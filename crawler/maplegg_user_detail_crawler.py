@@ -107,11 +107,11 @@ def get_past_chr_img_date(soup):
     past_chr = soup.find_all('div', attrs={'class': 'avatar-collection-item col-lg-2 col-md-4 col-6'})
     past_chr_img_list = [ past_chr_info.find('img')['src'] for past_chr_info in past_chr]
     if len(past_chr_img_list)!=6:
-        past_chr_img_list.extend(['None'] * (7-len(past_chr_img_list)))
+        past_chr_img_list.extend(['None'] * (6-len(past_chr_img_list)))
     past_chr_day_list = [ int(past_chr_info.find('img')['alt'].split('(')[1][:-4]) for past_chr_info in past_chr]
     past_chr_day_list = [ (datetime.datetime.now() - datetime.timedelta(days=last)).strftime("%y/%m/%d") for last in past_chr_day_list]
     if len(past_chr_day_list)!=6:
-        past_chr_day_list.extend(['None'] * (7-len(past_chr_day_list)))
+        past_chr_day_list.extend(['None'] * (6-len(past_chr_day_list)))
     past_chr_img_list.extend(past_chr_day_list)
     return past_chr_img_list
 
