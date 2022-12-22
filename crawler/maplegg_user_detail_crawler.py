@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from itertools import chain
 from tqdm import tqdm
 import datetime
+import time
 import argparse
 import pandas as pd
 import os
@@ -57,10 +58,7 @@ def get_chr_info(soup):
 
 def get_guild_ranking(soup):
     guild = soup.find('div', attrs={'class':'col-lg-2 col-md-4 col-sm-4 col-12 mt-3'})
-    if guild is None:
-        guild = 'CHECK'
-    else:
-        guild = guild.text[4:].replace('\n','')
+    guild = guild.text[4:].replace('\n','')
     ranking = soup.find_all('div', attrs={'class' : 'col-lg-2 col-md-4 col-sm-4 col-6 mt-3'})
     ranking_list = [ rank.text[5:].replace('\n','').replace(' ','') for rank in ranking]
     ranking_list.append(guild)
@@ -69,10 +67,11 @@ def get_guild_ranking(soup):
 
 def get_last_access(soup):
     last = soup.find('div', attrs={'class':'col-6 col-md-8 col-lg-6'})
-    last = last.text.replace('\n', '')
-    if last == '':
+
+    if (last == '') or (type(last) is None):
         last_visit = '-'
     else:
+        last = last.text.replace('\n', '')
         last = int(last.replace(' ','')[7:-2])
         last_visit = (datetime.datetime.now() - datetime.timedelta(days=last)).strftime("%y/%m/%d")
     # '22/12/18'
@@ -128,13 +127,25 @@ def crawler(url):
     req = requests.get(url)
     html = req.text
     soup = BeautifulSoup(html, 'html.parser')
-    codi_list = get_codi_analysis(soup)
-    chr_info = get_chr_info(soup)
-    guild_ranking = get_guild_ranking(soup)
-    last_access = get_last_access(soup)
-    mureung_theseed_union_achieve = get_mureung_theseed_union_achieve(soup)
-    cur_chr = get_cur_chr_img(soup)
-    past_chr = get_past_chr_img_date(soup)
+    try:
+        codi_list = get_codi_analysis(soup)
+        chr_info = get_chr_info(soup)
+        guild_ranking = get_guild_ranking(soup)
+        last_access = get_last_access(soup)
+        mureung_theseed_union_achieve = get_mureung_theseed_union_achieve(soup)
+        cur_chr = get_cur_chr_img(soup)
+        past_chr = get_past_chr_img_date(soup)
+    except:
+        req = requests.get(url)
+        html = req.text
+        soup = BeautifulSoup(html, 'html.parser')
+        codi_list = get_codi_analysis(soup)
+        chr_info = get_chr_info(soup)
+        guild_ranking = get_guild_ranking(soup)
+        last_access = get_last_access(soup)
+        mureung_theseed_union_achieve = get_mureung_theseed_union_achieve(soup)
+        cur_chr = get_cur_chr_img(soup)
+        past_chr = get_past_chr_img_date(soup)
     final_list = list(chain(codi_list,
                             chr_info,
                             guild_ranking,
