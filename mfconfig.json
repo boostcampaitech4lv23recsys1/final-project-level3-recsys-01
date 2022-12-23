@@ -1,0 +1,17 @@
+{
+    "user": "wonjun",
+    "project": "newMF",
+    "entity": "dkt-dinosaur",
+
+    "preprocess": {
+      "data_dir": "./data",
+      "start": "1"
+    },
+
+    "trainer": {
+      "type": "사용할 Trainer",
+      "epochs": 15,
+      "seed": 417,
+      "save_dir": "../models"
+    }
+}
