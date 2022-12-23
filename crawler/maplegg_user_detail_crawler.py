@@ -69,13 +69,16 @@ def get_guild_ranking(soup):
 
 def get_last_access(soup):
     last = soup.find('div', attrs={'class':'col-6 col-md-8 col-lg-6'})
-    last = last.text.replace('\n', '')
-    if last == '':
-        last_visit = '-'
+    if type(last) is None:
+        last_visit = 'CHECK'
     else:
-        last = int(last.replace(' ','')[7:-2])
-        last_visit = (datetime.datetime.now() - datetime.timedelta(days=last)).strftime("%y/%m/%d")
-    # '22/12/18'
+        last = last.text.replace('\n', '')
+        if (last == '') or (type(last) is None):
+            last_visit = '-'
+        else:
+            last = int(last.replace(' ','')[7:-2])
+            last_visit = (datetime.datetime.now() - datetime.timedelta(days=last)).strftime("%y/%m/%d")
+        # '22/12/18'
     return [last_visit]
 
 def get_mureung_theseed_union_achieve(soup):
