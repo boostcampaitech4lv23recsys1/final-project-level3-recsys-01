@@ -5,6 +5,7 @@ from tqdm import tqdm
 import datetime
 import argparse
 import pandas as pd
+import os
 
 COLUMNS = ['nickname',
             'codi-hat',
@@ -55,7 +56,11 @@ def get_chr_info(soup):
     return chr_list
 
 def get_guild_ranking(soup):
-    guild = soup.find('div', attrs={'class':'col-lg-2 col-md-4 col-sm-4 col-12 mt-3'}).text[4:].replace('\n','')
+    guild = soup.find('div', attrs={'class':'col-lg-2 col-md-4 col-sm-4 col-12 mt-3'})
+    if guild is None:
+        guild = 'CHECK'
+    else:
+        guild = guild.text[4:].replace('\n','')
     ranking = soup.find_all('div', attrs={'class' : 'col-lg-2 col-md-4 col-sm-4 col-6 mt-3'})
     ranking_list = [ rank.text[5:].replace('\n','').replace(' ','') for rank in ranking]
     ranking_list.append(guild)
@@ -64,9 +69,16 @@ def get_guild_ranking(soup):
 
 def get_last_access(soup):
     last = soup.find('div', attrs={'class':'col-6 col-md-8 col-lg-6'})
-    last = int(last.text.replace('\n','').replace(' ','')[7:-2])
-    last_visit = (datetime.datetime.now() - datetime.timedelta(days=last)).strftime("%y/%m/%d")
-    # '22/12/18'
+    if type(last) is None:
+        last_visit = 'CHECK'
+    else:
+        last = last.text.replace('\n', '')
+        if (last == '') or (type(last) is None):
+            last_visit = '-'
+        else:
+            last = int(last.replace(' ','')[7:-2])
+            last_visit = (datetime.datetime.now() - datetime.timedelta(days=last)).strftime("%y/%m/%d")
+        # '22/12/18'
     return [last_visit]
 
 def get_mureung_theseed_union_achieve(soup):
@@ -107,11 +119,11 @@ def get_past_chr_img_date(soup):
     past_chr = soup.find_all('div', attrs={'class': 'avatar-collection-item col-lg-2 col-md-4 col-6'})
     past_chr_img_list = [ past_chr_info.find('img')['src'] for past_chr_info in past_chr]
     if len(past_chr_img_list)!=6:
-        past_chr_img_list.extend(['None'] * (7-len(past_chr_img_list)))
+        past_chr_img_list.extend(['None'] * (6-len(past_chr_img_list)))
     past_chr_day_list = [ int(past_chr_info.find('img')['alt'].split('(')[1][:-4]) for past_chr_info in past_chr]
     past_chr_day_list = [ (datetime.datetime.now() - datetime.timedelta(days=last)).strftime("%y/%m/%d") for last in past_chr_day_list]
     if len(past_chr_day_list)!=6:
-        past_chr_day_list.extend(['None'] * (7-len(past_chr_day_list)))
+        past_chr_day_list.extend(['None'] * (6-len(past_chr_day_list)))
     past_chr_img_list.extend(past_chr_day_list)
     return past_chr_img_list
 
@@ -143,18 +155,22 @@ if __name__=="__main__":
     parser.add_argument("--save_dir", required=True, help="파일을 저장할 디렉토리를 입력해주세요.")
     parser.add_argument("--save_every", default=1000)
     args = parser.parse_args()
-    data = pd.read_csv(args.url_dir)
-    user_num = args.url_dir.split('user_info_')[1]
+
+    user_num_list = os.listdir(args.url_dir)
     
-    final_list = []
-    for idx, row in enumerate(tqdm(data.values)):
-        user = [row[2]]
-        user.extend(crawler(row[1]))
-        final_list.append(user)
-        
-        if idx % args.save_every == 0 and not idx==0:
-            final_df = pd.DataFrame(final_list, columns=COLUMNS)
-            final_df.to_csv(f'{args.save_dir}/user_detail_{user_num}', index=False, encoding='utf-8-sig')
-    final_df = pd.DataFrame(final_list, columns=COLUMNS)
-    final_df.to_csv(f'{args.save_dir}/user_detail_{user_num}', index=False, encoding='utf-8-sig')
+    for user_num in user_num_list:
+        data = pd.read_csv(os.path.join(args.url_dir, user_num))
+        user_num = user_num.split('user_info_')[1]
+        print(f"----------{user_num}----------")
+        final_list = []
+        for idx, row in enumerate(tqdm(data.values)):
+            user = [row[2]]
+            user.extend(crawler(row[1]))
+            final_list.append(user)
+            
+            if idx % args.save_every == 0 and not idx==0:
+                final_df = pd.DataFrame(final_list, columns=COLUMNS)
+                final_df.to_csv(f'{args.save_dir}/user_detail_{user_num}', index=False, encoding='utf-8-sig')
+        final_df = pd.DataFrame(final_list, columns=COLUMNS)
+        final_df.to_csv(f'{args.save_dir}/user_detail_{user_num}', index=False, encoding='utf-8-sig')
     
