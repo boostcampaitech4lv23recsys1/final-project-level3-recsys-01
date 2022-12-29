@@ -69,7 +69,7 @@ def get_guild_ranking(soup):
 
 def get_last_access(soup):
     last = soup.find('div', attrs={'class':'col-6 col-md-8 col-lg-6'})
-    if type(last) is None:
+    if last is None:
         last_visit = 'CHECK'
     else:
         last = last.text.replace('\n', '')
