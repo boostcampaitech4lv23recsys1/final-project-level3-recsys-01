@@ -5,7 +5,7 @@
 
     "preprocess": {
       "data_dir": "./data",
-      "start": "1"
+      "start": 1
     },
 
     "trainer": {

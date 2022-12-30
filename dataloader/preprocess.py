@@ -35,6 +35,7 @@ class Preprocess:
 
     def item_buwi_list(self, data: pd.DataFrame):
         user_detail = data
+        print(user_detail)
 
         hat = user_detail[user_detail['codi-hat'] != "-"]['codi-hat'].unique()
         hair = user_detail[user_detail['codi-hair'] != "-"]['codi-hair'].unique()
@@ -48,7 +49,7 @@ class Preprocess:
     
     def load_data_from_file(self):
         df = pd.read_csv( # 일단 한 csv 파일만 가져와보자
-            f"{self.cfg_preprocess['data_dir']}/user_detail/user_detail_{self.cfg_preprocess['start']}_{self.cfg_preprocess['start'] + 10000}.csv"
+            f"{self.cfg_preprocess['data_dir']}/user_detail/user_detail_{str(self.cfg_preprocess['start'])}_{str(self.cfg_preprocess['start'] + 9999)}.csv"
         )
         return df
     

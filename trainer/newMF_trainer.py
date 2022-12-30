@@ -4,7 +4,7 @@ import os
 from tqdm import tqdm
 
 class newMFTrainer:
-    def __init__(self, model: nn.Module, train_data, config):
+    def __init__(self, model, train_data, config):
         self.model = model
         self.config = config
         self.cfg_trainer = config["trainer"]
@@ -12,7 +12,8 @@ class newMFTrainer:
         self.save_dir = self.cfg_trainer["save_dir"]
         self.train_data = train_data
         self.n_users = len(self.train_data)
-        self.optimizer = torch.optim.SparseAdam(model.parameters(), lr=0.001)
+        print("bbb")
+        self.optimizer = torch.optim.SparseAdam(self.model.parameters(self), lr=0.001)
         self.criterion = torch.nn.BCELoss()
 
     def __train_epoch(self, epoch:int):

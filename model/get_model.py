@@ -1,6 +1,6 @@
-import model
+import model as models
 
 
 def get_models(config):
 
-    return model.newMF
+    return models.newmf
