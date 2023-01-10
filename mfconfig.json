@@ -2,16 +2,35 @@
     "user": "wonjun",
     "project": "newMF",
     "entity": "dkt-dinosaur",
+    "seed": 417,
 
     "preprocess": {
       "data_dir": "./data",
-      "start": 1
+      "start": 480000
+    },
+
+    "dataset": {
+      "test_size": 0.1,
+      "shuffle": true
+    },
+
+    "dataloader": {
+      "args": {
+        "batch_size": 32
+      }
     },
 
     "trainer": {
       "type": "사용할 Trainer",
       "epochs": 15,
-      "seed": 417,
-      "save_dir": "../models"
+      "save_dir": "../models",
+      "learning_rate": 0.001
+    },
+
+    "arch": {
+      "type": "NewMF",
+      "args": {
+        "n_factors": 20
+      }
     }
 }

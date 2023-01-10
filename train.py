@@ -1,9 +1,11 @@
-from dataloader.preprocess import Preprocess
+from dataloader import Preprocess
+from dataloader import get_loader
 import argparse
 import torch
 import model as models
+from dataset import BaseDataset
 from trainer import newMFTrainer
-from utils import read_json, set_seed
+from utils import read_json, set_seed, data_split
 
 def main(config):
     preprocess = Preprocess(config)
@@ -11,10 +13,15 @@ def main(config):
     # buwi = preprocess.item_buwi_list(data)
 
     model = models.get_models(config)
+    train_data, valid_data = data_split(config, data)
 
+    train_set = BaseDataset(config, train_data)
+    valid_set = BaseDataset(config, valid_data)
 
-    trainer = newMFTrainer(model, data, config)
+    train_loader, valid_loader = get_loader(config["dataloader"]["args"], train_set, valid_set)
+    trainer = newMFTrainer(config, model, train_loader, valid_loader)
 
+    breakpoint() # 
     trainer.train()
 
 if __name__ == "__main__":
@@ -30,7 +37,7 @@ if __name__ == "__main__":
     config = read_json(args.config)
 
     config["device"] = "cuda" if torch.cuda.is_available() else "cpu"
-    set_seed(config["trainer"]["seed"])
+    set_seed(config["seed"])
 
     main(config)
 

@@ -5,7 +5,14 @@ import random
 import numpy as np
 import torch
 from collections import OrderedDict
+from sklearn.model_selection import train_test_split
 
+
+def data_split(config, data):
+    test_size = config["dataset"]["test_size"]
+    shuffle = config["dataset"]["shuffle"]
+    X_train, X_valid = train_test_split(data, test_size=test_size, shuffle=shuffle)
+    return X_train, X_valid
 
 def read_json(fname):
     fname = Path(fname)

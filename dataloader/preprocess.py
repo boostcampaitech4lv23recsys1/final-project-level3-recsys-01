@@ -17,10 +17,11 @@ class Preprocess:
     
     def __preprocessing(self, data: pd.DataFrame, is_train=True):
         user_detail = data
+        breakpoint()
 
         user_detail = user_detail.set_index('nickname').stack().reset_index(level=1, drop=True).to_frame().rename(columns={0:'item'})
         user_detail['user'] = user_detail.index
-        user_detail = user_detail.reset_index(drop=True)[['user', 'item']]; user_detail
+        user_detail = user_detail.reset_index(drop=True)[['user', 'item']]
         user_detail = user_detail[user_detail['item'] != '-']
 
         user2idx = { k: i for i, k in enumerate(user_detail['user'].unique())}
@@ -30,7 +31,10 @@ class Preprocess:
         user_detail['item'] = user_detail['item'].apply(lambda x: item2idx[x])
 
         data = user_detail.groupby('user').apply(lambda x: x['item'].to_list())
-
+        
+        self.config["arch"]["args"]["n_users"] = len(user2idx)
+        self.config["arch"]["args"]["n_items"] = len(item2idx)
+        breakpoint()
         return data
 
     def item_buwi_list(self, data: pd.DataFrame):
@@ -49,7 +53,7 @@ class Preprocess:
     
     def load_data_from_file(self):
         df = pd.read_csv( # 일단 한 csv 파일만 가져와보자
-            f"{self.cfg_preprocess['data_dir']}/user_detail/user_detail_{str(self.cfg_preprocess['start'])}_{str(self.cfg_preprocess['start'] + 9999)}.csv"
+            f"{self.cfg_preprocess['data_dir']}/user_detail/user_detail_{str(self.cfg_preprocess['start'])}_{str(self.cfg_preprocess['start'] + 10000)}.csv"
         )
         return df
     
@@ -57,7 +61,6 @@ class Preprocess:
         self.train_data = self.load_data_from_file()
         self.train_data = self.__feature_engineering(self.train_data)
         self.train_data = self.__preprocessing(self.train_data, is_train=True)
-
         return self.train_data
 
 
