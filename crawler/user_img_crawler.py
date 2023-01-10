@@ -12,6 +12,7 @@ if __name__ == "__main__":
         file_path = os.path.join(base_folder, path)
         img_folder = os.path.join(base_img_folder, path[:-4])
         os.makedirs(img_folder, exist_ok=True)
+
         df = pd.read_csv(file_path)
         cur_date = sorted(df["last_access"], reverse=True)[0].replace("/", "_")
 
