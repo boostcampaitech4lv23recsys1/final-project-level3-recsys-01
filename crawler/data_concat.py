@@ -4,9 +4,10 @@ import argparse
 
 
 def making_df(base_path, base_df):
+    user_df = base_df.copy()
     for path in os.listdir(base_path):
         temp = pd.read_csv(os.path.join(base_path, path))
-        user_df = pd.concat([base_df, temp])
+        user_df = pd.concat([user_df, temp])
     return user_df
 
 
