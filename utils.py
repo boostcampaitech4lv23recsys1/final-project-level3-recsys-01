@@ -69,6 +69,20 @@ class GCS_helper:
             df = pd.read_csv(f, encoding="utf-8-sig")
         return df
 
+    def upload_image_to_gcs(self, blob_name: str, image_url: str) -> None:
+        """
+        url 안의 이미지를 gcs로 바로 업로드
+
+        blob_name: gcs에 저장될 파일 경로 및 이름 (gcs 상의 경로) ex) csv/user_info.csv
+        image_url: gcs에 upload할 image의 url
+        """
+        # 이미지 읽어오기
+        image_data = requests.get(image_url).content
+        # stream을 이용해 바로 업로드
+        with self.bucket.blob(blob_name).open("wb") as f:
+            f.write(image_data)
+        return None
+
 
 # 일단 주석 처리
 # def image_upload(
@@ -97,60 +111,24 @@ class GCS_helper:
 #     return None
 
 
-# def add_gcs_image_path(user_detail_info: pd.DataFrame, cur_date: str) -> pd.DataFrame:
-#     """
-#     이미지를 gcs에 저장하면 user 정보에서 image를 gcs에서 가져올 수 있도록 바꿔야한다.
-#     gcs 내 주소를 언급해주어 접근 경로를 web이 아니라 우리의 클라우드가 되도록 하자.
+def add_gcs_image_path(user_detail_info: pd.DataFrame) -> pd.DataFrame:
+    """
+    이미지를 gcs에 저장하면 user 정보에서 image를 gcs에서 가져올 수 있도록 바꿔야한다.
+    gcs 내 주소를 언급해주어 접근 경로를 web이 아니라 우리의 클라우드가 되도록 하자.
 
-#     cur_chr, past_chr_img_1 ~ 6: 현재 image 정보를 가지고 있는 column (web에 존재)
-#     뒤에 _gcs를 붙인 새로운 컬럼 7개를 만들어준다. ex) cur_chr_gcs, past_chr_img_1_gcs
+    cur_chr, past_chr_img_1 ~ 6: 현재 image 정보를 가지고 있는 column (web에 존재)
+    뒤에 _gcs를 붙인 새로운 컬럼 7개를 만들어준다. ex) cur_chr_gcs, past_chr_img_1_gcs
 
-#     cur_chr의 경우 날짜 정보가 없기때문에 유저가 직접 입력해줘야한다.
-#     "221223" 형식의 str을 이용하자.
-#     """
-#     if type(cur_date) != str:
-#         raise TypeError("str 형식으로 넣어주세요")
-#     if len(cur_date) != 6:
-#         raise ValueError("YYMMDD 형식의 6자리로 넣어주세요")
+    cur_chr의 경우 날짜 정보가 없기때문에 유저가 직접 입력해줘야한다.
+    "221223" 형식의 str을 이용하자.
+    """
 
-#     # {경로}_{닉네임}_{저장날짜} 형식
-#     user_detail_info["cur_chr_gcs"] = (
-#         "image/user/" + user_detail_info["nickname"] + "_" + cur_date
-#     )
-#     user_detail_info["past_chr_img_1_gcs"] = (
-#         "image/user/"
-#         + user_detail_info["nickname"]
-#         + "_"
-#         + user_detail_info["past_chr_date_1"].apply(lambda x: x.replace("/", ""))
-#     )
-#     user_detail_info["past_chr_img_2_gcs"] = (
-#         "image/user/"
-#         + user_detail_info["nickname"]
-#         + "_"
-#         + user_detail_info["past_chr_date_2"].apply(lambda x: x.replace("/", ""))
-#     )
-#     user_detail_info["past_chr_img_3_gcs"] = (
-#         "image/user/"
-#         + user_detail_info["nickname"]
-#         + "_"
-#         + user_detail_info["past_chr_date_3"].apply(lambda x: x.replace("/", ""))
-#     )
-#     user_detail_info["past_chr_img_4_gcs"] = (
-#         "image/user/"
-#         + user_detail_info["nickname"]
-#         + "_"
-#         + user_detail_info["past_chr_date_4"].apply(lambda x: x.replace("/", ""))
-#     )
-#     user_detail_info["past_chr_img_5_gcs"] = (
-#         "image/user/"
-#         + user_detail_info["nickname"]
-#         + "_"
-#         + user_detail_info["past_chr_date_5"].apply(lambda x: x.replace("/", ""))
-#     )
-#     user_detail_info["past_chr_img_6_gcs"] = (
-#         "image/user/"
-#         + user_detail_info["nickname"]
-#         + "_"
-#         + user_detail_info["past_chr_date_6"].apply(lambda x: x.replace("/", ""))
-#     )
-#     return user_detail_info
+    cur_date = sorted(user_detail_info["last_access"], reverse=True)[0].replace(
+        "/", "_"
+    )
+
+    # {경로}_{닉네임}_{저장날짜} 형식
+    user_detail_info[
+        "gcs_image_path"
+    ] = f"image/user/{user_detail_info['nickname']}/{user_detail_info['nickname']}_{cur_date}"
+    return user_detail_info
