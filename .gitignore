@@ -410,3 +410,6 @@ sketch
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/data,linux,react,python,pycharm,visualstudiocode,images
+
+# Key 파일들 제외
+keys/
