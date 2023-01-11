@@ -15,13 +15,13 @@ def main(config):
     model = models.get_models(config)
     train_data, valid_data = data_split(config, data)
 
-    train_set = BaseDataset(config, train_data)
-    valid_set = BaseDataset(config, valid_data)
+    train_set = BaseDataset(train_data)
+    valid_set = BaseDataset(valid_data)
 
     train_loader, valid_loader = get_loader(config["dataloader"]["args"], train_set, valid_set)
     trainer = newMFTrainer(config, model, train_loader, valid_loader)
 
-    breakpoint() # 
+    breakpoint()
     trainer.train()
 
 if __name__ == "__main__":

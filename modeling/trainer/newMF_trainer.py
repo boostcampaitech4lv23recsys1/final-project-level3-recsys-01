@@ -27,12 +27,12 @@ class newMFTrainer:
 
         self.model.train()
         print(f"...epoch {epoch} train...")
-        for data in tqdm(self.train_data_loader):
-            breakpoint()
-            print(data)
+        for data in tqdm(self.train_data_loader): # 547
+            # breakpoint()
+            # print(data)
 
             target = data["y"].to(self.device)
-            output = self.model(data["x"], data["x"].groupby("user")['item'])
+            output = self.model(data["x"])
             # interaction = data["y"]
             # items = torch.LongTensor(self.train_data[data])
             

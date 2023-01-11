@@ -11,8 +11,10 @@ class NewMF(torch.nn.Module):
         self.item_factors.weight.data.uniform_(-1, 1) # uniform distribution weight init
         self.sigmoid = nn.Sigmoid()
     
-    def forward(self, user, items):
-        item_emb =self.item_factors(items[0])
+    def forward(self, items):
+        item_emb = self.item_factors(items[0])
         for i in range(1, len(items)):
-            item_emb = item_emb*self.item_factors(items[i])
-        return self.sigmoid(item_emb.sum(0))
+            item_emb = item_emb * self.item_factors(items[i])
+            
+        return self.sigmoid(item_emb.sum(-1))
+    

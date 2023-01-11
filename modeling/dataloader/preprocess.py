@@ -17,12 +17,11 @@ class Preprocess:
     
     def __preprocessing(self, data: pd.DataFrame, is_train=True):
         user_detail = data
-        breakpoint()
 
         user_detail = user_detail.set_index('nickname').stack().reset_index(level=1, drop=True).to_frame().rename(columns={0:'item'})
         user_detail['user'] = user_detail.index
         user_detail = user_detail.reset_index(drop=True)[['user', 'item']]
-        user_detail = user_detail[user_detail['item'] != '-']
+        # user_detail = user_detail[user_detail['item'] != '-']
 
         user2idx = { k: i for i, k in enumerate(user_detail['user'].unique())}
         item2idx = { k: i for i, k in enumerate(user_detail['item'].unique())}
@@ -34,7 +33,7 @@ class Preprocess:
         
         self.config["arch"]["args"]["n_users"] = len(user2idx)
         self.config["arch"]["args"]["n_items"] = len(item2idx)
-        breakpoint()
+
         return data
 
     def item_buwi_list(self, data: pd.DataFrame):
