@@ -14,10 +14,12 @@ def data_split(config, data):
     X_train, X_valid = train_test_split(data, test_size=test_size, shuffle=shuffle)
     return X_train, X_valid
 
+
 def read_json(fname):
     fname = Path(fname)
     with fname.open("rt") as handle:
         return json.load(handle, object_hook=OrderedDict)
+
 
 def set_seed(seed=417):
     os.environ["PYTHONHASHSEED"] = str(seed)

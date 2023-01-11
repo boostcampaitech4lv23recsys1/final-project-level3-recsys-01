@@ -413,3 +413,6 @@ sketch
 
 # Key 파일들 제외
 keys/
+
+# saved models
+*.pt

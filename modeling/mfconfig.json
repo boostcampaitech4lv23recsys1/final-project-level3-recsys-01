@@ -5,7 +5,7 @@
     "seed": 417,
 
     "preprocess": {
-      "data_dir": "./data",
+      "data_dir": "../data",
       "start": 480000
     },
 
@@ -16,14 +16,14 @@
 
     "dataloader": {
       "args": {
-        "batch_size": 32
+        "batch_size": 1024
       }
     },
 
     "trainer": {
       "type": "사용할 Trainer",
       "epochs": 15,
-      "save_dir": "../models",
+      "save_dir": "./save_models",
       "learning_rate": 0.001
     },
 

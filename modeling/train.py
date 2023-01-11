@@ -5,12 +5,12 @@ import torch
 import model as models
 from dataset import BaseDataset
 from trainer import newMFTrainer
-from utils import read_json, set_seed, data_split
+from utilities import read_json, set_seed, data_split
+
 
 def main(config):
     preprocess = Preprocess(config)
     data = preprocess.load_train_data()
-    # buwi = preprocess.item_buwi_list(data)
 
     model = models.get_models(config)
     train_data, valid_data = data_split(config, data)
@@ -21,7 +21,6 @@ def main(config):
     train_loader, valid_loader = get_loader(config["dataloader"]["args"], train_set, valid_set)
     trainer = newMFTrainer(config, model, train_loader, valid_loader)
 
-    breakpoint()
     trainer.train()
 
 if __name__ == "__main__":
