@@ -2,6 +2,10 @@ import pandas as pd
 import os
 from tqdm import tqdm
 import argparse
+import sys
+
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from utils import GCS_helper
 
 
 def drop_past_add_column(user_detail_info: pd.DataFrame) -> pd.DataFrame:
@@ -28,8 +32,10 @@ def drop_past_add_column(user_detail_info: pd.DataFrame) -> pd.DataFrame:
         inplace=True,
     )
 
-    cur_date = sorted(user_detail_info["last_access"], reverse=True)[0].replace(
-        "/", "_"
+    cur_date = (
+        sorted(user_detail_info["last_access"], reverse=True)[0]
+        .replace("/", "_")
+        .replace('-', '_')
     )
 
     # {경로}_{닉네임}_{저장날짜} 형식
@@ -40,17 +46,36 @@ def drop_past_add_column(user_detail_info: pd.DataFrame) -> pd.DataFrame:
     return user_detail_info
 
 
+def image_uploader(
+    user_detail_info: pd.DataFrame, gcs_helper: GCS_helper, csv_folder: str
+) -> None:
+    local_images = user_detail_info['gcs_image_path'].apply(
+        lambda x: f"user_{x.split('/')[3]}"
+    )
+    gcs_path = user_detail_info['gcs_image_path']
+    for image, path in tqdm(zip(local_images, gcs_path)):
+        gcs_helper.upload_file_to_gcs(
+            path, os.path.join('./data/user_img', csv_folder, image)
+        )
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     arg = parser.add_argument
-    arg('--base_folder', type=str, default='../data/user_detail')
+    arg('--base_folder', type=str, default='./data/user_detail')
+    arg('--key_path', type=str, default='./config/key.json')
     args = parser.parse_args()
-
-    for csv_file in tqdm(os.listdir(args.base_folder)):
+    gcs_helper = GCS_helper(args.key_path)
+    for csv_file in os.listdir(args.base_folder):
         if not csv_file.endswith(".csv"):
             continue
         csv_path = os.path.join(args.base_folder, csv_file)
 
         data = pd.read_csv(csv_path)
-        data = drop_past_add_column(data)
-        data.to_csv(csv_path, index=False)
+        try:
+            data = drop_past_add_column(data)
+            data.to_csv(csv_path, index=False)
+        except:
+            pass
+
+        image_uploader(data, gcs_helper, csv_path.split('/')[-1][:-4])
