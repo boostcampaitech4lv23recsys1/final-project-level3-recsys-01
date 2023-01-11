@@ -6,7 +6,7 @@ import os
 
 def get_int_basic(data: pd.DataFrame) -> pd.DataFrame:
     """_Modify string columns as integer
-    (level, popularity, total_ranking, world_ranking, class_wolrd_ranking, class_total_ranking)
+    (level, exp, popularity, total_ranking, world_ranking, class_wolrd_ranking, class_total_ranking)
 
     Args:
         data (pd.DataFrame): Base dataframe
@@ -14,6 +14,8 @@ def get_int_basic(data: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Reformatted dataframe
     """
+    data["exp"] = data["level"].apply(lambda x: float(x.split("(")[-1][:-2]))
+
     data["level"] = data["level"].apply(
         lambda x: int(re.search("\d+\(", x).group()[:-1])
     )
@@ -23,12 +25,15 @@ def get_int_basic(data: pd.DataFrame) -> pd.DataFrame:
     data["total_ranking"] = data["total_ranking"].apply(
         lambda x: int(x.replace("위", "").replace(",", ""))
     )
+    data["world_ranking"] = data["world_ranking"].str.replace('-', '-1')
     data["world_ranking"] = data["world_ranking"].apply(
         lambda x: int(x.replace("위", "").replace(",", ""))
     )
+    data["class_world_ranking"] = data["class_world_ranking"].str.replace('-', '-1')
     data["class_world_ranking"] = data["class_world_ranking"].apply(
         lambda x: int(x.replace("(월드)", "").replace("위", "").replace(",", ""))
     )
+    data["class_total_ranking"] = data["class_total_ranking"].str.replace('-', '-1')
     data["class_total_ranking"] = data["class_total_ranking"].apply(
         lambda x: int(x.replace("(전체)", "").replace("위", "").replace(",", ""))
     )
