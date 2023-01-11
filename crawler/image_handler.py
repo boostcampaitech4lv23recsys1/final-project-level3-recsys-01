@@ -65,7 +65,7 @@ if __name__ == "__main__":
     arg = parser.add_argument
     arg('--detail_folder', type=str, default='./data/user_detail')
     arg('--img_folder', type=str, default='./data/user_img')
-    arg('--key_path', type=str, default='./config/key.json')
+    arg('--key_path', type=str, default='./keys/gcs_key.json')
     args = parser.parse_args()
     gcs_helper = GCS_helper(args.key_path)
     for csv_file in os.listdir(args.detail_folder):
