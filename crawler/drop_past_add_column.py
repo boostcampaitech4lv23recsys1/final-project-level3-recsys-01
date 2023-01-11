@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+from tqdm import tqdm
 
 
 def drop_past_add_column(user_detail_info: pd.DataFrame) -> pd.DataFrame:
@@ -25,7 +26,7 @@ def drop_past_add_column(user_detail_info: pd.DataFrame) -> pd.DataFrame:
 if __name__ == "__main__":
     base_folder = "../data/user_detail"
 
-    for csv_file in os.listdir(base_folder):
+    for csv_file in tqdm(os.listdir(base_folder)):
         if not csv_file.endswith(".csv"):
             continue
         csv_path = os.path.join(base_folder, csv_file)
