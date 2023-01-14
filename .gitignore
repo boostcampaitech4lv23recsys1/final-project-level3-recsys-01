@@ -416,3 +416,7 @@ keys/
 
 # saved models
 *.pt
+
+# item indexing txt file
+idx2item.txt
+item2idx.txt
