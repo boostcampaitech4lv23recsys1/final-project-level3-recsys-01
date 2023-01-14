@@ -104,6 +104,7 @@ def get_last_access(soup):
 
 def get_mureung_theseed_union_achieve(soup):
     datas = soup.findAll("div", "col-lg-3 col-6 mt-3 px-1")
+    murueng, theseed, union, achieve = ['기록이 없습니다'] * 4
     for idx, data in enumerate(datas):
         if idx == 0:
             mureung = data.find("h1")
@@ -210,7 +211,7 @@ if __name__ == "__main__":
     if args.your_name not in ["eunhye", "jeong", "ryu", "wonjun", "sssu", "test"]:
         raise ValueError("이름 제대로 입력하세요~")
 
-    gcs_helper = GCS_helper("../key.json")
+    gcs_helper = GCS_helper("./keys/gcs_key.json")
     existed_df = gcs_helper.read_df_from_gcs(f"csv/user_detail_{args.your_name}.csv")
 
     # 혹시 모르니까 이거 시작하기 전에 로컬에 저장 한번 하고 시작
