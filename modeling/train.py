@@ -24,7 +24,7 @@ def main(config):
     trainer.train()
 
 if __name__ == "__main__":
-    args = argparse.ArgumentParser(description="DKT Dinosaur")
+    args = argparse.ArgumentParser(description="Final Dinosaur")
     args.add_argument(
         "-c",
         "--config",

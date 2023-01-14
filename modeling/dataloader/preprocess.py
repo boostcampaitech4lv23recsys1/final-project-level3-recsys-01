@@ -20,10 +20,8 @@ class Preprocess:
         self.cfg_preprocess = config["preprocess"]
         self.save_dir = self.cfg_preprocess["idx_save_dir"]
         self.user_feature_engineering = self.cfg_preprocess["user_feature_engineering"]
-        self.item_feature_engineering = self.cfg_preprocess["item_feature_engineering"]
-        self.item_feature_engineering_weapon = self.cfg_preprocess[
-            "item_feature_engineering_weapon"
-        ]
+        self.item_category = self.cfg_preprocess["item_category"]
+        self.item_subCategory = self.cfg_preprocess["item_subCategory"]
         self.train_data = None
         self.gcs_helper = GCS_helper(
             "/opt/ml/final-project-level3-recsys-01/keys/gcs_key.json"
@@ -34,10 +32,10 @@ class Preprocess:
             print(
                 "------------------------item feature engineering----------------------"
             )
+            data = data.drop_duplicates(subset="name")
             data = data[
-                (data["category"].isin(self.item_feature_engineering))
-                & (data["subCategory"].isin(self.item_feature_engineering))
-                | (data["subCategory"].isin(self.item_feature_engineering_weapon))
+                (data["category"].isin(self.item_category))
+                & (data["subCategory"].isin(self.item_subCategory))
             ]
             data = data.drop_duplicates(subset=["name"])  # item drop duplicates
             self.config["arch"]["args"]["n_items"] = len(data)

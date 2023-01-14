@@ -14,20 +14,20 @@
       "codi-shoes",
       "codi-weapon"
     ],
-    "item_feature_engineering": [
+    "item_category": [
       "Armor",
       "Character",
       "One-Handed Weapon",
-      "Two-Handed Weapon",
+      "Two-Handed Weapon"
+    ],
+    "item_subCategory": [
       "Hat",
-      "Hair",
-      "Face",
       "Overall",
       "Top",
       "Bottom",
-      "Shoes"
-    ],
-    "item_feature_engineering_weapon": [
+      "Shoes",
+      "Hair",
+      "Face",
       "Shining Rod",
       "Bladecaster",
       "Breath Shooter",
@@ -46,6 +46,8 @@
       "Cane",
       "Wand",
       "Staff",
+      "Test Weapon",
+      "Cash",
       "Two-Handed Sword",
       "Two-Handed Axe",
       "Two-Handed Blunt",
@@ -61,9 +63,7 @@
       "Lapis",
       "Lazuli",
       "Arm Cannon",
-      "Ancient Bow",
-      "Test Weapon",
-      "Cash"
+      "Ancient Bow"
     ]
   },
   "dataset": {

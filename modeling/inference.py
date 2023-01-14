@@ -26,7 +26,7 @@ def inference_ver1(
     model.load_state_dict(load_state["state_dict"])
     model.eval()
     print("---------------------------item part listing--------------------------")
-    item_part_list = item_part(config, item_data)
+    item_part_list = item_part(config, item_data)  # 부위별 아이템 리스트 (8개)
 
     predict_list = []
     for f in fixed:
@@ -35,21 +35,28 @@ def inference_ver1(
             predict_list.append([])
             continue
         else:
-            certain_part = item_part_list[f]
-            for certain in certain_part:
-                temp_equip = equip[:]
-                if certain in item2idx:
-                    temp_equip.append(item2idx[certain])
-                    output = model(torch.tensor(temp_equip))
-                    part_score.append((certain, float(output)))
+            certain_part = item_part_list[f]  # 부위별 아이템 리스트를 가져옴
+            for certain in certain_part:  # 전체 아이템 중 하나를 가져옴
+                temp_equip = equip[:]  # 현재 착용중인 장비
+                if (
+                    certain in item2idx
+                ):  # 만약 학습한 유저들 아이템셋에 그 아이템이 존재한다면(mismatching 이슈 존재)
+                    temp_equip.append(item2idx[certain])  # 착용중인 장비에 추가
+                    output = model(torch.tensor(temp_equip))  # 그걸 model에 넣고 유사도 측정
+                    part_score.append(
+                        (certain, float(output))
+                    )  # part_score에 점수와 함께 그 아이템을 저장함
         # part_score = part_score.apply(lambda x: sorted(x[1]), reversed=True)
-        part_score.sort(key=lambda x: x[1], reverse=True)
-        part_recommendation = part_score[: config["inference"]["top_k"]]
-        predict_list.append(part_recommendation)
+        part_score.sort(key=lambda x: x[1], reverse=True)  # 점수 기준 정렬
+        part_recommendation = part_score[
+            : config["inference"]["top_k"]
+        ]  # top_k만큼 상위에서 자름
+        predict_list.append(part_recommendation)  # predict_list에 저장
     return predict_list
 
 
 def item_part(config, item_data):
+    item_data = item_data.drop_duplicates(subset="name")
     hat_name_list = item_data[
         (item_data["subCategory"] == "Hat") & (item_data["isCash"] == True)
     ]["name"].unique()
@@ -72,12 +79,8 @@ def item_part(config, item_data):
         (item_data["subCategory"] == "Shoes") & (item_data["isCash"] == True)
     ]["name"].unique()
     weapon_name_list = item_data[
-        (item_data["category"].isin(config["preprocess"]["item_feature_engineering"]))
-        & (
-            item_data["subCategory"].isin(
-                config["preprocess"]["item_feature_engineering_weapon"]
-            )
-        )
+        (item_data["category"].isin(["One-Handed Weapon", "Two-Handed Weapon"]))
+        & (item_data["subCategory"].isin(config["preprocess"]["item_subCategory"]))
         & (item_data["isCash"] == True)
     ]["name"].unique()
     return [
@@ -122,6 +125,7 @@ def main(config, equipment):
             final_codi[i].append(equip_name[i])
         else:
             continue
+
     cur_time = str(datetime.now(timezone("Asia/Seoul")))[:19]
     save_path = config["inference"]["result_dir"]
     if not os.path.exists(save_path):
