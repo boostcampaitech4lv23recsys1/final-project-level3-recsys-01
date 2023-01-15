@@ -1,5 +1,8 @@
-from utilities import read_json, loading_text_file
-from dataloader import Preprocess
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from modeling.utilities import read_json, loading_text_file
+from modeling.dataloader import Preprocess
 from datetime import datetime
 from pytz import timezone
 import model as models
@@ -138,7 +141,7 @@ def main(config, equipment):
         [list(map(lambda x: x[0], fc)) if len(fc) != 1 else fc for fc in final_codi]
     )
     final_codi.reset_index().to_csv(save_path, index=None)
-
+    return final_codi
 
 if __name__ == "__main__":
     args = argparse.ArgumentParser(description="Final Dinosaur")

@@ -1,4 +1,5 @@
-from torch.utils.data import Dataset, DataLoader, default_collate
+from torch.utils.data import Dataset, DataLoader
+from torch.utils.data.dataloader import default_collate
 
 
 def get_loader(

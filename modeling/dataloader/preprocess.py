@@ -1,4 +1,7 @@
-from utilities import saving_text_file
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from modeling.utilities import saving_text_file
 
 from varname import nameof
 import pandas as pd
