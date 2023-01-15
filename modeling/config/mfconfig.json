@@ -1,0 +1,95 @@
+{
+  "user": "wonjun",
+  "project": "newMF",
+  "entity": "dkt-dinosaur",
+  "seed": 417,
+  "preprocess": {
+    "idx_save_dir": "./temporary",
+    "user_feature_engineering": [
+      "codi-hat",
+      "codi-hair",
+      "codi-face",
+      "codi-top",
+      "codi-bottom",
+      "codi-shoes",
+      "codi-weapon"
+    ],
+    "item_category": [
+      "Armor",
+      "Character",
+      "One-Handed Weapon",
+      "Two-Handed Weapon"
+    ],
+    "item_subCategory": [
+      "Hat",
+      "Overall",
+      "Top",
+      "Bottom",
+      "Shoes",
+      "Hair",
+      "Face",
+      "Shining Rod",
+      "Bladecaster",
+      "Breath Shooter",
+      "Soul Shooter",
+      "Desperado",
+      "Whip Blade",
+      "Psy-limiter",
+      "Chain",
+      "Gauntlet",
+      "Ritual Fan",
+      "One-Handed Sword",
+      "One-Handed Axe",
+      "One-Handed Blunt Weapon",
+      "Dagger",
+      "Katara",
+      "Cane",
+      "Wand",
+      "Staff",
+      "Test Weapon",
+      "Cash",
+      "Two-Handed Sword",
+      "Two-Handed Axe",
+      "Two-Handed Blunt",
+      "Spear",
+      "Pole Arm",
+      "Bow",
+      "Crossbow",
+      "Claw",
+      "Knuckle",
+      "Gun",
+      "Dual Bowgun",
+      "Hand Cannon",
+      "Lapis",
+      "Lazuli",
+      "Arm Cannon",
+      "Ancient Bow"
+    ]
+  },
+  "dataset": {
+    "test_size": 0.3,
+    "shuffle": true
+  },
+  "dataloader": {
+    "args": {
+      "batch_size": 1024
+    }
+  },
+  "trainer": {
+    "type": "사용할 Trainer",
+    "epochs": 30,
+    "save_dir": "./save_models",
+    "learning_rate": 0.001,
+    "early_stopping": 5
+  },
+  "arch": {
+    "type": "NewMF",
+    "args": {
+      "n_factors": 20
+    }
+  },
+  "inference": {
+    "top_k": 10,
+    "result_dir": "./result"
+  }
+}
