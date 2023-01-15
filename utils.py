@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 
 
-class GCS_helper:
+class GCSHelper:
     """
     GCS로 파일을 주고 받을 때 사용하는 객체
     """
@@ -14,9 +14,9 @@ class GCS_helper:
         bucket_name: gcs 안에 어떤 버킷에 저장 할 것인지? ex) maple_raw_data
         """
         # client 가져오기
-        storage_client = storage.Client.from_service_account_json(key_path)
+        self.storage_client = storage.Client.from_service_account_json(key_path)
         # client 내 bucket 가져오기
-        self.bucket = storage_client.get_bucket(bucket_name)
+        self.bucket = self.storage_client.get_bucket(bucket_name)
 
     def upload_file_to_gcs(self, blob_name: str, file_name: str) -> None:
         """
@@ -82,6 +82,9 @@ class GCS_helper:
         with self.bucket.blob(blob_name).open("wb") as f:
             f.write(image_data)
         return None
+
+    def path_exists(self, path: str):
+        return storage.Blob(bucket=self.bucket, name=path).exists(self.storage_client)
 
 
 # 일단 주석 처리
