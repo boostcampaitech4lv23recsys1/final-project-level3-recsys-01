@@ -10,6 +10,7 @@ class newMFTrainer:
         self.config = config
         self.cfg_trainer = config["trainer"]
         self.epoch = self.cfg_trainer["epochs"]
+        self.early_stopping_count = self.cfg_trainer["early_stopping"]
         self.save_dir = self.cfg_trainer["save_dir"]
         self.learning_rate = self.cfg_trainer["learning_rate"]
 
@@ -29,6 +30,8 @@ class newMFTrainer:
         self.criterion = torch.nn.BCELoss()
 
         self.min_val_loss = float("inf")
+        self.stopping_count = 0
+        self.stopping = False
 
     def _train_epoch(self, epoch: int):
         self.model.train()
@@ -59,8 +62,8 @@ class newMFTrainer:
         train_loss = sum(total_train_loss) / len(total_train_loss)
         valid_loss = sum(total_val_loss) / len(total_val_loss)
 
-        print("train_loss: ", train_loss, "valid_loss: ", valid_loss)
         if self.min_val_loss > valid_loss:
+            self.stopping_count = 0
             print(f"smaller valid loss... state has been updated")
             self.min_val_loss = valid_loss
             self.state = {
@@ -68,13 +71,29 @@ class newMFTrainer:
                 "epoch": epoch,
                 "state_dict": self.model.state_dict(),
             }
+        if self.stopping_count == self.early_stopping_count:
+            self.stopping = True
+
+        print(
+            f"train_loss: {float(train_loss)}    valid_loss: {float(valid_loss.float())}    early stopping count: {self.stopping_count}/{self.early_stopping_count}"
+        )
+
+        self.stopping_count += 1
 
     def train(self):
         for epoch in range(self.epoch):
             self._train_epoch(epoch)
+            if self.stopping:
+                print("...early stopping...")
+                break
         self._save_checkpoint()
 
     def _save_checkpoint(self):
-        print("...SAVING MODEL...")
-        save_path = os.path.join(self.save_dir, f"{self.model_name}.pt")
+        print(
+            f"...SAVING MODEL...   model_name: {self.state['model_name']} epoch: {self.state['epoch']}"
+        )
+        save_path = os.path.join(self.save_dir, self.model_name)
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
+        save_path = os.path.join(save_path, f"{self.model_name}.pt")
         torch.save(self.state, save_path)

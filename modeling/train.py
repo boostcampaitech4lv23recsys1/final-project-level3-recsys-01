@@ -24,13 +24,13 @@ def main(config):
     trainer.train()
 
 if __name__ == "__main__":
-    args = argparse.ArgumentParser(description="DKT Dinosaur")
+    args = argparse.ArgumentParser(description="Final Dinosaur")
     args.add_argument(
         "-c",
         "--config",
-        default="./mfconfig.json",
+        default="./config/mfconfig.json",
         type=str,
-        help='config 파일 경로 (default: "./config.json")',
+        help='config 파일 경로 (default: "./config/mfconfig.json")',
     )
     args = args.parse_args()
     config = read_json(args.config)
