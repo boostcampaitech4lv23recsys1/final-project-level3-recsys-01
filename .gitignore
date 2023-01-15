@@ -413,3 +413,10 @@ sketch
 
 # Key 파일들 제외
 keys/
+
+# saved models
+*.pt
+
+# item indexing txt file
+idx2item.txt
+item2idx.txt
