@@ -87,10 +87,14 @@ def item_image_crawling(
 ):
     for row in tqdm(item_df.iterrows(), total=len(item_df)):
         item_id = row[1]["id"]
-        gcs_helper.upload_image_to_gcs(
-            blob_name=f"image/item/{item_id}.png",
-            image_url=row[1]["image_url"]
-        )
+        item_url = row[1]["image_url"]
+        gcs_path = f"image/item/{item_id}.png"
+
+        if not gcs_helper.path_exists(path=gcs_path):
+            gcs_helper.upload_image_to_gcs(
+                blob_name=gcs_path,
+                image_url=item_url
+            )
 
 
 if __name__ == "__main__":
@@ -102,20 +106,26 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     gcs_helper = GCS_helper(args.key_path)
+    save_file_path = f"csv/maple_item_{args.client}_{args.version}.csv"
 
-    print("---------ITEM INFO CRAWLING START---------")
-    item_df = item_info_crawing(
-        client=args.client,
-        version=args.version
-    )
-    print("---------ITEM INFO CRAWLING FINISH---------")
-    print("---------ITEM INFO DATAFRAME SAVE START---------")
-    save_file_name = f"maple_item_{args.client}_{args.version}.csv"
-    gcs_helper.upload_df_to_gcs(
-        blob_name=f"csv/{save_file_name}",
-        df=item_df
-    )
-    print("---------ITEM INFO DATAFRAME SAVE FINISH---------")
+    if not gcs_helper.path_exists(path=save_file_path):
+        print("---------ITEM INFO CRAWLING START---------")
+        item_df = item_info_crawing(
+            client=args.client,
+            version=args.version
+        )
+        print("---------ITEM INFO CRAWLING FINISH---------")
+        print("---------ITEM INFO DATAFRAME SAVE START---------")
+        gcs_helper.upload_df_to_gcs(
+            blob_name=save_file_path,
+            df=item_df
+        )
+        print("---------ITEM INFO DATAFRAME SAVE FINISH---------")
+    else:
+        print("---------FILE ALREADY EXIST---------")
+        item_df = gcs_helper.read_df_from_gcs(blob_name=save_file_path)
+
+
     print("---------ITEM IMAGE CRAWLING AND SAVE START---------")
     item_image_crawling(
         item_df=item_df,
