@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 
 
-class GCS_helper:
+class GCSHelper:
     """
     GCS로 파일을 주고 받을 때 사용하는 객체
     """

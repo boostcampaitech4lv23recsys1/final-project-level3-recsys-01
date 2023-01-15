@@ -8,7 +8,7 @@ import sys
 from tqdm import tqdm
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-from utils import GCS_helper
+from utils import GCSHelper
 
 
 COLUMNS = [
@@ -83,7 +83,7 @@ def item_info_crawing(
 
 def item_image_crawling(
         item_df: pd.DataFrame,
-        gcs_helper: GCS_helper,
+        gcs_helper: GCSHelper,
 ):
     for row in tqdm(item_df.iterrows(), total=len(item_df)):
         item_id = row[1]["id"]
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     arg('--key_path', type=str, default='../keys/gcs_key.json')
     args = parser.parse_args()
 
-    gcs_helper = GCS_helper(args.key_path)
+    gcs_helper = GCSHelper(args.key_path)
     save_file_path = f"csv/maple_item_{args.client}_{args.version}.csv"
 
     if not gcs_helper.path_exists(path=save_file_path):
