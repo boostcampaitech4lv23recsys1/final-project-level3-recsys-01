@@ -1,42 +1,37 @@
-// import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import * as Api from "./api";
+// import { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
-function Header(props) {
-  return (
-    <header>
-      <h1><a href="/">{props.title}</a></h1>
-    </header>
-  );
-}
-
-function Nav() {
-  return (
-    <nav>
-      <ol>
-        <li><a href="/read/1">html</a></li>
-        <li><a href="/read/2">css</a></li>
-        <li><a href="/read/3">js</a></li>
-      </ol>
-    </nav>
-  );
-}
-
-function Article(props) {
-  return (
-    <article>
-      <h2>{props.title}</h2>
-      {props.body}
-    </article>
-  );
-}
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import LandingPage from "./pages/LandingPage/LandingPage";
+import PreferenceRecommendPage from "./pages/PreferenceRecommendPage/PreferenceRecommendPage";
+import PreferenceRecommendResultPage from "./pages/PreferenceRecommendResultPage/PreferenceRecommendResultPage";
 
 function App() {
   return (
-    <div className="App">
-      <Header title="REACT"></Header>
-      <Nav></Nav>
-      <Article title="Welcome" body="Hello, WEB"></Article>
-    </div>
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" exact element={<Navigate to="/recommend" />} />
+        <Route path="/recommend" exact element={<LandingPage />} />
+        <Route
+          path="recommend/preference"
+          element={<PreferenceRecommendPage />}
+        />
+        <Route
+          path="recommend/preference/result"
+          element={<PreferenceRecommendResultPage />}
+        />
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 
