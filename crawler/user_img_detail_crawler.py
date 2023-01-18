@@ -104,7 +104,7 @@ def get_last_access(soup):
 
 def get_mureung_theseed_union_achieve(soup):
     datas = soup.findAll("div", "col-lg-3 col-6 mt-3 px-1")
-    murueng, theseed, union, achieve = ['기록이 없습니다'] * 4
+    mureung, theseed, union, achieve = ['기록이 없습니다'] * 4
     for idx, data in enumerate(datas):
         if idx == 0:
             mureung = data.find("h1")
