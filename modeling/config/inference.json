@@ -1,19 +1,19 @@
 {
     "cur_codi": {
-        "codi-hat": "흐드러진 악몽",
+        "codi-hat": "흐드러진악몽",
         "codi-hair": "-",
         "codi-face": "-",
-        "codi-overall": "아린 장미",
+        "codi-overall": "아린장미",
         "codi-top": "-",
         "codi-bottom": "-",
-        "codi-shoes": "악몽 무도곡",
-        "codi-weapon": "악몽 진주"
+        "codi-shoes": "악몽무도곡",
+        "codi-weapon": "악몽진주"
     },
     "fix_equip": {
-        "codi-hat": -1,
+        "codi-hat": 0,
         "codi-hair": 1,
         "codi-face": 2,
-        "codi-overall": 3,
+        "codi-overall": -1,
         "codi-top": -1,
         "codi-bottom": -1,
         "codi-shoes": -1,

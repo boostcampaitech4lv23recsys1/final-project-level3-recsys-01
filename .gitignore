@@ -420,3 +420,4 @@ keys/
 # item indexing txt file
 idx2item.txt
 item2idx.txt
+user_item_len.txt
