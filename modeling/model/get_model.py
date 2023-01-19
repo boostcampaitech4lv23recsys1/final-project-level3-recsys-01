@@ -2,9 +2,10 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 import model as models
+import torch.nn as nn
 
 
-def get_models(config):
+def get_models(config: dict) -> nn.Module:
     if config["arch"]["type"] == "NewMF":
         model_config = config["arch"]["args"]
         model = getattr(models, config["arch"]["type"])(
