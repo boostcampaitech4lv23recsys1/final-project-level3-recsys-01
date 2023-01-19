@@ -88,7 +88,7 @@
     }
   },
   "inference": {
-    "top_k": 10,
+    "top_k": 20,
     "result_dir": "./result"
   }
 }

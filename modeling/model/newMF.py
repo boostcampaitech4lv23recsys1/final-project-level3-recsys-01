@@ -8,7 +8,7 @@ class NewMF(torch.nn.Module):
         self.user_factors = torch.nn.Embedding(n_users, n_factors, sparse=True)
         self.item_factors = torch.nn.Embedding(n_items, n_factors, sparse=True)
 
-        self.item_factors.weight.data.uniform_(-1, 1) # uniform distribution weight init
+        # self.item_factors.weight.data.uniform_(-1, 1) # uniform distribution weight init
         self.sigmoid = nn.Sigmoid()
     
     def forward(self, items):
