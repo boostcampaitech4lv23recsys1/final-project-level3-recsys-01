@@ -26,7 +26,8 @@ class Preprocess:
         self.item_subCategory = self.cfg_preprocess["item_subCategory"]
         self.train_data = None
         self.gcs_helper = GCSHelper(
-            "/opt/ml/final-project-level3-recsys-01/keys/gcs_key.json"
+            key_path = "/opt/ml/final-project-level3-recsys-01/keys/gcs_key.json",
+            bucket_name = "maple_preprocessed_data"
         )
 
     def __feature_engineering(self, data: pd.DataFrame, is_items=False) -> pd.DataFrame:
