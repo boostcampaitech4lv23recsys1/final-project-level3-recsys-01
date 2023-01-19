@@ -1,7 +1,7 @@
 from utilities import saving_text_file
-
 from varname import nameof
 import pandas as pd
+import json
 import sys
 import os
 
@@ -15,7 +15,7 @@ from utils import GCS_helper
 
 
 class Preprocess:
-    def __init__(self, config):
+    def __init__(self, config: dict) -> None:
         self.config = config
         self.cfg_preprocess = config["preprocess"]
         self.save_dir = self.cfg_preprocess["idx_save_dir"]
@@ -27,7 +27,7 @@ class Preprocess:
             "/opt/ml/final-project-level3-recsys-01/keys/gcs_key.json"
         )
 
-    def __feature_engineering(self, data: pd.DataFrame, is_items=False):
+    def __feature_engineering(self, data: pd.DataFrame, is_items=False) -> pd.DataFrame:
         if is_items:
             print(
                 "------------------------item feature engineering----------------------"
@@ -47,7 +47,9 @@ class Preprocess:
         print("using columns: ", list(data.columns))
         return data
 
-    def __preprocessing(self, data: pd.DataFrame, items: pd.DataFrame, is_train=False):
+    def __preprocessing(
+        self, data: pd.DataFrame, items: pd.DataFrame, is_train=False
+    ) -> pd.DataFrame:
         print("--------------------------data preprocessing--------------------------")
         print("...listing items by user...")
         user_detail = data
@@ -97,7 +99,7 @@ class Preprocess:
                 "------------------------load item data from gcs-----------------------"
             )
             df = self.gcs_helper.read_df_from_gcs(
-                "csv/new_maple_item.csv"
+                "csv/maple_item_KMST_1149.csv"
             )  # gcs_item_csv
         else:
             print(
@@ -108,7 +110,7 @@ class Preprocess:
             )  # gcs_user_csv
         return df
 
-    def load_train_data(self):
+    def load_train_data(self) -> pd.DataFrame:
         self.items_data = self.load_data_from_file(is_items=True)
         self.items_data = self.__feature_engineering(self.items_data, is_items=True)
 
@@ -125,7 +127,7 @@ class Preprocess:
         )
         return self.users_data
 
-    def load_test_data(self):
+    def load_test_data(self) -> pd.DataFrame:
         self.items_data = self.load_data_from_file(is_items=True)
         self.items_data = self.__feature_engineering(self.items_data, is_items=True)
 

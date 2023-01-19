@@ -1,28 +1,29 @@
+from sklearn.model_selection import train_test_split
+from collections import OrderedDict
+from ast import literal_eval
 from pathlib import Path
+import pandas as pd
+import numpy as np
+import random
+import torch
 import json
 import os
-import random
-import numpy as np
-import torch
-from ast import literal_eval
-from collections import OrderedDict
-from sklearn.model_selection import train_test_split
 
 
-def data_split(config, data):
+def data_split(config: OrderedDict, data: pd.DataFrame) -> pd.DataFrame:
     test_size = config["dataset"]["test_size"]
     shuffle = config["dataset"]["shuffle"]
     X_train, X_valid = train_test_split(data, test_size=test_size, shuffle=shuffle)
     return X_train, X_valid
 
 
-def read_json(fname):
+def read_json(fname: str) -> OrderedDict:
     fname = Path(fname)
     with fname.open("rt") as handle:
         return json.load(handle, object_hook=OrderedDict)
 
 
-def set_seed(seed=417):
+def set_seed(seed: int = 417) -> None:
     os.environ["PYTHONHASHSEED"] = str(seed)
     random.seed(seed)
     np.random.seed(seed)
@@ -33,7 +34,7 @@ def set_seed(seed=417):
     torch.backends.cudnn.deterministic = True
 
 
-def saving_text_file(dir, file, filename):
+def saving_text_file(dir: str, file: object, filename: str) -> None:
     if not os.path.exists(dir):
         os.makedirs(dir)
     f = open(f"{dir}/{filename}.txt", "w")
@@ -41,7 +42,7 @@ def saving_text_file(dir, file, filename):
     f.close
 
 
-def loading_text_file(filename):
+def loading_text_file(filename: str) -> object:
     f = open(f"./temporary/{filename}.txt", "r")
     strings = f.read()
     return literal_eval(strings)

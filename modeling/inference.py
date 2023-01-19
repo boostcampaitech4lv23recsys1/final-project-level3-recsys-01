@@ -13,7 +13,7 @@ import os
 
 def inference_ver1(
     model, config, item_data, equip, fixed, item2idx, idx2item
-):  # default 추천 방식
+) -> list:  # default 추천 방식
     # equip은 고정 요청된 부위를 indexing하여 tensor로 전달한 parameter
     # 현재는 아이템 정보와 유저가 착용한 아이템 정보가 매칭되지 않아, 정확한 부위 정보를 알 수 없음
     # 할 수는 있지만, 현재 상태에서 굳이? 그래서 부위 신경 안 쓰고 유사도 높은 것을 일단 추천

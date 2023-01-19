@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 class NewMF(torch.nn.Module):
-    def __init__(self, n_users, n_items, n_factors):
+    def __init__(self, n_users, n_items, n_factors) -> None:
         super().__init__()
 
         self.user_factors = torch.nn.Embedding(n_users, n_factors, sparse=True)

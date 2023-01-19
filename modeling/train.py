@@ -8,7 +8,7 @@ from trainer import newMFTrainer
 from utilities import read_json, set_seed, data_split
 
 
-def main(config):
+def main(config: dict) -> None:
     preprocess = Preprocess(config)
     data = preprocess.load_train_data()
 
@@ -39,7 +39,6 @@ if __name__ == "__main__":
     set_seed(config["seed"])
 
     main(config)
-
     
 
 
