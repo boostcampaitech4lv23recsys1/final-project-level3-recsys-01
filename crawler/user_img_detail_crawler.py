@@ -11,7 +11,7 @@ import sys
 sys.path.append(
     os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 )  # 상위 폴더의 파일을 import 하기 위한 방법
-from utils import GCS_helper
+from utils import GCSHelper
 
 from typing import List
 
@@ -104,7 +104,7 @@ def get_last_access(soup):
 
 def get_mureung_theseed_union_achieve(soup):
     datas = soup.findAll("div", "col-lg-3 col-6 mt-3 px-1")
-    murueng, theseed, union, achieve = ['기록이 없습니다'] * 4
+    mureung, theseed, union, achieve = ['기록이 없습니다'] * 4
     for idx, data in enumerate(datas):
         if idx == 0:
             mureung = data.find("h1")
@@ -162,7 +162,7 @@ def get_past_chr_img_date(soup):
     return past_chr_img_list
 
 
-def upload_character_img(user_info: List[str], gcs_helper: GCS_helper) -> List[str]:
+def upload_character_img(user_info: List[str], gcs_helper: GCSHelper) -> List[str]:
     nickname = user_info[0]
     last_access = user_info[16].replace("/", "_")
     image_url = user_info[21]
@@ -211,7 +211,7 @@ if __name__ == "__main__":
     if args.your_name not in ["eunhye", "jeong", "ryu", "wonjun", "sssu", "test"]:
         raise ValueError("이름 제대로 입력하세요~")
 
-    gcs_helper = GCS_helper("./keys/gcs_key.json")
+    gcs_helper = GCSHelper("./keys/gcs_key.json")
     existed_df = gcs_helper.read_df_from_gcs(f"csv/user_detail_{args.your_name}.csv")
 
     # 혹시 모르니까 이거 시작하기 전에 로컬에 저장 한번 하고 시작

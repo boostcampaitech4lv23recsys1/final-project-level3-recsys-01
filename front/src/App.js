@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import * as Api from "./api";
+// import { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import LandingPage from "./pages/LandingPage/LandingPage";
+import PreferenceRecommendPage from "./pages/PreferenceRecommendPage/PreferenceRecommendPage";
+import PreferenceRecommendResultPage from "./pages/PreferenceRecommendResultPage/PreferenceRecommendResultPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" exact element={<Navigate to="/recommend" />} />
+        <Route path="/recommend" exact element={<LandingPage />} />
+        <Route
+          path="recommend/preference"
+          element={<PreferenceRecommendPage />}
+        />
+        <Route
+          path="recommend/preference/result"
+          element={<PreferenceRecommendResultPage />}
+        />
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 
