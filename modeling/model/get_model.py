@@ -1,7 +1,8 @@
 import model as models
+import torch.nn as nn
 
 
-def get_models(config):
+def get_models(config: dict) -> nn.Module:
     if config["arch"]["type"] == "NewMF":
         model_config = config["arch"]["args"]
         model = getattr(models, config["arch"]["type"])(

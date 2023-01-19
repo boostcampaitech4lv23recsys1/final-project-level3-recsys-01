@@ -46,7 +46,6 @@
       "Cane",
       "Wand",
       "Staff",
-      "Test Weapon",
       "Cash",
       "Two-Handed Sword",
       "Two-Handed Axe",
@@ -89,7 +88,7 @@
     }
   },
   "inference": {
-    "top_k": 10,
+    "top_k": 20,
     "result_dir": "./result"
   }
 }
