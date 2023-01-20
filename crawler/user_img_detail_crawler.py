@@ -104,7 +104,7 @@ def get_last_access(soup):
 
 def get_mureung_theseed_union_achieve(soup):
     datas = soup.findAll("div", "col-lg-3 col-6 mt-3 px-1")
-    mureung, theseed, union, achieve = ['기록이 없습니다'] * 4
+    mureung, theseed, union, achieve = ["기록이 없습니다"] * 4
     for idx, data in enumerate(datas):
         if idx == 0:
             mureung = data.find("h1")
@@ -222,17 +222,20 @@ if __name__ == "__main__":
 
     user_num_list = os.listdir(args.url_dir)
 
-    for user_num in user_num_list:
+    for csv_count, user_num in enumerate(user_num_list):
         data = pd.read_csv(os.path.join(args.url_dir, user_num))
         user_num = user_num.split("user_info_")[1]
         print(f"----------{user_num}----------")
+        print(f"----------{csv_count + 1}/{len(user_num_list)}----------")
         final_list = []
         for idx, row in enumerate(tqdm(data.values)):
-            user = [row[2]]
-            user.extend(crawler(row[1]))
-            user = upload_character_img(user, gcs_helper)
-            final_list.append(user)
-
+            try:
+                user = [row[2]]
+                user.extend(crawler(row[1]))
+                # user = upload_character_img(user, gcs_helper)
+                final_list.append(user)
+            except:
+                continue
         final_df = pd.DataFrame(final_list, columns=COLUMNS)
 
         # gcs 상의 DataFrame 뒤에 1만명 크롤링 결과 붙이고, 업로드
@@ -242,3 +245,5 @@ if __name__ == "__main__":
         final_df.to_csv(
             f"{args.save_dir}/user_detail_{user_num}", index=False, encoding="utf-8-sig"
         )
+
+    print("----------Done----------")
