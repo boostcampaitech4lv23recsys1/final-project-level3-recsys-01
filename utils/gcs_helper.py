@@ -1,4 +1,5 @@
 from google.cloud import storage
+from torch.nn import Module
 import pandas as pd
 import requests
 
@@ -8,7 +9,9 @@ class GCSHelper:
     GCS로 파일을 주고 받을 때 사용하는 객체
     """
 
-    def __init__(self, key_path: str, bucket_name: str = "maple_raw_data") -> None:
+    def __init__(
+        self, key_path: str, bucket_name: str = "maple_preprocessed_data"
+    ) -> None:
         """
         key_path: 아까 저장한 key file 경로 ex) config/key.json
         bucket_name: gcs 안에 어떤 버킷에 저장 할 것인지? ex) maple_raw_data
@@ -81,6 +84,19 @@ class GCSHelper:
         # stream을 이용해 바로 업로드
         with self.bucket.blob(blob_name).open("wb") as f:
             f.write(image_data)
+        return None
+
+    def upload_model_to_gcs(self, blob_name: str, model_name: str) -> None:
+        """
+        model.pt를 gcs로 바로 업로드
+
+        blob_name: gcs에 저장될 파일 경로 및 이름 (gcs 상의 경로) ex) csv/user_info.csv
+        model_name: gcs에 upload할 model 경로 및 이름 (local 상의 경로) ex) data/user_info/user_info.csv
+        """
+        # bucket 내 깡통 blob 생성
+        blob = self.bucket.blob(blob_name)
+        # 해당 blob에 파일 업로드
+        blob.upload_from_filename(model_name)
         return None
 
     def path_exists(self, path: str):

@@ -30,12 +30,14 @@ if __name__ == "__main__":
         "--config",
         default="./config/mfconfig.json",
         type=str,
-        help='config 파일 경로 (default: "./config/mfconfig.json")',
+        help='config 파일 경로 입력 (default: "./config/mfconfig.json")',
     )
+    args.add_argument("-g", "--gcs", default = False, type=bool, help='GCS 업로드 여부 선택 (default: False)')
     args = args.parse_args()
     config = read_json(args.config)
 
     config["device"] = "cuda" if torch.cuda.is_available() else "cpu"
+    config["GCS_upload"] = args.gcs
     set_seed(config["seed"])
 
     main(config)
