@@ -1,6 +1,17 @@
 import torch
+import sys
 import os
 from tqdm import tqdm
+from datetime import datetime
+from pytz import timezone
+
+# to import ../../utils.py
+sys.path.append(
+    os.path.dirname(
+        os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+    )
+)
+from utils import GCSHelper
 
 
 class newMFTrainer:
@@ -32,6 +43,11 @@ class newMFTrainer:
         self.min_val_loss = float("inf")
         self.stopping_count = 0
         self.stopping = False
+
+        self.gcs_helper = GCSHelper(
+            "/opt/ml/final-project-level3-recsys-01/keys/gcs_key.json",
+            "maple_trained_model",
+        )
 
     def _train_epoch(self, epoch: int):
         self.model.train()
@@ -95,5 +111,10 @@ class newMFTrainer:
         save_path = os.path.join(self.save_dir, self.model_name)
         if not os.path.exists(save_path):
             os.makedirs(save_path)
-        save_path = os.path.join(save_path, f"{self.model_name}.pt")
+        now = datetime.now(timezone("Asia/Seoul")).strftime(f"%Y%m%d-%H%M")
+        save_path = os.path.join(save_path, f"{self.model_name}_{now}.pt")
         torch.save(self.state, save_path)
+        if self.config["GCS_upload"]:
+            self.gcs_helper.upload_model_to_gcs(
+                f"{self.model_name}/{self.model_name}_{now}.pt", save_path
+            )
