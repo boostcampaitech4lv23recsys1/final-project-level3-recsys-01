@@ -1,6 +1,8 @@
 import torch
 import sys
 import os
+from torch.utils.data import DataLoader
+from torch.nn import Module
 from tqdm import tqdm
 from datetime import datetime
 from pytz import timezone
@@ -15,7 +17,13 @@ from utils import GCSHelper
 
 
 class newMFTrainer:
-    def __init__(self, config, model, train_data_loader, valid_data_loader):
+    def __init__(
+        self,
+        config: dict,
+        model: Module,
+        train_data_loader: DataLoader,
+        valid_data_loader: DataLoader,
+    ) -> None:
         self.model = model
 
         self.config = config
@@ -49,7 +57,7 @@ class newMFTrainer:
             "maple_trained_model",
         )
 
-    def _train_epoch(self, epoch: int):
+    def _train_epoch(self, epoch: int) -> None:
         self.model.train()
 
         total_train_loss = []
@@ -96,7 +104,7 @@ class newMFTrainer:
 
         self.stopping_count += 1
 
-    def train(self):
+    def train(self) -> None:
         for epoch in range(self.epoch):
             self._train_epoch(epoch)
             if self.stopping:
@@ -104,7 +112,7 @@ class newMFTrainer:
                 break
         self._save_checkpoint()
 
-    def _save_checkpoint(self):
+    def _save_checkpoint(self) -> None:
         print(
             f"...SAVING MODEL...   model_name: {self.state['model_name']} epoch: {self.state['epoch']}"
         )

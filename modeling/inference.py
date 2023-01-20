@@ -3,31 +3,32 @@ from dataloader import Preprocess
 from datetime import datetime
 from pytz import timezone
 import model as models
-from tqdm import tqdm
-import pandas as pd
+from torch.nn import Module
 import numpy as np
+from typing import List
+import pandas as pd
 import argparse
 import torch
 import os
 
 
 def inference_ver1(
-    model, config, item_data, equip, fixed, item2idx, idx2item
-) -> list:  # default 추천 방식
-    # equip은 고정 요청된 부위를 indexing하여 tensor로 전달한 parameter
-    # 현재는 아이템 정보와 유저가 착용한 아이템 정보가 매칭되지 않아, 정확한 부위 정보를 알 수 없음
-    # 할 수는 있지만, 현재 상태에서 굳이? 그래서 부위 신경 안 쓰고 유사도 높은 것을 일단 추천
-    print("--------------------------loading saved model-------------------------")
-    # 저장된 모델 불러오기 및 eval 모드
-    model_name = config["arch"]["type"]
+    model: Module,
+    config: dict,
+    item_data: pd.DataFrame,
+    equip: list,
+    fixed: list,
+    item2idx: dict,
+) -> List[List]:  # default 추천 방식
+    print("----------------------------INFERENCE VER 1---------------------------")
+    model_name = config["arch"]["type"]  # 저장된 모델 불러오기 및 eval 모드
     model_path = os.path.join(config["trainer"]["save_dir"], model_name)
-    model_path = os.path.join(model_path, f"{model_name}.pt")
+    model_path = os.path.join(model_path, f"{model_name}.pt")  # 불러올 모델 선택
     load_state = torch.load(model_path)
     model.load_state_dict(load_state["state_dict"])
     model.eval()
-    print("---------------------------item part listing--------------------------")
+    print("...item part listing...")
     item_part_list = item_part(config, item_data)  # 부위별 아이템 리스트 (8개)
-
     predict_list = []
     for f in fixed:
         part_score = []
@@ -38,15 +39,11 @@ def inference_ver1(
             certain_part = item_part_list[f]  # 부위별 아이템 리스트를 가져옴
             for certain in certain_part:  # 부위별 전체 아이템 중 하나를 가져옴
                 temp_equip = equip[:]  # 현재 착용중인 장비
-                # if (
-                #     certain in item2idx
-                # ):  # 만약 학습한 유저들 아이템셋에 그 아이템이 존재한다면(mismatching 이슈 존재)
                 temp_equip.append(item2idx[certain])  # 착용중인 장비에 추가
                 output = model(torch.tensor(temp_equip))  # 그걸 model에 넣고 유사도 측정
                 part_score.append(
                     (certain, float(output))
                 )  # part_score에 점수와 함께 그 아이템을 저장함
-        # part_score = part_score.apply(lambda x: sorted(x[1]), reversed=True)
         part_score.sort(key=lambda x: x[1], reverse=True)  # 점수 기준 정렬
         part_recommendation = part_score[
             : config["inference"]["top_k"]
@@ -55,7 +52,7 @@ def inference_ver1(
     return predict_list
 
 
-def item_part(config, item_data):
+def item_part(config, item_data: pd.DataFrame) -> List[np.array]:
     item_data = item_data.drop_duplicates(subset="name")
     hat_name_list = item_data[
         (item_data["subCategory"] == "Hat") & (item_data["isCash"] == True)
@@ -95,21 +92,21 @@ def item_part(config, item_data):
     ]
 
 
-def main(config, equipment):
-    # preprocess하여 n_users, n_items, n_factors 등 config에 추가
-    # indexing 과정은 is_train parameter 도입하여 skip
+def main(config, equipment: dict) -> None:
+    print("-----------------------------START INFERENCE--------------------------")
     preprocess = Preprocess(config)
-    item_data = preprocess.load_test_data()  # load_train_data와 겹치므로 수정 예정
+    item_data = preprocess.load_data()
+    print("...load txt file...")
 
     # 저장된 dictionary txt 불러오기
-    idx2item = loading_text_file("idx2item")
+    # idx2item = loading_text_file("idx2item")
     item2idx = loading_text_file("item2idx")
     user_item_len = loading_text_file("user_item_len")
     config["arch"]["args"]["n_users"] = user_item_len[0]
     config["arch"]["args"]["n_items"] = user_item_len[1]
 
     # 고정할 부위(1)인 경우 equips에 idx화 하여 넣어놓기, 고정되지 않은 부위가 추천 대상
-    print("---------------------------start infenrece----------------------------")
+    print("...item indexing...")
     equip_name = list(dict(equipment["cur_codi"]).values())
     equip_fixed = list(dict(equipment["fix_equip"]).values())
     equip = []
@@ -119,16 +116,16 @@ def main(config, equipment):
             equip.append(item2idx[en])
         cnt += 1
 
+    print("...load saved model...")
     model = models.get_models(config)
-    final_codi = inference_ver1(
-        model, config, item_data, equip, equip_fixed, item2idx, idx2item
-    )
+    final_codi = inference_ver1(model, config, item_data, equip, equip_fixed, item2idx)
     for i, p in enumerate(final_codi):
         if not p:
             final_codi[i].append(equip_name[i])
         else:
             continue
 
+    print("...save csv file...")
     cur_time = str(datetime.now(timezone("Asia/Seoul")))[:19]
     save_path = config["inference"]["result_dir"]
     if not os.path.exists(save_path):
@@ -153,6 +150,7 @@ if __name__ == "__main__":
         help='config 파일 경로 (default: "./config/mfconfig.json")',
     )
     args.add_argument(
+        "-e",
         "--equipment",
         default="./config/inference.json",
         type=str,
