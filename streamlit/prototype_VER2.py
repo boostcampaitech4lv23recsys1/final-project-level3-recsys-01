@@ -103,7 +103,6 @@ if st.button("추천 시작!"):
     equipment = {"cur_codi":cur_codi, "fix_equip" : codi_index}
 
     inference = main(config, equipment)
-    inference = inference.fillna(method="ffill", axis=1)
     new_column_name = [ f"BEST{i}" for i in range(1,len(inference.columns)+1)]
     inference.columns = new_column_name
     inference = inference[[ f"BEST{i}" for i in range(1,6)]]
