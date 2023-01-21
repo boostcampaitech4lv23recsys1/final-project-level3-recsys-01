@@ -6,12 +6,15 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from modeling.model.newMF import NewMF
 from modeling.inference import main
 from modeling.utilities import read_json, loading_text_file
+from utils import GCSHelper
 import torch
 import json
 
 
 # import data
-item = pd.read_csv('./data/new_item.csv')
+gcs_helper = GCSHelper(key_path = "./keys/gcs_key.json", bucket_name = "maple_preprocessed_data")
+item = gcs_helper.download_file_from_gcs(blob_name = "item_KMST_1149_VER1.2.csv", file_name = "./data/item_KMST_1149_VER1.2.csv")
+item = pd.read_csv('./data/item_KMST_1149_VER1.2.csv')
 inference_start = False
 ################################################################
 
@@ -67,23 +70,27 @@ if st.sidebar.button("추천 시작!"):
     # import model
     config = read_json("./modeling/config/mfconfig.json")
     cur_codi = {"codi-hat":hat_option,
-                            "codi-hair":hair_option,
-                            "codi-face":face_option,
-                            "codi-top":top_option,
-                            "codi-bottom":bottom_option,
-                            "codi-shoes":shoes_option,
-                            "codi-weapon":weapon_option}
+                "codi-hair":hair_option,
+                "codi-face":face_option,
+                "codi-top":top_option,
+                "codi-bottom":bottom_option,
+                "codi-shoes":shoes_option,
+                "codi-weapon":weapon_option}
     codi_index = {}
-    for codi, key in zip(codi_option, cur_codi.keys()):
-        if codi == '-':
+    for idx, (codi, key) in enumerate(zip(codi_option, cur_codi.keys())):
+        if codi != '-':
             codi_index[key] = -1
         else:
             try: #key가 안 맞아서 일단 안 되면 -1 뱉도록 함
-                codi_index[key] = item2idx[codi]
+                codi_index[key] = idx
             except:
                 codi_index[key] = -1
                 
     equipment = {"cur_codi":cur_codi, "fix_equip" : codi_index}
 
     inference = main(config, equipment)
-    st.dataframe(inference)
+    new_column_name = [ f"BEST{i}" for i in range(1,len(inference.columns)+1)]
+    inference.columns = new_column_name
+    inference = inference[[ f"BEST{i}" for i in range(1,6)]]
+    inference.index = cur_codi.keys()
+    st.dataframe(inference.T)
