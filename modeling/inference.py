@@ -141,7 +141,7 @@ def main(config, equipment):
         [list(map(lambda x: x[0], fc)) if len(fc) != 1 else fc for fc in final_codi]
     )
     final_codi = final_codi.reset_index()
-    final_codi = final_codi.fillna(method="ffill", axis=1
+    final_codi = final_codi.fillna(method="ffill", axis=1)
     final_codi.to_csv(save_path, index=None)
 
 
