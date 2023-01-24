@@ -11,18 +11,15 @@
     white-space: pre-line;
 }
 
-
 /*footer*/
+@font-face {
+    font-family: 'NanumSquare_acB';
+    src: url('./assets/fonts/NanumSquare_acB.ttf') format('truetype'); /*원하는 글꼴 선택 */
+}
 
-.footer{
-
-    height:auto;
-    min-height: 100%;
-    padding-bottom: 60px;
-    position: relative;
-    transform: translateY(0%);
-    background-color:#FCCEAD;
+.text-footer{
     white-space: pre-line;
-
-    display:flex;
+    /* font-weight: bold; */
+    color: white;
+    font-family: 'NanumSquare_acB';
 }
