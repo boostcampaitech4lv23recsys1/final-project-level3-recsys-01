@@ -242,9 +242,4 @@ if __name__ == "__main__":
         existed_df = pd.concat([existed_df, final_df])
         gcs_helper.upload_df_to_gcs(f"csv/user_detail_{args.your_name}.csv", existed_df)
 
-        final_df.to_csv(
-            f"{args.save_dir}/user_detail_{user_num}", index=False, encoding="utf-8-sig"
-        )
-        os.remove(os.path.join(args.url_dir, user_num))
-
     print("----------Done----------")
