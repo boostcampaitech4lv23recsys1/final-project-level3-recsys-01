@@ -10,7 +10,7 @@ from utilities import read_json, set_seed, data_split
 
 def main(config: dict) -> None:
     preprocess = Preprocess(config)
-    data = preprocess.load_train_data()
+    data = preprocess.load_data(is_train = True)
 
     model = models.get_models(config)
     train_data, valid_data = data_split(config, data)
