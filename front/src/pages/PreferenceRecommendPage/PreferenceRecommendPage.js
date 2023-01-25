@@ -21,15 +21,27 @@ function PreferenceRecommendPage() {
       <div className="BuwiItemInput">
         <Stack direction="column" spacing={8} alignItems="center">
           <Stack direction="row" spacing={6} alignItems="center">
-            <FloatingBuwiButton buwi="헤어" />
-            <FloatingBuwiButton buwi="머리" />
-            <FloatingBuwiButton buwi="성형" />
+            <FloatingBuwiButton
+              buwi="헤어"
+              clickable={true}
+              searchable={true}
+            />
+            <FloatingBuwiButton
+              buwi="머리"
+              clickable={true}
+              searchable={true}
+            />
+            <FloatingBuwiButton
+              buwi="성형"
+              clickable={true}
+              searchable={false}
+            />
           </Stack>
           <Stack direction="row" spacing={8} alignItems="center">
-            <FloatingBuwiButton buwi="상의" />
-            <FloatingBuwiButton buwi="하의" />
-            <FloatingBuwiButton buwi="신발" />
-            <FloatingBuwiButton buwi="무기" />
+            {/* <FloatingBuwiButton buwi="상의" clickable={true} />
+            <FloatingBuwiButton buwi="하의" clickable={true} />
+            <FloatingBuwiButton buwi="신발" clickable={true} />
+            <FloatingBuwiButton buwi="무기" clickable={false} /> */}
           </Stack>
         </Stack>
       </div>
