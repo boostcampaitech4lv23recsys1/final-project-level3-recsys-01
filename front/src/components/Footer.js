@@ -2,8 +2,10 @@ import React from "react";
 import Box from "@mui/material/Box";
 
 export default function StickyFooter() {
-  const teamDescription =
-    "Contact | gongryongal1@gmail.com \n 네이버 부스트캠프 AI Tech 4기 RecSys Track 공룡알 팀의 최종 프로젝트입니다.";
+  const teamDescriptionOne = "Contact | ";
+  const teamMail = "gongryongal1@gmail.com";
+  const teamDescriptionTwo =
+    "\n네이버 부스트캠프 AI Tech 4기 RecSys Track 공룡알 팀의 최종 프로젝트입니다.";
   return (
     <Box
       sx={{
@@ -19,7 +21,18 @@ export default function StickyFooter() {
           mt: "auto",
           backgroundColor: "#FCCEAD",
         }}>
-        <div className="text-footer">{teamDescription}</div>
+        <div className="text-footer">
+          {teamDescriptionOne}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="mailto:gongryongal1@gmail.com"
+            className="text-hyperlink"
+            style={{ color: "white" }}>
+            {teamMail}
+          </a>
+          {teamDescriptionTwo}
+        </div>
       </Box>
     </Box>
   );

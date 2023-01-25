@@ -1,0 +1,82 @@
+/* Font */
+/* @font-face {
+    font-family: 'NanumSquare_acB';
+    src: url('./assets/fonts/NanumSquare_acB.ttf') format('truetype'); 
+}
+
+@font-face {
+    font-family: 'NanumSquare_acEB';
+    src: url('./assets/fonts/NanumSquare_acEB.ttf') format('truetype'); 
+}
+
+@font-face {
+    font-family: 'NanumSquare_acR';
+    src: url('./assets/fonts/NanumSquare_acR.ttf') format('truetype'); 
+} */
+
+/*1. LandingPage*/
+.text-defaultsetting{
+    line-height: 30px;
+    white-space: pre-line;
+    padding-bottom: 20px;
+    padding-top:30px;
+    font-family: 'NanumSquareAcr';
+}
+
+.round-square{
+    width:300px;
+    height:300px;
+    border-radius:30px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    background-color:rgb(228, 228, 228);
+    margin: 5px;
+    margin-bottom: 200px;
+    white-space: pre-line;
+}
+
+.text-textinbutton {
+    white-space: pre-line;
+    padding-bottom: 25px;
+    font-family: 'NanumSquareAcr';
+    font-size: 18px;
+}
+
+.img-margin{
+    margin-top:30px;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-right:20px;
+}
+
+.text-hyperlink{
+    text-decoration: none;
+}
+
+.img-member {
+    border-radius: 100%;
+    width:100px;
+    height:100px;
+}
+
+
+/*footer*/
+
+.text-footer{
+    white-space: pre-line;
+    line-height: 25px;
+    /* font-weight: bold; */
+    color: white;
+    font-family: 'NanumSquareAcb';
+}
+
+/* body */
+.body-one-margin {
+    display: inline-block;
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+.body-two-margin {
+    display: inline-block;
+    vertical-align: middle;
+}
