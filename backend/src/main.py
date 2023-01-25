@@ -1,8 +1,12 @@
 from fastapi import FastAPI
 from uvicorn import run
+import os
 
 from src.routers.all_router import router
 from src.database.database_creation import create_db
+
+# Port num
+PORT = os.getenv("PORT")
 
 
 def create_api():
@@ -21,4 +25,4 @@ def create_api():
 app = create_api()
 
 if __name__ == "__main__":
-    run("src.main:app", host="127.0.0.1", port=8001, reload=True)
+    run("src.main:app", host="127.0.0.1", port=PORT, reload=True)
