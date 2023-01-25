@@ -21,6 +21,12 @@ class GCSHelper:
         # client 내 bucket 가져오기
         self.bucket = self.storage_client.get_bucket(bucket_name)
 
+    def change_bucket(self, bucket_name: str):
+        """
+        bucket_name: 현재 설정되어있는 버킷 변경 ex) maple_preprocessed_data
+        """
+        self.bucket = self.storage_client.get_bucket(bucket_name)
+
     def upload_file_to_gcs(self, blob_name: str, file_name: str) -> None:
         """
         파일 하나를 gcs로 업로드

@@ -4,7 +4,7 @@ import pandas as pd
 
 from typing import Optional, Sequence
 
-convert_dtype = {"INTEGER": "int64", "STRING": "str"}
+convert_dtype = {"INTEGER": "int64", "STRING": "str", "DATETIME": "datetime64[ns]"}
 
 
 class BigQueryHelper:
@@ -92,8 +92,8 @@ class BigQueryHelper:
                 raise ValueError(
                     f"column 이름이 일치하지 않습니다. Table: {schema.name}, DataFrmae: {col}"
                 )
-
-            DataFrame[col] = DataFrame[col].astype(convert_dtype[schema.field_type])
+            if schema.field_type in convert_dtype:
+                DataFrame[col] = DataFrame[col].astype(convert_dtype[schema.field_type])
 
         errors = self.bigquery_client.insert_rows_from_dataframe(
             table=table, dataframe=DataFrame
