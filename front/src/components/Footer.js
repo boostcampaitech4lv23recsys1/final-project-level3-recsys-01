@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 
-export default function StickyFooter() {
+function StickyFooter() {
   const teamDescriptionOne = "Contact | ";
   const teamMail = "gongryongal1@gmail.com";
   const teamDescriptionTwo =
@@ -11,7 +11,6 @@ export default function StickyFooter() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        minHeight: "100vh",
       }}>
       <Box
         component="footer"
@@ -20,6 +19,7 @@ export default function StickyFooter() {
           px: 2,
           mt: "auto",
           backgroundColor: "#FCCEAD",
+          marginTop: 10,
         }}>
         <div className="text-footer">
           {teamDescriptionOne}
@@ -37,3 +37,4 @@ export default function StickyFooter() {
     </Box>
   );
 }
+export default StickyFooter;
