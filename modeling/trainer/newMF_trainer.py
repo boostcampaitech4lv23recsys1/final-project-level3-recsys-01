@@ -1,25 +1,21 @@
 import torch
-import sys
-import os
 from torch.utils.data import DataLoader
 from torch.nn import Module
-from tqdm import tqdm
+
 from datetime import datetime
 from pytz import timezone
+from tqdm import tqdm
+from typing import Dict, Any
+import os
 
-# to import ../../utils.py
-sys.path.append(
-    os.path.dirname(
-        os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-    )
-)
+
 from utils import GCSHelper
 
 
 class newMFTrainer:
     def __init__(
         self,
-        config: dict,
+        config: Dict[str, Any],
         model: Module,
         train_data_loader: DataLoader,
         valid_data_loader: DataLoader,
@@ -35,7 +31,6 @@ class newMFTrainer:
 
         self.cfg_arch = self.config["arch"]
         self.model_name = self.cfg_arch["type"]
-        self.n_users = self.cfg_arch["args"]["n_users"]
         self.n_items = self.cfg_arch["args"]["n_items"]
 
         self.train_data_loader = train_data_loader
@@ -53,8 +48,8 @@ class newMFTrainer:
         self.stopping = False
 
         self.gcs_helper = GCSHelper(
-            "/opt/ml/final-project-level3-recsys-01/keys/gcs_key.json",
-            "maple_trained_model",
+            key_path="keys/gcs_key.json",
+            bucket_name="maple_trained_model",
         )
 
     def _train_epoch(self, epoch: int) -> None:
