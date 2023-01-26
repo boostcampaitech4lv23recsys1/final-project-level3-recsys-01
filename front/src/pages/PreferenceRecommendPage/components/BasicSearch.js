@@ -13,10 +13,14 @@ const top5Songs = [
 function BasicSearch() {
   return (
     <Autocomplete
-      disablePortal
-      id="combo-box-demo"
+      id="popover-searchbox"
       options={top5Songs}
       sx={{ width: 300 }}
+      ListboxProps={{
+        style: {
+          maxHeight: "125px",
+        },
+      }}
       renderInput={(params) => <TextField {...params} label="Songs" />}
     />
   );
