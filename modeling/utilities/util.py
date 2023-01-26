@@ -1,16 +1,21 @@
+import torch
+import numpy as np
+import pandas as pd
 from sklearn.model_selection import train_test_split
+
 from collections import OrderedDict
 from ast import literal_eval
 from pathlib import Path
-import pandas as pd
-import numpy as np
 import random
-import torch
 import json
 import os
 
+from typing import Tuple
 
-def data_split(config: OrderedDict, data: pd.DataFrame) -> pd.DataFrame:
+
+def data_split(
+    config: OrderedDict, data: pd.DataFrame
+) -> Tuple[pd.DataFrame, pd.DataFrame]:
     test_size = config["dataset"]["test_size"]
     shuffle = config["dataset"]["shuffle"]
     X_train, X_valid = train_test_split(data, test_size=test_size, shuffle=shuffle)
