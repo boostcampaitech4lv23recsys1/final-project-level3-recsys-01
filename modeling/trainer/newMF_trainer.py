@@ -71,12 +71,16 @@ class newMFTrainer:
         self.model.eval()
 
         total_val_loss = []
-        for data in tqdm(self.valid_data_loader):
-            target = data["y"].to(self.device)
-            output = self.model(data["x"]).cuda()
 
-            loss = self.criterion(output.to(torch.float32), target.to(torch.float32))
-            total_val_loss.append(loss)
+        with torch.no_grad():
+            for data in tqdm(self.valid_data_loader):
+                target = data["y"].to(self.device)
+                output = self.model(data["x"]).cuda()
+
+                loss = self.criterion(
+                    output.to(torch.float32), target.to(torch.float32)
+                )
+                total_val_loss.append(loss)
 
         train_loss = sum(total_train_loss) / len(total_train_loss)
         valid_loss = sum(total_val_loss) / len(total_val_loss)
