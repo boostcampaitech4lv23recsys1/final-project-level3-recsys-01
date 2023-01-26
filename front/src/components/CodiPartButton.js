@@ -15,7 +15,7 @@ function CodiPartButton(props) {
   }
   const codiPartButton = codiPartButtonMaker(isClickable);
   return (
-    <Stack direction="column" spacing={1}>
+    <Stack direction="column" spacing={1} alignItems="center">
       <Typography>
         <b> {props.codiPart}</b>
       </Typography>

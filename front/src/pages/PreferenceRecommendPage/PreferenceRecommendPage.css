@@ -1,9 +1,3 @@
-.infoText{
-    text-align: center;
-}
-.infoVideo{
-    text-align: center;
-}
-.codiPartInput{
-    text-align: center;
+.PreferenceRecommendPage .infoTextAndVideo {
+    text-align: center,
 }
