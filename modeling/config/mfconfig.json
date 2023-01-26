@@ -1,7 +1,4 @@
 {
-  "user": "wonjun",
-  "project": "newMF",
-  "entity": "dkt-dinosaur",
   "seed": 417,
   "dataset": {
     "test_size": 0.3,
@@ -20,7 +17,7 @@
     "early_stopping": 5
   },
   "arch": {
-    "type": "newMF",
+    "type": "NewMF",
     "args": {
       "n_factors": 20
     }
