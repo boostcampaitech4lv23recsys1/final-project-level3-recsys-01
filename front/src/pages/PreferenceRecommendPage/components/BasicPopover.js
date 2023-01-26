@@ -1,15 +1,13 @@
 import React from "react";
+import {useState} from React
 import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
 import Fab from "@mui/material/Fab";
 
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
-import BasicSearch from "./BasicSearch";
-
-function BasicPopover(isSearchable) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+function BasicPopover() {
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

@@ -10,7 +10,7 @@ const top5Songs = [
   { label: "Nzaza" },
 ];
 
-export default function BasicSearch() {
+function BasicSearch() {
   return (
     <Autocomplete
       disablePortal
@@ -21,3 +21,5 @@ export default function BasicSearch() {
     />
   );
 }
+
+export default BasicSearch;
