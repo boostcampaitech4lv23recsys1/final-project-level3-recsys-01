@@ -15,7 +15,7 @@ function BasicSearch() {
     <Autocomplete
       id="popover-searchbox"
       options={top5Songs}
-      sx={{ width: 300 }}
+      sx={{ width: "300px" }}
       ListboxProps={{
         style: {
           maxHeight: "125px",

@@ -30,7 +30,7 @@ function BasicPopover() {
         onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "center",
+          horizontal: "centerehr",
         }}
         transformOrigin={{
           vertical: "top",
@@ -38,7 +38,7 @@ function BasicPopover() {
         }}>
         <div
           style={{
-            paddig: "10px",
+            padding: "10px",
             width: "300px",
             height: "200px",
           }}>
