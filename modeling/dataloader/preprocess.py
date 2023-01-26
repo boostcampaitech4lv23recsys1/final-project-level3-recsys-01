@@ -20,6 +20,8 @@ class Preprocess:
     def load_data(self, is_train: bool = False) -> pd.DataFrame:
         print("---------------------------LOAD DATA FROM GCP-------------------------")
         if is_train:
-            return self.big_query_helper.read_df_from_table(table_name="newMF")
+            return self.big_query_helper.read_df_from_table(
+                table_name=f"{self.config['arch']['type']}"
+            )
 
         return self.gcs_helper.read_df_from_gcs(blob_name="item_KMST_1149_latest.csv")
