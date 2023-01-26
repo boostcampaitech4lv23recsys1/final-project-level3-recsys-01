@@ -1,5 +1,5 @@
 import "./PreferenceRecommendPage.css";
-import FloatingBuwiButton from "../../components/BuwiButton";
+import CodiPartButton from "../../components/CodiPartButton";
 import Stack from "@mui/material/Stack";
 
 function PreferenceRecommendPage() {
@@ -18,18 +18,18 @@ function PreferenceRecommendPage() {
         </video>
       </div>
       <br />
-      <div className="buwiItemInput">
+      <div className="codiPartInput">
         <Stack direction="column" spacing={8} alignItems="center">
           <Stack direction="row" spacing={6} alignItems="center">
-            <FloatingBuwiButton buwi="헤어" clickable={true} />
-            <FloatingBuwiButton buwi="머리" clickable={true} />
-            <FloatingBuwiButton buwi="성형" clickable={true} />
+            <CodiPartButton codiPart="헤어" clickable={true} />
+            <CodiPartButton codiPart="머리" clickable={true} />
+            <CodiPartButton codiPart="성형" clickable={true} />
           </Stack>
           <Stack direction="row" spacing={8} alignItems="center">
-            <FloatingBuwiButton buwi="상의" clickable={true} />
-            <FloatingBuwiButton buwi="하의" clickable={true} />
-            <FloatingBuwiButton buwi="신발" clickable={true} />
-            <FloatingBuwiButton buwi="무기" clickable={false} />
+            <CodiPartButton codiPart="상의" clickable={true} />
+            <CodiPartButton codiPart="하의" clickable={true} />
+            <CodiPartButton codiPart="신발" clickable={true} />
+            <CodiPartButton codiPart="무기" clickable={false} />
           </Stack>
         </Stack>
       </div>

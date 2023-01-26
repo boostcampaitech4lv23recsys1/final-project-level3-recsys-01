@@ -4,24 +4,24 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
 
-const FloatingBuwiButton = (props) => {
+function CodiPartButton(props) {
   const isClickable = props.clickable;
-  function buwiButtonMaker(isClickable) {
+  function codiPartButtonMaker(isClickable) {
     if (isClickable) {
       return BasicPopover();
     } else {
       return <Fab aria-label="NotClickable"> Do not cilck! </Fab>;
     }
   }
-  const buwiButton = buwiButtonMaker(isClickable);
+  const codiPartButton = codiPartButtonMaker(isClickable);
   return (
     <Stack direction="column" spacing={1}>
       <Typography>
-        <b> {props.buwi}</b>
+        <b> {props.codiPart}</b>
       </Typography>
-      {buwiButton}
+      {codiPartButton}
     </Stack>
   );
-};
+}
 
-export default FloatingBuwiButton;
+export default CodiPartButton;
