@@ -2,6 +2,10 @@ from google.cloud import storage
 from torch.nn import Module
 import pandas as pd
 import requests
+from PIL import Image
+from io import BytesIO
+import os
+from tqdm import tqdm
 
 
 class GCSHelper:
@@ -52,6 +56,47 @@ class GCSHelper:
         # 해당 blob에 파일 업로드
         blob.download_to_filename(file_name)
         return None
+
+    def download_folder_from_gcs(self, folder_name: str, save_path: str) -> None:
+        """
+        `download_file_from_gcs`는 파일 하나를 다운로드.
+        얘는 폴더를 입력받아 폴더 전체를 다운로드.
+        폴더 안에 폴더가 있을 경우는 구현하지 않음
+
+        Args:
+            folder_name: gcs bucket 내에 존재하는 폴더 이름 ex) image/item
+            save_path: bucket에 존재하는 파일을 저장할 폴더 이름 ex) modeling/data/image/item
+        """
+
+        # 저장할 폴더 없으면 생성
+        os.makedirs(save_path, exist_ok=True)
+        # 해당 폴더 내에 있는 모든 blob 가져오기
+        blobs = self.bucket.list_blobs(prefix=folder_name)
+        # 블롭에 대해 하나씩 다운로드 실행
+        for blob in tqdm(blobs):
+            if blob.name.endswith("/"):
+                continue
+            file_name = blob.name.split("/")[-1]
+            save_file_path = os.path.join(save_path, file_name)
+            self.download_file_from_gcs(blob.name, save_file_path)
+        return None
+
+    def open_image_from_gcs(self, blob_name: str) -> Image:
+        """
+        image를 `PIL.Image` 형식으로 return
+
+        Args:
+            blob_name: image file 이름 ex) image/item/123456.png
+
+        Returns:
+            PIL.Image: 이미지...
+        """
+
+        blob = self.bucket.get_blob(blob_name)
+        memory_file = BytesIO()
+        blob.download_to_file(memory_file)
+        image = Image.open(memory_file).convert("RGB")
+        return image
 
     def upload_df_to_gcs(self, blob_name: str, df: pd.DataFrame) -> None:
         """

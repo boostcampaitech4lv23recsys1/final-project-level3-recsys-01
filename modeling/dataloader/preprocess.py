@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 from typing import Dict, Any
 
@@ -25,3 +26,14 @@ class Preprocess:
             )
 
         return self.gcs_helper.read_df_from_gcs(blob_name="item_KMST_1149_latest.csv")
+
+    def download_images(self) -> None:
+        if os.path.exists("modeling/data/image/item"):
+            print("----------데이터가 이미 저장되어 있습니다.----------")
+            return
+
+        print("----------이미지 데이터 다운로드를 시작합니다. ----------")
+        self.gcs_helper.change_bucket("maple_raw_data")
+        self.gcs_helper.download_folder_from_gcs(
+            folder_name="image/item", save_path="modeling/data/image/item"
+        )

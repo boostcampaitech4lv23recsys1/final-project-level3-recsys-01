@@ -15,6 +15,9 @@ def main(config: Dict[str, Any]) -> None:
     data = preprocess.load_data(is_train=True)
     item_data = preprocess.load_data(is_train=False)
 
+    if config["arch"]["type"] == "MCN":
+        preprocess.download_images()
+
     config["arch"]["args"]["n_items"] = item_data.shape[0]
 
     train_data, valid_data = data_split(config, data)
