@@ -14,17 +14,17 @@ code {
 
 @font-face {
   font-family: 'NanumSquareAcb';
-  src: url('./assets/fonts/NanumSquare_acB.ttf') format('truetype');
+  src: url('https://storage.googleapis.com/maple_web/font/NanumSquare_acB.ttf') format('truetype');
 }
 @font-face {
   font-family: 'NanumSquareAceb';
-  src: url('./assets/fonts/NanumSquare_acEB.ttf') format('truetype');
+  src: url('https://storage.googleapis.com/maple_web/font/NanumSquare_acEB.ttf') format('truetype');
 }
 @font-face {
   font-family: 'NanumSquareAcl';
-  src: url('./assets/fonts/NanumSquare_acL.ttf') format('truetype');
+  src: url('https://storage.googleapis.com/maple_web/font/NanumSquare_acL.ttf') format('truetype');
 }
 @font-face {
   font-family: 'NanumSquareAcr';
-  src: url('./assets/fonts/NanumSquare_acR.ttf') format('truetype');
+  src: url('https://storage.googleapis.com/maple_web/font/NanumSquare_acR.ttf') format('truetype');
 }
