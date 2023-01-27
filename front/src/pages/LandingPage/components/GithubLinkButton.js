@@ -1,7 +1,9 @@
 import React from "react";
 import Fab from "@mui/material/Fab";
 
-function LinkButton({ link, displaylink }) {
+function GithubLinkButton() {
+  const teamGithubLink = "https://www.naver.com/";
+  const teamGithubLinkDes = "Team Github";
   return (
     <Fab
       variant="extended"
@@ -13,17 +15,18 @@ function LinkButton({ link, displaylink }) {
         fontFamily: "NanumSquareAceb",
         fontSize: 20,
         boxShadow: 0,
+        displayPrint: "none",
       }}>
       <a
-        href={link}
+        href={teamGithubLink}
         target="_blank"
         rel="noreferrer"
         className="text-hyperlink"
         style={{ color: "black" }}>
-        {displaylink}
+        {teamGithubLinkDes}
       </a>
     </Fab>
   );
 }
 
-export default LinkButton;
+export default GithubLinkButton;
