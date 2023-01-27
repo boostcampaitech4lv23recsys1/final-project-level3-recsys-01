@@ -122,3 +122,38 @@ def ver1_3():
         "https://storage.googleapis.com/maple_web/" + df["gcs_image_url"]
     )
     return df
+
+
+def ver_1_4():
+    dependent_file = "item_KMST_1149_VER1.3.csv"
+    gcs_helper.change_bucket("maple_preprocessed_data")
+    data = gcs_helper.read_df_from_gcs(dependent_file)
+
+    data["isCash"] = data["isCash"].apply(int)
+
+    rename_dict = {
+        k: v
+        for k, v in zip(
+            data.columns,
+            [
+                "required_jobs",
+                "required_level",
+                "required_gender",
+                "is_cash",
+                "desc",
+                "item_id",
+                "name",
+                "overall_category",
+                "category",
+                "sub_category",
+                "low_item_id",
+                "high_item_id",
+                "image_url",
+                "gcs_image_url",
+                "name_processed",
+                "equip_category",
+            ],
+        )
+    }
+    data = data.rename(columns=rename_dict)
+    return data
