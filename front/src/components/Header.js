@@ -5,17 +5,17 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import dinoEgg from "../assets/icons/dino_egg_white.png";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+
 import { useNavigate } from "react-router-dom";
 
 const headerTheme = createTheme({
   palette: {
-    mode: "dark",
     primary: {
-      main: "#1976d2",
+      main: "#D6A5B6",
     },
   },
   typography: {
-    fontFamily: ["NanumSquareAceb", "sans-serif"].join(","),
+    fontFamily: ["PyeongChangPeace-Light", "sans-serif"].join(","),
   },
 });
 
@@ -33,7 +33,7 @@ function Header() {
             sx={{ mr: 2 }}>
             <img alt="" src={dinoEgg} width="25px" height="25px" />
           </IconButton>
-          <Typography variant="h6" color="inherit" component="div">
+          <Typography variant="h6" color="white" component="div">
             메이플스토리 코디 추천
           </Typography>
         </Toolbar>
