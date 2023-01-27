@@ -8,7 +8,7 @@ function CodiPartButton(props) {
   const isClickable = props.clickable;
   function codiPartButtonMaker(isClickable) {
     if (isClickable) {
-      return BasicPopover();
+      return BasicPopover(props.codiPart);
     } else {
       return <Fab aria-label="NotClickable"> Do not cilck! </Fab>;
     }

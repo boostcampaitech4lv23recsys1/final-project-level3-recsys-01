@@ -4,7 +4,7 @@ import Popover from "@mui/material/Popover";
 import Fab from "@mui/material/Fab";
 import BasicSearch from "./BasicSearch";
 
-function BasicPopover() {
+function BasicPopover(codiPart) {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -42,7 +42,7 @@ function BasicPopover() {
             width: "300px",
             height: "200px",
           }}>
-          <BasicSearch />
+          <BasicSearch codiPart={codiPart} />
         </div>
       </Popover>
     </div>

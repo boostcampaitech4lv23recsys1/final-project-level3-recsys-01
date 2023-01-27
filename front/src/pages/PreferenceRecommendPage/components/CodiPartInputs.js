@@ -7,9 +7,10 @@ function CodiPartInputs() {
   return (
     <Stack direction="column" spacing={8} alignItems="center" sx={{ p: 8 }}>
       <Stack direction="row" spacing={6} alignItems="center">
+        <CodiPartButton codiPart="모자" clickable={true} />
         <CodiPartButton codiPart="헤어" clickable={true} />
-        <CodiPartButton codiPart="머리" clickable={true} />
         <CodiPartButton codiPart="성형" clickable={true} />
+        <CodiPartButton codiPart="한벌옷" clickable={true} />
       </Stack>
       <Stack direction="row" spacing={8} alignItems="center">
         <CodiPartButton codiPart="상의" clickable={true} />
