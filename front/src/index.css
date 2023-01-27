@@ -28,3 +28,15 @@ code {
   font-family: 'NanumSquareAcr';
   src: url('https://storage.googleapis.com/maple_web/font/NanumSquare_acR.ttf') format('truetype');
 }
+@font-face{
+  font-family: 'PyeongChangPeace-Light';
+  src: url('https://storage.googleapis.com/maple_web/font/PyeongChangPeace-Light.ttf') format('truetype');
+}
+@font-face{
+  font-family: 'Maplestory Bold';
+  src: url('https://storage.googleapis.com/maple_web/font/Maplestory%20Bold.ttf') format('truetype');
+}
+@font-face{
+  font-family: 'Maplestory Light';
+  src: url('https://storage.googleapis.com/maple_web/font/Maplestory%20Light.ttf') format('truetype');
+}

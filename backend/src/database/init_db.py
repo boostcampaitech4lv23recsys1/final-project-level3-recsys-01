@@ -1,25 +1,12 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from pymongo import MongoClient
+import os
 
+# MongoDB URI
+MONGODB_URI = os.getenv("MONGODB_URI")
+# DB name
+MONGODB_DATABASE_NAME = str(os.getenv("MONGODB_DATABASE_NAME"))
 
-host_name = "localhost"
-port = 3306
-user_name = "root"
-password = ""
+client = MongoClient(MONGODB_URI)
+print("정상적으로 MongoDB 서버에 연결되었습니다.")
 
-
-SQLALCHEMY_DATABASE_URL = (
-    f"mysql+pymysql://{user_name}:{password}@{host_name}:{port}/items"
-)
-# SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+db = client[MONGODB_DATABASE_NAME]
