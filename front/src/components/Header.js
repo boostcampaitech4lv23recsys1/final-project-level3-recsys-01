@@ -3,9 +3,9 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import dinoEgg from "../assets/icons/dino_egg_white.png";
+import mapleDino from "../assets/icons/maple_dino.png";
+import "./Header.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
 import { useNavigate } from "react-router-dom";
 
 const headerTheme = createTheme({
@@ -15,7 +15,7 @@ const headerTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: ["PyeongChangPeace-Light", "sans-serif"].join(","),
+    fontFamily: ["PyeongChangPeace-Bold", "sans-serif"].join(","),
   },
 });
 
@@ -23,18 +23,17 @@ function Header() {
   const navigate = useNavigate();
   return (
     <ThemeProvider theme={headerTheme}>
-      <AppBar position="static" color="primary">
+      <AppBar className="headerAppBar" position="static" color="primary">
         <Toolbar variant="dense">
           <IconButton
             onClick={() => navigate("/recommend")}
             edge="start"
             color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}>
-            <img alt="" src={dinoEgg} width="25px" height="25px" />
+            aria-label="menu">
+            {/* <img alt="" src={mapleDino} width="25px" height="25px" /> */}
           </IconButton>
-          <Typography variant="h6" color="white" component="div">
-            메이플스토리 코디 추천
+          <Typography align="center" variant="h5" color="white" component="div">
+            MESINSA
           </Typography>
         </Toolbar>
       </AppBar>
