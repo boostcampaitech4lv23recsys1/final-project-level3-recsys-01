@@ -1,28 +1,24 @@
 from fastapi import FastAPI
 from uvicorn import run
+from dotenv import load_dotenv
 import os
 
-from src.routers.all_router import router
-from src.database.database_creation import create_db
+from src.routers.items_router import router as items_router
+
+load_dotenv(verbose=True)
 
 # Port num
-PORT = os.getenv("PORT")
+PORT = int(os.getenv("PORT"))
+
+app = FastAPI()
 
 
-def create_api():
-    app = FastAPI()
-    app.include_router(router)
-
-    # 시작할 때 db 자동 생성
-    @app.on_event("startup")
-    async def startup():
-        create_db()
-        print("startup")
-
-    return app
+@app.on_event("startup")
+async def startup():
+    print("startup")
 
 
-app = create_api()
+app.include_router(items_router)
 
 if __name__ == "__main__":
     run("src.main:app", host="127.0.0.1", port=PORT, reload=True)
