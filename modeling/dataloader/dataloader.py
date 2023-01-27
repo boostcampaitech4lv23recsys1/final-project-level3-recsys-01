@@ -15,12 +15,14 @@ def get_loader(
         train_set,
         shuffle=True,
         batch_size=config["batch_size"],
+        num_workers=config["num_workers"],
         collate_fn=default_collate,
     )
     valid_loader = DataLoader(
         val_set,
         shuffle=False,
         batch_size=config["batch_size"],
+        num_workers=config["num_workers"],
         collate_fn=default_collate,
     )
 
