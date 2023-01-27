@@ -1,0 +1,73 @@
+/*1. LandingPage*/
+.LandingPage .text-defaultsetting{
+    line-height: 30px;
+    white-space: pre-line;
+    padding-bottom: 20px;
+    padding-top:30px;
+    font-family: 'NanumSquareAcr';
+    text-align: center;
+}
+
+.LandingPage .grid-center {
+    display: grid;
+    place-items: center;
+}
+
+.LandingPage .box-recoptionselect{
+    width:300px;
+    height:300px;
+    border-radius:30px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    background-color:rgb(228, 228, 228);
+    margin-top: 50px;
+    margin-bottom: 200px;
+    text-align: center;
+}
+
+.LandingPage .text-textinbox {
+    white-space: pre-line;
+    padding-bottom: 25px;
+    font-family: 'NanumSquareAcr';
+    font-size: 18px;
+}
+
+.LandingPage .box-elementsetting{
+    display: block;
+    margin-bottom:10px;
+    text-align: center;
+}
+
+.LandingPage .img-dinoinbox{
+    margin-top: 30px;
+    text-align: center;
+}
+
+.LandingPage .img-github{
+    margin-top:30px;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-right:20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.LandingPage .text-hyperlink{
+    text-decoration: none;
+}
+
+.LandingPage .img-member {
+    border-radius: 100%;
+    width:100px;
+    height:100px;
+}
+
+.LandingPage .body-one-margin {
+    display: inline-block;
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+.LandingPage .body-two-margin {
+    display: inline-block;
+    vertical-align: middle;
+}

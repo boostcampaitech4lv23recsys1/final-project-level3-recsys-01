@@ -1,11 +1,13 @@
 from torch.utils.data import Dataset, DataLoader, default_collate
 
+from typing import Dict, Tuple, Any
+
 
 def get_loader(
-    config: dict,
+    config: Dict[str, Any],
     train_set: Dataset,
     val_set: Dataset,
-) -> DataLoader:
+) -> Tuple[DataLoader, DataLoader]:
     """
     get Data Loader
     """
