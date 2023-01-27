@@ -5,7 +5,7 @@ import argparse
 import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-from utils import GCS_helper
+from utils import GCSHelper
 
 
 def drop_past_add_column(user_detail_info: pd.DataFrame) -> pd.DataFrame:
@@ -48,7 +48,7 @@ def drop_past_add_column(user_detail_info: pd.DataFrame) -> pd.DataFrame:
 
 def image_uploader(
     user_detail_info: pd.DataFrame,
-    gcs_helper: GCS_helper,
+    gcs_helper: GCSHelper,
     img_folder: str,
     csv_folder: str,
 ) -> None:
@@ -65,9 +65,9 @@ if __name__ == "__main__":
     arg = parser.add_argument
     arg('--detail_folder', type=str, default='./data/user_detail')
     arg('--img_folder', type=str, default='./data/user_img')
-    arg('--key_path', type=str, default='./config/key.json')
+    arg('--key_path', type=str, default='./keys/gcs_key.json')
     args = parser.parse_args()
-    gcs_helper = GCS_helper(args.key_path)
+    gcs_helper = GCSHelper(args.key_path)
     for csv_file in os.listdir(args.detail_folder):
         if not csv_file.endswith(".csv"):
             continue
