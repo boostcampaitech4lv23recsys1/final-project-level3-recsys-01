@@ -18,11 +18,17 @@ def save_csv(user_infos, check_start, check_end, save_path):
     return list()
 
 
-def crawler(delay, save_every, start_iter, end_iter, save_path):
+def crawler(delay, save_every, start_iter, end_iter, save_path, is_reboot):
     user_infos = list()
     check_start = start_iter
+
+    if is_reboot:
+        base_url = "https://maple.gg/rank/reboot?page="
+    else:
+        base_url = "https://maple.gg/rank/total?page="
+
     for i in tqdm(range(start_iter, end_iter + 1)):
-        req = requests.get(f"https://maple.gg/rank/total?page={i}")
+        req = requests.get(f"{base_url}{i}")
         soup = BeautifulSoup(req.text, "html.parser")
         users = soup.findAll("div", "d-inline-block align-middle")
 
@@ -49,7 +55,10 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--save_every", default=10000, type=int)
     parser.add_argument("--start_iter", default=1, type=int)
     parser.add_argument("--end_iter", default=10000, type=int)
-    parser.add_argument("--save_path", default="./data", type=str)
+    parser.add_argument("--save_path", default="../data/user_info", type=str)
+    parser.add_argument("--is_reboot_server", default=False, type=bool)
     args = parser.parse_args()
 
-    crawler(args.delay, args.save_every, args.start_iter, args.end_iter, args.save_path)
+    if args.is_reboot_server:
+        args.save_path += "/reboot"
+    crawler(args.delay, args.save_every, args.start_iter, args.end_iter, args.save_path, args.is_reboot_server)
