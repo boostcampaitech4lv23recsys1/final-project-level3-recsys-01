@@ -12,7 +12,7 @@ class MCNDataset(Dataset):
     def __init__(self, inter_data: DataFrame) -> None:
         super().__init__()
         self.inter_data = inter_data
-        self.y = [1] * len(inter_data)
+        self.y = True
 
     def __len__(self) -> int:
         return len(self.inter_data)
@@ -31,7 +31,7 @@ class MCNDataset(Dataset):
         # 일단 논문 코드에는 변형하는 부분이 없어서 그대로 진행
         images = torch.stack(images)
 
-        return {"x": images, "y": self.y[index]}
+        return images, self.y
 
     def transform(self) -> torchvision.transforms.Compose:
         img_size = 224
