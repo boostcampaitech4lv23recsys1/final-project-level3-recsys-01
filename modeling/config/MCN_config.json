@@ -7,8 +7,8 @@
   },
   "dataloader": {
     "args": {
-      "batch_size": 2048,
-      "num_workers": 1
+      "batch_size": 16,
+      "num_workers": 4
     }
   },
   "trainer": {
