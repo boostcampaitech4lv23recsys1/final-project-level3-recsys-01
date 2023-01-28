@@ -7,21 +7,33 @@
   },
   "dataloader": {
     "args": {
-      "batch_size": 16,
-      "num_workers": 4
+      "batch_size": 32,
+      "num_workers": 0
     }
   },
   "trainer": {
-    "type": "사용할 Trainer",
-    "epochs": 2,
+    "epochs": 50,
     "save_dir": "modeling/save_models",
     "learning_rate": 0.001,
-    "early_stopping": 5
+    "early_stopping": 5,
+    "loss": "bce",
+    "lr_scheduler": {
+      "type": "steplr",
+      "args": {
+        "step_size": 10,
+        "gamma": 0.5
+      }
+    }
   },
   "arch": {
     "type": "MCN",
     "args": {
-      "n_factors": 20
+      "embed_size": 512,
+      "need_rep": true,
+      "vse_off": true,
+      "pe_off": false,
+      "mlp_layers": 2,
+      "conv_feats": "1234"
     }
   },
   "inference": {
