@@ -6,7 +6,7 @@ from typing import Dict, Any
 from modeling.dataloader import Preprocess, get_loader
 import modeling.model as models
 from modeling.dataset import get_datasets
-from modeling.trainer import newMFTrainer
+from modeling.trainer import get_trainers
 from modeling.utilities import read_json, set_seed, data_split
 
 
@@ -26,11 +26,11 @@ def main(config: Dict[str, Any]) -> None:
     valid_set = get_datasets(config, valid_data)
 
     train_loader, valid_loader = get_loader(
-        config["dataloader"]["args"], train_set, valid_set
+        config, train_set, valid_set
     )
 
     model = models.get_models(config)
-    trainer = newMFTrainer(config, model, train_loader, valid_loader)
+    trainer = get_trainers(config, model, train_loader, valid_loader)
 
     trainer.train()
 

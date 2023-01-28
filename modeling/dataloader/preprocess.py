@@ -3,7 +3,7 @@ import os
 
 from typing import Dict, Any
 
-from utils import GCSHelper, BigQueryHelper
+from modeling.utils import GCSHelper, BigQueryHelper
 
 
 class Preprocess:
