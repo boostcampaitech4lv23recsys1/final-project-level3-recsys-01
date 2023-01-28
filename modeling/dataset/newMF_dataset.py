@@ -5,7 +5,7 @@ from torch.utils.data import Dataset
 from typing import Dict, Union
 
 
-class BaseDataset(Dataset):
+class NewMFDataset(Dataset):
     def __init__(self, data: pd.DataFrame) -> None:
         super().__init__()
         self.X = data

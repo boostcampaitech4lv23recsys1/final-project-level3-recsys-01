@@ -1,0 +1,44 @@
+{
+  "project": "MCN",
+  "seed": 417,
+  "dataset": {
+    "test_size": 0.3,
+    "shuffle": true
+  },
+  "dataloader": {
+    "args": {
+      "batch_size": 32,
+      "num_workers": 0
+    }
+  },
+  "trainer": {
+    "epochs": 50,
+    "save_dir": "modeling/save_models",
+    "learning_rate": 0.001,
+    "early_stopping": 5,
+    "loss": "bce",
+    "lr_scheduler": {
+      "type": "steplr",
+      "args": {
+        "step_size": 10,
+        "gamma": 0.5
+      }
+    }
+  },
+  "arch": {
+    "type": "MCN",
+    "args": {
+      "embed_size": 512,
+      "need_rep": true,
+      "vse_off": true,
+      "pe_off": false,
+      "mlp_layers": 2,
+      "conv_feats": "1234",
+      "pretrained": true
+    }
+  },
+  "inference": {
+    "top_k": 20,
+    "result_dir": "modeling/result"
+  }
+}

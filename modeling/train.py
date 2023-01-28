@@ -5,8 +5,8 @@ from typing import Dict, Any
 
 from modeling.dataloader import Preprocess, get_loader
 import modeling.model as models
-from modeling.dataset import BaseDataset
-from modeling.trainer import newMFTrainer
+from modeling.dataset import get_datasets
+from modeling.trainer import get_trainers
 from modeling.utilities import read_json, set_seed, data_split
 
 
@@ -15,19 +15,22 @@ def main(config: Dict[str, Any]) -> None:
     data = preprocess.load_data(is_train=True)
     item_data = preprocess.load_data(is_train=False)
 
+    if config["arch"]["type"] == "MCN":
+        preprocess.download_images()
+
     config["arch"]["args"]["n_items"] = item_data.shape[0]
 
-    model = models.get_models(config)
     train_data, valid_data = data_split(config, data)
 
-    train_set = BaseDataset(train_data)
-    valid_set = BaseDataset(valid_data)
+    train_set = get_datasets(config, train_data)
+    valid_set = get_datasets(config, valid_data)
 
     train_loader, valid_loader = get_loader(
-        config["dataloader"]["args"], train_set, valid_set
+        config, train_set, valid_set
     )
 
-    trainer = newMFTrainer(config, model, train_loader, valid_loader)
+    model = models.get_models(config)
+    trainer = get_trainers(config, model, train_loader, valid_loader)
 
     trainer.train()
 
