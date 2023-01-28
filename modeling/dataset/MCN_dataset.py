@@ -25,6 +25,10 @@ class MCNDataset(Dataset):
             image = self.transform()(image)
             images.append(image)
 
+        # shape (7, 3, img_size, img_size)
+        # 7은 7개의 착용 장비정보, 3은 색깔 차원 RGB
+        # 내 생각에는 (7, img_size, img_size, 3) 이 나와야 할 것 같은데
+        # 일단 논문 코드에는 변형하는 부분이 없어서 그대로 진행
         images = torch.stack(images)
 
         return {"x": images, "y": self.y[index]}
@@ -33,7 +37,7 @@ class MCNDataset(Dataset):
         img_size = 224
         trans = torchvision.transforms.Compose(
             [
-                torchvision.transforms.Resize(img_size, img_size),
+                torchvision.transforms.Resize((img_size, img_size)),
                 torchvision.transforms.ToTensor(),
             ]
         )
