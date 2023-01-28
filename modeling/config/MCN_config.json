@@ -1,4 +1,5 @@
 {
+  "project": "MCN",
   "seed": 417,
   "dataset": {
     "test_size": 0.3,
@@ -6,8 +7,8 @@
   },
   "dataloader": {
     "args": {
-      "batch_size": 2048,
-      "num_workers": 1
+      "batch_size": 16,
+      "num_workers": 4
     }
   },
   "trainer": {
@@ -18,7 +19,7 @@
     "early_stopping": 5
   },
   "arch": {
-    "type": "NewMF",
+    "type": "MCN",
     "args": {
       "n_factors": 20
     }
