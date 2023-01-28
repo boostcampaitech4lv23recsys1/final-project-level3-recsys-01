@@ -19,6 +19,7 @@ class MCN(nn.Module):
             pe_off=False,
             mlp_layers=2,
             conv_feats="1234",
+            pretrained=True,
         ):
         """The Multi-Layered Comparison Network (MCN) for outfit compatibility
         prediction and diagnosis.
@@ -39,7 +40,7 @@ class MCN(nn.Module):
         self.mlp_layers = mlp_layers
         self.conv_feats = conv_feats
 
-        cnn = resnet50(pretrained=True, need_rep=need_rep)
+        cnn = resnet50(pretrained=pretrained, need_rep=need_rep)
         cnn.fc = nn.Linear(cnn.fc.in_features, embed_size)
         self.cnn = cnn
         self.need_rep = need_rep
