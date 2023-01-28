@@ -362,7 +362,7 @@ def ver_1_5():
         0,
         "None",
         7,
-        "dummy_sheos",
+        "dummy_shoes",
         "dummy",
         "dummy",
         "dummy",
@@ -371,7 +371,7 @@ def ver_1_5():
         "dummy",
         "dummy",
         "dummy",
-        "Sheos",
+        "Shoes",
         "modeling/data/image/item/7.png",
     ]
     weapon_row = [
