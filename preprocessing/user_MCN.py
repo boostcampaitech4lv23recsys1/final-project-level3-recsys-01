@@ -89,7 +89,25 @@ def item_name_to_index(user: pd.DataFrame, item: pd.DataFrame) -> pd.DataFrame:
     """
     user detail에 있는 아이템 이름 (maple.gg) item에 있는 index로 변환하기 (maplestory.io)
     """
-    name2idx = item.reset_index().set_index("name_processed")["index"].to_dict()
+    name2idx = item.set_index("name_processed")["index"].to_dict()
+
+    dummy_hat_index = item[item["name"] == "dummy_hat"]["index"].values[0]
+    dummy_hair_index = item[item["name"] == "dummy_hair"]["index"].values[0]
+    dummy_face_index = item[item["name"] == "dummy_face"]["index"].values[0]
+    dummy_top_index = item[item["name"] == "dummy_top"]["index"].values[0]
+    dummy_bottom_index = item[item["name"] == "dummy_bottom"]["index"].values[0]
+    dummy_shoes_index = item[item["name"] == "dummy_shoes"]["index"].values[0]
+    dummy_weapon_index = item[item["name"] == "dummy_weapon"]["index"].values[0]
+
+    dummy_index = [
+        dummy_hat_index,
+        dummy_hair_index,
+        dummy_face_index,
+        dummy_top_index,
+        dummy_bottom_index,
+        dummy_shoes_index,
+        dummy_weapon_index,
+    ]
 
     total_item = []
 
@@ -97,12 +115,13 @@ def item_name_to_index(user: pd.DataFrame, item: pd.DataFrame) -> pd.DataFrame:
         temp_item = [-1] * 7
         is_matched = True
         for i, codi_item in enumerate(row[1:]):  # 닉네임 제외
-            if codi_item == "":
-                continue
-            if codi_item not in name2idx:
-                is_matched = False
-                break
-            temp_item[i] = name2idx[codi_item]
+            if codi_item == "":  # 착용하지 않은 경우 더미로 맵핑
+                temp_item[i] = dummy_index[i]
+            else:  # 착용 한 경우
+                if codi_item not in name2idx:
+                    is_matched = False
+                    break
+                temp_item[i] = name2idx[codi_item]
 
         if is_matched:
             total_item.append(temp_item)
@@ -121,9 +140,8 @@ def item_name_to_index(user: pd.DataFrame, item: pd.DataFrame) -> pd.DataFrame:
     )
 
 
-def index_to_image_url(user_df: pd.DataFrame, item_df: pd.DataFrame) -> pd.DataFrame:
-    index2url = item_df["gcs_image_url"].to_dict()
-    index2url[-1] = "이건 경로 어떡하지"
+def index_to_image_path(user_df: pd.DataFrame, item_df: pd.DataFrame) -> pd.DataFrame:
+    index2path = item_df["local_image_path"].to_dict()
     columns = [
         "codi_hat",
         "codi_hair",
@@ -134,16 +152,16 @@ def index_to_image_url(user_df: pd.DataFrame, item_df: pd.DataFrame) -> pd.DataF
         "codi_weapon",
     ]
     for column in columns:
-        user_df[column] = user_df[column].map(index2url)
+        user_df[column] = user_df[column].map(index2path)
 
     image_columns = [
-        "hat_image_url",
-        "hair_image_url",
-        "face_image_url",
-        "top_image_url",
-        "bottom_image_url",
-        "shoes_image_url",
-        "weapon_image_url",
+        "hat_image_path",
+        "hair_image_path",
+        "face_image_path",
+        "top_image_path",
+        "bottom_image_path",
+        "shoes_image_path",
+        "weapon_image_path",
     ]
 
     user_df.columns = image_columns
@@ -170,9 +188,11 @@ def main():
     user_df_item_name_to_index = item_name_to_index(
         user_df_item_name_processing, item_df
     )
-    user_df_index_to_image_url = index_to_image_url(user_df_item_name_to_index, item_df)
+    user_df_index_to_image_path = index_to_image_path(
+        user_df_item_name_to_index, item_df
+    )
 
-    return user_df_index_to_image_url
+    return user_df_index_to_image_path
 
 
 if __name__ == "__main__":
