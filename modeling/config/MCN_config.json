@@ -33,7 +33,8 @@
       "vse_off": true,
       "pe_off": false,
       "mlp_layers": 2,
-      "conv_feats": "1234"
+      "conv_feats": "1234",
+      "pretrained": true
     }
   },
   "inference": {
