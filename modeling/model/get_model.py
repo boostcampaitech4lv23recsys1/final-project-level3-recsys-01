@@ -13,9 +13,9 @@ def get_models(config: Dict[str, Any]) -> nn.Module:
     elif config["arch"]["type"] == "MCN":
         model_config = config["arch"]["args"]
         model = getattr(models, config["arch"]["type"])(
-            embed_size=1000,
-            need_rep=True,
-            vocabulary=config["dataloader"]["args"]["vocabulary_len"],
+            embed_size=model_config["embed_size"],
+            need_rep=model_config["need_rep"],
+            vocabulary=None,
             vse_off=model_config["vse_off"],
             pe_off=model_config["pe_off"],
             mlp_layers=model_config["mlp_layers"],
