@@ -39,6 +39,7 @@ COLUMNS = [
     "achievement",
     "cur_chr",
     "gcs_image_path",
+    "updated_at"
     # "past_chr_img_1",
     # "past_chr_img_2",
     # "past_chr_img_3",
@@ -196,6 +197,10 @@ def crawler(url):
             # past_chr,
         )
     )
+
+    # 업데이트 날짜 추가
+    final_list.append("None")
+    final_list.append(datetime.datetime.now())
     return final_list
 
 
@@ -211,7 +216,7 @@ if __name__ == "__main__":
     if args.your_name not in ["eunhye", "jeong", "ryu", "wonjun", "sssu", "test"]:
         raise ValueError("이름 제대로 입력하세요~")
 
-    gcs_helper = GCSHelper("./keys/gcs_key.json", bucket_name = "maple_raw_data")
+    gcs_helper = GCSHelper("../keys/gcs_key.json", bucket_name="maple_raw_data")
     existed_df = gcs_helper.read_df_from_gcs(f"csv/user_detail_{args.your_name}.csv")
 
     # 혹시 모르니까 이거 시작하기 전에 로컬에 저장 한번 하고 시작

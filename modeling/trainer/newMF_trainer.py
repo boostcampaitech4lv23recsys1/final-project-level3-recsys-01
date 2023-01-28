@@ -1,21 +1,25 @@
 import torch
-import sys
-import os
-from tqdm import tqdm
+from torch.utils.data import DataLoader
+from torch.nn import Module
+
 from datetime import datetime
 from pytz import timezone
+from tqdm import tqdm
+from typing import Dict, Any
+import os
 
-# to import ../../utils.py
-sys.path.append(
-    os.path.dirname(
-        os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-    )
-)
+
 from utils import GCSHelper
 
 
 class newMFTrainer:
-    def __init__(self, config, model, train_data_loader, valid_data_loader):
+    def __init__(
+        self,
+        config: Dict[str, Any],
+        model: Module,
+        train_data_loader: DataLoader,
+        valid_data_loader: DataLoader,
+    ) -> None:
         self.model = model
 
         self.config = config
@@ -27,7 +31,6 @@ class newMFTrainer:
 
         self.cfg_arch = self.config["arch"]
         self.model_name = self.cfg_arch["type"]
-        self.n_users = self.cfg_arch["args"]["n_users"]
         self.n_items = self.cfg_arch["args"]["n_items"]
 
         self.train_data_loader = train_data_loader
@@ -45,11 +48,11 @@ class newMFTrainer:
         self.stopping = False
 
         self.gcs_helper = GCSHelper(
-            "/opt/ml/final-project-level3-recsys-01/keys/gcs_key.json",
-            "maple_trained_model",
+            key_path="keys/gcs_key.json",
+            bucket_name="maple_trained_model",
         )
 
-    def _train_epoch(self, epoch: int):
+    def _train_epoch(self, epoch: int) -> None:
         self.model.train()
 
         total_train_loss = []
@@ -68,12 +71,16 @@ class newMFTrainer:
         self.model.eval()
 
         total_val_loss = []
-        for data in tqdm(self.valid_data_loader):
-            target = data["y"].to(self.device)
-            output = self.model(data["x"]).cuda()
 
-            loss = self.criterion(output.to(torch.float32), target.to(torch.float32))
-            total_val_loss.append(loss)
+        with torch.no_grad():
+            for data in tqdm(self.valid_data_loader):
+                target = data["y"].to(self.device)
+                output = self.model(data["x"]).cuda()
+
+                loss = self.criterion(
+                    output.to(torch.float32), target.to(torch.float32)
+                )
+                total_val_loss.append(loss)
 
         train_loss = sum(total_train_loss) / len(total_train_loss)
         valid_loss = sum(total_val_loss) / len(total_val_loss)
@@ -96,7 +103,7 @@ class newMFTrainer:
 
         self.stopping_count += 1
 
-    def train(self):
+    def train(self) -> None:
         for epoch in range(self.epoch):
             self._train_epoch(epoch)
             if self.stopping:
@@ -104,7 +111,7 @@ class newMFTrainer:
                 break
         self._save_checkpoint()
 
-    def _save_checkpoint(self):
+    def _save_checkpoint(self) -> None:
         print(
             f"...SAVING MODEL...   model_name: {self.state['model_name']} epoch: {self.state['epoch']}"
         )
