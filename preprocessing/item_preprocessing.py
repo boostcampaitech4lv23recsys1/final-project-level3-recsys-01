@@ -157,3 +157,258 @@ def ver_1_4():
     }
     data = data.rename(columns=rename_dict)
     return data
+
+
+def ver_1_5():
+    dependent_file = "item_KMST_1149_VER1.0.csv"
+
+    gcs_helper.change_bucket("maple_preprocessed_data")
+    item_df = gcs_helper.read_df_from_gcs(blob_name=dependent_file)
+
+    item_df["requiredJobs"] = item_df["requiredJobs"].replace("None", "['Beginner']")
+    item_df["requiredLevel"] = item_df["requiredLevel"].replace("None", 0)
+
+    item_df = item_df[item_df["name"] != "None"]
+    item_df = item_df[item_df["name"] != "-"]
+
+    pattern = r"[!@#$%^&*()_+-=`~,.<>/?{}\s\[\]]"
+    item_df["name_processed"] = item_df["name"].apply(
+        lambda x: re.sub(pattern, "", x.lower())
+    )
+
+    pattern = r"검은색|빨간색|주황색|노란색|초록색|파란색|보라색|갈색"
+    new_names = []
+    for i, row in item_df.iterrows():
+        if row["subCategory"] != "Hair":
+            new_names.append(row["name_processed"])
+        else:
+            new_names.append(re.sub(pattern, "", row["name_processed"]))
+
+    item_df["name_processed"] = new_names
+    item_df = item_df.drop_duplicates(["name_processed"]).reset_index(drop=True)
+
+    item_df["requiredGender"] = item_df["requiredGender"].apply(lambda x: min(x, 2))
+
+    def equipCategory(x):
+        if x in ["Hat", "Top", "Face", "Hair", "Overall", "Bottom", "Shoes"]:
+            return x
+        return "Weapon"
+
+    item_df["equipCategory"] = item_df["subCategory"].apply(equipCategory)
+
+    item_df["gcs_image_url"] = (
+        "https://storage.googleapis.com/maple_web/" + item_df["gcs_image_url"]
+    )
+
+    item_df["isCash"] = item_df["isCash"].apply(int)
+
+    rename_dict = {
+        k: v
+        for k, v in zip(
+            item_df.columns,
+            [
+                "required_jobs",
+                "required_level",
+                "required_gender",
+                "is_cash",
+                "desc",
+                "item_id",
+                "name",
+                "overall_category",
+                "category",
+                "sub_category",
+                "low_item_id",
+                "high_item_id",
+                "image_url",
+                "gcs_image_url",
+                "name_processed",
+                "equip_category",
+            ],
+        )
+    }
+    item_df = item_df.rename(columns=rename_dict)
+
+    item_df["local_image_path"] = "modeling/data/" + item_df["gcs_image_url"].apply(
+        lambda x: x[41:]
+    )
+
+    item_df = item_df.reset_index()
+
+    hat_row = [
+        10093,
+        "dummy",
+        0,
+        0,
+        0,
+        "None",
+        1,
+        "dummy_hat",
+        "dummy",
+        "dummy",
+        "dummy",
+        0,
+        0,
+        "dummy",
+        "dummy",
+        "dummy",
+        "Hat",
+        "modeling/data/image/item/1.png",
+    ]
+    hair_row = [
+        10094,
+        "dummy",
+        0,
+        0,
+        0,
+        "None",
+        2,
+        "dummy_hair",
+        "dummy",
+        "dummy",
+        "dummy",
+        0,
+        0,
+        "dummy",
+        "dummy",
+        "dummy",
+        "Hair",
+        "modeling/data/image/item/2.png",
+    ]
+    face_row = [
+        10095,
+        "dummy",
+        0,
+        0,
+        0,
+        "None",
+        3,
+        "dummy_face",
+        "dummy",
+        "dummy",
+        "dummy",
+        0,
+        0,
+        "dummy",
+        "dummy",
+        "dummy",
+        "Face",
+        "modeling/data/image/item/3.png",
+    ]
+    overall_row = [
+        10096,
+        "dummy",
+        0,
+        0,
+        0,
+        "None",
+        4,
+        "dummy_overall",
+        "dummy",
+        "dummy",
+        "dummy",
+        0,
+        0,
+        "dummy",
+        "dummy",
+        "dummy",
+        "Overall",
+        "modeling/data/image/item/4.png",
+    ]
+    top_row = [
+        10097,
+        "dummy",
+        0,
+        0,
+        0,
+        "None",
+        5,
+        "dummy_top",
+        "dummy",
+        "dummy",
+        "dummy",
+        0,
+        0,
+        "dummy",
+        "dummy",
+        "dummy",
+        "Top",
+        "modeling/data/image/item/5.png",
+    ]
+    bottom_row = [
+        10098,
+        "dummy",
+        0,
+        0,
+        0,
+        "None",
+        6,
+        "dummy_bottom",
+        "dummy",
+        "dummy",
+        "dummy",
+        0,
+        0,
+        "dummy",
+        "dummy",
+        "dummy",
+        "Bottom",
+        "modeling/data/image/item/6.png",
+    ]
+    shoes_row = [
+        10099,
+        "dummy",
+        0,
+        0,
+        0,
+        "None",
+        7,
+        "dummy_sheos",
+        "dummy",
+        "dummy",
+        "dummy",
+        0,
+        0,
+        "dummy",
+        "dummy",
+        "dummy",
+        "Sheos",
+        "modeling/data/image/item/7.png",
+    ]
+    weapon_row = [
+        10100,
+        "dummy",
+        0,
+        0,
+        0,
+        "None",
+        8,
+        "dummy_weapon",
+        "dummy",
+        "dummy",
+        "dummy",
+        0,
+        0,
+        "dummy",
+        "dummy",
+        "dummy",
+        "Weapon",
+        "modeling/data/image/item/8.png",
+    ]
+
+    dummy = pd.DataFrame(
+        [
+            hat_row,
+            hair_row,
+            face_row,
+            overall_row,
+            top_row,
+            bottom_row,
+            shoes_row,
+            weapon_row,
+        ]
+    )
+    dummy.columns = item_df.columns
+
+    item_df = pd.concat([item_df, dummy], axis=0)
+
+    return item_df
