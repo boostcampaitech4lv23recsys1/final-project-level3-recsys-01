@@ -5,7 +5,7 @@ from torch.utils.data import Dataset
 from PIL import Image
 
 from pandas import DataFrame
-from typing import Dict, Union
+from typing import Tuple
 
 
 class MCNDataset(Dataset):
@@ -17,7 +17,7 @@ class MCNDataset(Dataset):
     def __len__(self) -> int:
         return len(self.inter_data)
 
-    def __getitem__(self, index) -> Dict[str, Union[torch.Tensor, int]]:
+    def __getitem__(self, index) -> Tuple[torch.Tensor, bool]:
         images = []
 
         for image_path in self.inter_data.iloc[index]:

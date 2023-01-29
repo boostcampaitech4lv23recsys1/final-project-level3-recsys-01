@@ -25,9 +25,7 @@ def main(config: Dict[str, Any]) -> None:
     train_set = get_datasets(config, train_data)
     valid_set = get_datasets(config, valid_data)
 
-    train_loader, valid_loader = get_loader(
-        config, train_set, valid_set
-    )
+    train_loader, valid_loader = get_loader(config, train_set, valid_set)
 
     model = models.get_models(config)
     trainer = get_trainers(config, model, train_loader, valid_loader)
