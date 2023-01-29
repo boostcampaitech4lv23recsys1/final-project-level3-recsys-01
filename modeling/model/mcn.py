@@ -9,18 +9,19 @@ import torchvision.models as models
 
 from modeling.model.resnet import resnet50
 
+
 class MCN(nn.Module):
     def __init__(
-            self,
-            embed_size=1000,
-            need_rep=False,
-            vocabulary=None,
-            vse_off=True,
-            pe_off=False,
-            mlp_layers=2,
-            conv_feats="1234",
-            pretrained=True,
-        ):
+        self,
+        embed_size=1000,
+        need_rep=False,
+        vocabulary=None,
+        vse_off=True,
+        pe_off=False,
+        mlp_layers=2,
+        conv_feats="1234",
+        pretrained=True,
+    ):
         """The Multi-Layered Comparison Network (MCN) for outfit compatibility
         prediction and diagnosis.
         Args:
@@ -45,12 +46,14 @@ class MCN(nn.Module):
         self.cnn = cnn
         self.need_rep = need_rep
         self.num_rela = 15 * len(conv_feats)
-        self.bn = nn.BatchNorm1d(self.num_rela)  # 5x5 relationship matrix have 25 elements
+        self.bn = nn.BatchNorm1d(
+            self.num_rela
+        )  # 5x5 relationship matrix have 25 elements
 
         # Define predictor part
         if self.mlp_layers > 0:
             predictor = []
-            for _ in range(self.mlp_layers-1):
+            for _ in range(self.mlp_layers - 1):
                 linear = nn.Linear(self.num_rela, self.num_rela)
                 nn.init.xavier_uniform_(linear.weight)
                 nn.init.constant_(linear.bias, 0)
@@ -104,18 +107,18 @@ class MCN(nn.Module):
             out, features, tmasks = self._compute_score(images)
 
         if self.vse_off:
-            vse_loss = torch.tensor(0.)
+            vse_loss = torch.tensor(0.0)
         else:
             vse_loss = self._compute_vse_loss(names, rep)
         if self.pe_off:
-            tmasks_loss, features_loss = torch.tensor(0.), torch.tensor(0.)
+            tmasks_loss, features_loss = torch.tensor(0.0), torch.tensor(0.0)
         else:
             tmasks_loss, features_loss = self._compute_type_repr_loss(tmasks, features)
 
         return out, vse_loss, tmasks_loss, features_loss
 
     def _compute_vse_loss(self, names, rep):
-        """ Visual semantice loss which map both visual embedding and semantic embedding
+        """Visual semantice loss which map both visual embedding and semantic embedding
         into a common space.
         Reference:
         https://github.com/xthan/polyvore/blob/e0ca93b0671491564b4316982d4bfe7da17b6238/polyvore/polyvore_model_bi.py#L362
@@ -155,7 +158,7 @@ class MCN(nn.Module):
         return vse_loss
 
     def _compute_type_repr_loss(self, tmasks, features):
-        """ Here adopt two losses to improve the type-spcified represetations.
+        """Here adopt two losses to improve the type-spcified represetations.
         `tmasks_loss` expect the masks to be sparse and `features_loss` regularize
         the feature vector to be a unit vector.
         Reference:
@@ -189,43 +192,60 @@ class MCN(nn.Module):
         masks = F.relu(self.masks.weight)
         # Comparison matrix
         if "4" in self.conv_feats:
-            for mi, (i, j) in enumerate(itertools.combinations_with_replacement([0,1,2,3,4], 2)):
+            for mi, (i, j) in enumerate(
+                itertools.combinations_with_replacement([0, 1, 2, 3, 4], 2)
+            ):
                 if self.pe_off:
-                    left = F.normalize(features[:, i:i+1, :], dim=-1) # (32, 1, 1000)
-                    right = F.normalize(features[:, j:j+1, :], dim=-1)
+                    left = F.normalize(
+                        features[:, i : i + 1, :], dim=-1
+                    )  # (32, 1, 1000)
+                    right = F.normalize(features[:, j : j + 1, :], dim=-1)
                 else:
-                    left = F.normalize(masks[mi] * features[:, i:i+1, :], dim=-1) # (32, 1, 1000)
-                    right = F.normalize(masks[mi] * features[:, j:j+1, :], dim=-1)
-                rela = torch.matmul(left, right.transpose(1, 2)).squeeze() # (32)
+                    left = F.normalize(
+                        masks[mi] * features[:, i : i + 1, :], dim=-1
+                    )  # (32, 1, 1000)
+                    right = F.normalize(masks[mi] * features[:, j : j + 1, :], dim=-1)
+                rela = torch.matmul(left, right.transpose(1, 2)).squeeze()  # (32)
                 relations.append(rela)
 
         # Comparision at Multi-Layered representations
         rep_list = []
         masks_list = []
         if "1" in self.conv_feats:
-            rep_list.append(rep_l1); masks_list.append(self.masks_l1)
+            rep_list.append(rep_l1)
+            masks_list.append(self.masks_l1)
         if "2" in self.conv_feats:
-            rep_list.append(rep_l2); masks_list.append(self.masks_l2)
+            rep_list.append(rep_l2)
+            masks_list.append(self.masks_l2)
         if "3" in self.conv_feats:
-            rep_list.append(rep_l3); masks_list.append(self.masks_l3)
+            rep_list.append(rep_l3)
+            masks_list.append(self.masks_l3)
         for rep_li, masks_li in zip(rep_list, masks_list):
-            rep_li = self.ada_avgpool2d(rep_li).squeeze().reshape(batch_size, item_num, -1)
+            rep_li = (
+                self.ada_avgpool2d(rep_li).squeeze().reshape(batch_size, item_num, -1)
+            )
             masks_li = F.relu(masks_li.weight)
             # Enumerate all pairwise combination among the outfit then compare their features
-            for mi, (i, j) in enumerate(itertools.combinations_with_replacement([0,1,2,3,4], 2)):
+            for mi, (i, j) in enumerate(
+                itertools.combinations_with_replacement([0, 1, 2, 3, 4], 2)
+            ):
                 if self.pe_off:
-                    left = F.normalize(masks_li[mi] * rep_li[:, i:i+1, :], dim=-1) # (32, 1, 1000)
-                    right = F.normalize(masks_li[mi] * rep_li[:, j:j+1, :], dim=-1)
+                    left = F.normalize(
+                        masks_li[mi] * rep_li[:, i : i + 1, :], dim=-1
+                    )  # (32, 1, 1000)
+                    right = F.normalize(masks_li[mi] * rep_li[:, j : j + 1, :], dim=-1)
                 else:
-                    left = F.normalize(masks_li[mi] * rep_li[:, i:i+1, :], dim=-1) # (32, 1, 1000)
-                    right = F.normalize(masks_li[mi] * rep_li[:, j:j+1, :], dim=-1)
-                rela = torch.matmul(left, right.transpose(1, 2)).squeeze() # (32)
+                    left = F.normalize(
+                        masks_li[mi] * rep_li[:, i : i + 1, :], dim=-1
+                    )  # (32, 1, 1000)
+                    right = F.normalize(masks_li[mi] * rep_li[:, j : j + 1, :], dim=-1)
+                rela = torch.matmul(left, right.transpose(1, 2)).squeeze()  # (32)
                 relations.append(rela)
 
-        if batch_size == 1: # Inference during evaluation, which input one sample
+        if batch_size == 1:  # Inference during evaluation, which input one sample
             relations = torch.stack(relations).unsqueeze(0)
         else:
-            relations = torch.stack(relations, dim=1) # (32 ,15*4)
+            relations = torch.stack(relations, dim=1)  # (32 ,15*4)
         relations = self.bn(relations)
 
         # Predictor
