@@ -1,14 +1,22 @@
 import React from "react";
-import Box from '@mui/material/Box';
 import AllParts from "./AllParts";
+import good from "../../../assets/images/happy.png";
+import bad from "../../../assets/images/calm.png";
 
 function BestCodi({ order, fixPartList }) {
-    return (
-        <div className="block-bestorder">
-            <h2>Best {order}</h2>
-            <AllParts fixPartList={fixPartList}></AllParts>
-        </div>
-    )
+  // add button type later
+  return (
+    <div className="block-bestorder">
+      <h2 className="button-feedback">Best {order}</h2>
+      <button className="button-goodbad">
+        <img alt="" src={good} width="20" height="20"></img>
+      </button>
+      <button className="button-goodbad">
+        <img alt="" src={bad} width="20" height="20"></img>
+      </button>
+      <AllParts fixPartList={fixPartList}></AllParts>
+    </div>
+  );
 }
 
-export default BestCodi
+export default BestCodi;

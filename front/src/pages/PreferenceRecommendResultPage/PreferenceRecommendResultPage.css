@@ -33,6 +33,22 @@
     margin-top: 100px;
 }
 
+.PRRP .button-feedback {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 20px;
+}
+
+.PRRP .button-goodbad {
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 100%;
+    border-color: white;
+    background-color: white;
+}
+
 .PRRP .box-bestcodibox {
     width: auto;
     height: 200px;
