@@ -1,24 +1,33 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from uvicorn import run
+from dotenv import load_dotenv
+import os
 
-from src.routers.all_router import router
-from src.database.database_creation import create_db
+from src.routers.items_router import router as items_router
 
+load_dotenv(verbose=True)
 
-def create_api():
-    app = FastAPI()
-    app.include_router(router)
+# Port num
+PORT = int(os.getenv("PORT"))
 
-    # 시작할 때 db 자동 생성
-    @app.on_event("startup")
-    async def startup():
-        create_db()
-        print("startup")
-
-    return app
+app = FastAPI()
 
 
-app = create_api()
+@app.on_event("startup")
+async def startup():
+    print("startup")
+
+
+app.include_router(items_router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 if __name__ == "__main__":
-    run("src.main:app", host="127.0.0.1", port=8001, reload=True)
+    run("src.main:app", host="127.0.0.1", port=PORT, reload=True)

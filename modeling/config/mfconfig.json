@@ -1,7 +1,4 @@
 {
-  "user": "wonjun",
-  "project": "newMF",
-  "entity": "dkt-dinosaur",
   "seed": 417,
   "dataset": {
     "test_size": 0.3,
@@ -9,7 +6,8 @@
   },
   "dataloader": {
     "args": {
-      "batch_size": 2048
+      "batch_size": 2048,
+      "num_workers": 1
     }
   },
   "trainer": {
