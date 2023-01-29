@@ -43,15 +43,15 @@ class MCNTrainer(object):
             vse_losses = AverageMeter()
 
             self.model.train()
-            auc = self.__train(
+            accuracy = self.__train(
                 epoch=epoch,
                 total_losses=total_losses,
                 clf_losses=clf_losses,
                 vse_losses=vse_losses
             )
 
-            if auc > self.best:
-                self.best = auc
+            if accuracy > self.best:
+                self.best = accuracy
                 torch.save(self.model.state_dict(), self.model_save_path)
                 print("Saved best model to {}".format(self.model_save_path))
 
@@ -91,9 +91,9 @@ class MCNTrainer(object):
                     )
                 )
         print("Train Loss (clf_loss): {:.4f}".format(clf_losses.avg))
-        auc = self.__val(epoch)
+        accuracy = self.__val(epoch)
 
-        return auc
+        return accuracy
 
     def __val(self, epoch):
         print("Valid Phase, Epoch: {}".format(epoch))
@@ -116,8 +116,8 @@ class MCNTrainer(object):
         print("Valid Loss (clf_loss): {:.4f}".format(clf_losses.avg))
         outputs = torch.cat(outputs).cpu().data.numpy()
         targets = torch.cat(targets).cpu().data.numpy()
-        auc = metrics.roc_auc_score(targets, outputs)
-        print("AUC: {:.4f}".format(auc))
+        # auc = metrics.roc_auc_score(targets, outputs)
+        # print("AUC: {:.4f}".format(auc))
         predicts = np.where(outputs > 0.5, 1, 0)
         accuracy = metrics.accuracy_score(predicts, targets)
         print("Accuracy@0.5: {:.4f}".format(accuracy))
@@ -126,7 +126,7 @@ class MCNTrainer(object):
         positive_acc = sum(outputs[targets==1]>0.5) / len(outputs)
         print("Positive accuracy: {:.4f}".format(positive_acc))
 
-        return auc
+        return accuracy
 
 
 class AverageMeter(object):
