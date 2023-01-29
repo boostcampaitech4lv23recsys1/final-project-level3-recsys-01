@@ -4,7 +4,7 @@ import RetryButton from "./components/RetryButton";
 import "./PreferenceRecommendResultPage.css";
 
 function PreferenceRecommendResultPage() {
-  const fixPartList = ['헤어', '상의', '하의', '신발', '무기']
+  const fixPartList = ["헤어", "상의", "하의", "신발", "무기"];
   return (
     <div className="PRRP">
       <TitleFixItem fixPartList={fixPartList}></TitleFixItem>
