@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-
 # 한 아이템이 가지는 정보
 class ItemSchema(BaseModel):
     index: int
