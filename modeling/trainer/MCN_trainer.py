@@ -11,11 +11,11 @@ from modeling.trainer.scheduler import get_scheduler
 
 class MCNTrainer(object):
     def __init__(
-            self,
-            config,
-            model,
-            train_loader,
-            val_loader,
+        self,
+        config,
+        model,
+        train_loader,
+        val_loader,
     ):
         self.config = config
         self.model = model
@@ -29,7 +29,6 @@ class MCNTrainer(object):
         self.best = float("-inf")
 
         self.model_save_path = self.config["trainer"]["save_dir"] + "/mcn.pt"
-
 
     def train(self):
         self.model = self.model.to(self.device)
@@ -47,7 +46,7 @@ class MCNTrainer(object):
                 epoch=epoch,
                 total_losses=total_losses,
                 clf_losses=clf_losses,
-                vse_losses=vse_losses
+                vse_losses=vse_losses,
             )
 
             if accuracy > self.best:
@@ -55,13 +54,7 @@ class MCNTrainer(object):
                 torch.save(self.model.state_dict(), self.model_save_path)
                 print("Saved best model to {}".format(self.model_save_path))
 
-    def __train(
-            self,
-            epoch,
-            total_losses,
-            clf_losses,
-            vse_losses
-    ):
+    def __train(self, epoch, total_losses, clf_losses, vse_losses):
         for batch_num, batch in enumerate(self.train_loader, 1):
             images, is_compat = batch
             images = images.to(self.device)
@@ -86,8 +79,14 @@ class MCNTrainer(object):
             if batch_num % 10 == 0:
                 print(
                     "[{}/{}] #{} clf_loss: {:.4f}, vse_loss: {:.4f}, features_loss: {:.4f}, tmasks_loss: {:.4f}, total_loss:{:.4f}".format(
-                        epoch, self.epochs, batch_num, clf_losses.val, vse_losses.val, features_loss, tmasks_loss,
-                        total_losses.val
+                        epoch,
+                        self.epochs,
+                        batch_num,
+                        clf_losses.val,
+                        vse_losses.val,
+                        features_loss,
+                        tmasks_loss,
+                        total_losses.val,
                     )
                 )
         print("Train Loss (clf_loss): {:.4f}".format(clf_losses.avg))
@@ -121,9 +120,9 @@ class MCNTrainer(object):
         predicts = np.where(outputs > 0.5, 1, 0)
         accuracy = metrics.accuracy_score(predicts, targets)
         print("Accuracy@0.5: {:.4f}".format(accuracy))
-        positive_loss = -np.log(outputs[targets==1]).mean()
+        positive_loss = -np.log(outputs[targets == 1]).mean()
         print("Positive loss: {:.4f}".format(positive_loss))
-        positive_acc = sum(outputs[targets==1]>0.5) / len(outputs)
+        positive_acc = sum(outputs[targets == 1] > 0.5) / len(outputs)
         print("Positive accuracy: {:.4f}".format(positive_acc))
 
         return accuracy
