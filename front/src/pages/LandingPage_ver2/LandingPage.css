@@ -1,0 +1,39 @@
+.grid-mainleft {
+    display: flex;
+    justify-content: center;
+}
+
+.grid-mainright {
+    display: flex;
+    justify-content: center;
+}
+
+.text-defaultsetting{
+    font-family: 'NanumSquareAcr';
+}
+
+.text-slogan {
+    color: #FCCEAD;
+    margin-top: 300px;
+    font-size: large;
+    white-space: pre-line;
+}
+
+.text-ProjectSummary {
+    color: black;
+    margin-top: 10px;
+    font-family: 'NanumSquareAceb';
+    font-size: xx-large;
+    white-space: pre-line;
+}
+
+.text-subsummary {
+    color: #FCCEAD;
+    margin-top: 30px;
+    font-size: large;
+    white-space: pre-line;
+}
+
+.button-gocodi {
+    text-align: center;
+}
