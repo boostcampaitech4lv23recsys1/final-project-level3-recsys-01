@@ -9,13 +9,13 @@ function AllParts({ fixPartList }) {
     for (let idx = 0; idx < allPartsName.length; idx++) {
       if (fixPartList.includes(allPartsName[idx])) {
         all.push(
-          <Grid item xs={1} className="button-fixitem">
+          <Grid item xs={1} className="button-fixitem" key={allPartsName[idx]}>
             <FixCodiPartButton codiPart={allPartsName[idx]}></FixCodiPartButton>
           </Grid>,
         );
       } else {
         all.push(
-          <Grid item xs={1} className="button-recitem">
+          <Grid item xs={1} className="button-recitem" key={allPartsName[idx]}>
             <FixCodiPartButton codiPart={allPartsName[idx]}></FixCodiPartButton>
           </Grid>,
         );
@@ -28,7 +28,6 @@ function AllParts({ fixPartList }) {
     <Grid container spacing={1} className="box-bestcodibox">
       <Grid item xs></Grid>
       {collectAllPart()}
-      {console.log(collectAllPart())}
       <Grid item xs></Grid>
     </Grid>
   );
