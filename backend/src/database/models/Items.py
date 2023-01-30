@@ -10,7 +10,22 @@ class Items:
         return res
 
     def find_by_equip_category(equip_category: str) -> List[ItemSchema]:
-        res = list(db.items.find({"equip_category": equip_category}, {"_id": False}))
+        if equip_category == "Top":
+            res = list(
+                db.items.find(
+                    {
+                        "$or": [
+                            {"equip_category": equip_category},
+                            {"equip_category": "Overall"},
+                        ]
+                    },
+                    {"_id": False},
+                )
+            )
+        else:
+            res = list(
+                db.items.find({"equip_category": equip_category}, {"_id": False})
+            )
         return res
 
     def find_by_item_id(item_id: int) -> Dict:
