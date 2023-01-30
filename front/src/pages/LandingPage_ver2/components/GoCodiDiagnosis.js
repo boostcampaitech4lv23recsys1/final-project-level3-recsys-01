@@ -2,7 +2,7 @@ import * as React from "react";
 import Fab from "@mui/material/Fab";
 import { useNavigate } from "react-router-dom";
 
-function GoCodiDignosis() {
+function GoCodiDiagnosis() {
   const navigate = useNavigate();
   return (
     <div>
@@ -28,4 +28,4 @@ function GoCodiDignosis() {
   );
 }
 
-export default GoCodiDignosis;
+export default GoCodiDiagnosis;

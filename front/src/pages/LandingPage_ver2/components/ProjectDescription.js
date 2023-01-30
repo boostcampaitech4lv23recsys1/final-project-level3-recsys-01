@@ -3,7 +3,7 @@ import Slogan from "./Slogan";
 import ProjectSummary from "./ProjectSummary";
 import SubSummary from "./SubSummary";
 import GoCodiRec from "./GoCodiRec";
-import GoCodiDignosis from "./GoCodiDignosis";
+import GoCodiDiagnosis from "./GoCodiDiagnosis";
 
 function ProjectDescription() {
   return (
@@ -13,7 +13,7 @@ function ProjectDescription() {
       <SubSummary></SubSummary>
       <div className="button-gocodi">
         <GoCodiRec></GoCodiRec>
-        <GoCodiDignosis></GoCodiDignosis>
+        <GoCodiDiagnosis></GoCodiDiagnosis>
       </div>
     </div>
   );

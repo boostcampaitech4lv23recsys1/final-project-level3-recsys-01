@@ -1,6 +1,6 @@
 import "./LandingPage.css";
 import Grid from "@mui/material/Grid";
-import ProjectDescription from "./components/ProjectDsecription";
+import ProjectDescription from "./components/ProjectDescription";
 
 function LandingPage() {
   return (

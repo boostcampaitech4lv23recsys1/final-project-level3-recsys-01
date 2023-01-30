@@ -1,6 +1,7 @@
 .grid-mainleft {
     display: flex;
     justify-content: center;
+    margin-left: 25px;
 }
 
 .grid-mainright {
