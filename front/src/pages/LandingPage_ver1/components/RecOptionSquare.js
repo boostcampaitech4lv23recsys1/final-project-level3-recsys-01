@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function RecOptionSquare({ optiondes, optionbutton }) {
   const navigate = useNavigate();
-  return (
+  return ( // 일단 결과 페이지로 연결
     <Box className="box-recoptionselect">
       <img alt="" src={dinoEgg} width="60px" height="60px" />
       <p className="text-textinbox">{optiondes}</p>
@@ -19,7 +19,7 @@ function RecOptionSquare({ optiondes, optionbutton }) {
           fontFamily: "NanumSquareAcb",
           fontSize: 20,
         }}>
-        <a onClick={() => navigate("preference")} style={{ color: "white" }}>
+        <a onClick={() => navigate("preference/result")} style={{ color: "white" }}>
           {optionbutton}
         </a>
       </Fab>
