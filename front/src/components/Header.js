@@ -7,6 +7,8 @@ import mapleDino from "../assets/icons/maple_dino.png";
 import "./Header.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import TemporaryDrawer from "./TemporaryDrawer";
+import Grid from "@mui/material/Grid";
 
 const headerTheme = createTheme({
   palette: {
@@ -24,18 +26,27 @@ function Header() {
   return (
     <ThemeProvider theme={headerTheme}>
       <AppBar className="headerAppBar" position="static" color="primary">
-        <Toolbar variant="dense">
-          <IconButton
-            onClick={() => navigate("/recommend")}
-            edge="start"
-            color="inherit"
-            aria-label="menu">
-            {/* <img alt="" src={mapleDino} width="25px" height="25px" /> */}
-          </IconButton>
-          <Typography align="center" variant="h5" color="white" component="div">
-            MESINSA
-          </Typography>
-        </Toolbar>
+        <Grid container>
+          <Grid item xs></Grid>
+          <Grid item xs={4} className="grid-center">
+            <IconButton
+              onClick={() => navigate("/recommend")}
+              edge="start"
+              color="inherit"
+              aria-label="menu">
+              <Typography
+                align="center"
+                variant="h5"
+                color="white"
+                component="div">
+                MESINSA
+              </Typography>
+            </IconButton>
+          </Grid>
+          <Grid item xs={4} className="grid-drawer">
+            <TemporaryDrawer></TemporaryDrawer>
+          </Grid>
+        </Grid>
       </AppBar>
     </ThemeProvider>
   );
