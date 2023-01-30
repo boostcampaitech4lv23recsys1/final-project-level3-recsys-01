@@ -11,6 +11,9 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import menu from "../assets/icons/menuicon.png";
+import reviewIcon from "../assets/icons/reviewicon.png";
+import recIcon from "../assets/icons/recicon.png";
+import dignosisIcon from "../assets/icons/dignosisicon.png";
 
 function TemporaryDrawer() {
   const [state, setState] = React.useState({
@@ -28,15 +31,37 @@ function TemporaryDrawer() {
     setState({ ...state, [anchor]: open });
   };
 
+  const iconList = [recIcon, dignosisIcon, reviewIcon];
+
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}>
-      코디추천 코디진단 리뷰 남기기
+      <List>
+        {["코디 추천", "코디 진단", "리뷰 남기기"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <img src={iconList[index]} width="30" height="30"></img>
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
       <Divider />
-      Home About Contact
+      <List>
+        {["Home", "About", "Contact"].map((text, index) => (
+          <ListItem key={text} alignItems="flex-start">
+            <ListItemButton>
+              <ListItemIcon></ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
     </Box>
   );
 
