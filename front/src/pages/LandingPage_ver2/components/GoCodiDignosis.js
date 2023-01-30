@@ -11,11 +11,11 @@ function GoCodiDignosis() {
         sx={{
           marginTop: 2,
           borderRadius: 0,
-          width: 200,
+          width: 240,
           backgroundColor: "white",
           color: "black",
           fontFamily: "NanumSquareAcb",
-          fontSize: 15,
+          fontSize: 18,
           margin: "0auto",
           boxShadow: 0,
         }}

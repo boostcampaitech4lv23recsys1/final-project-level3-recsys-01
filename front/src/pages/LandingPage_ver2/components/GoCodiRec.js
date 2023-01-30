@@ -11,11 +11,12 @@ function GoCodiRec() {
         marginTop: 5,
         borderRadius: 3,
         border: 1,
-        width: 400,
+        width: 500,
+        height: 60,
         backgroundColor: "#E5B8C8",
         color: "white",
         fontFamily: "NanumSquareAcb",
-        fontSize: 20,
+        fontSize: 25,
       }}
       className="button-gorec">
       <a onClick={() => navigate("preference")} style={{ color: "white" }}>
