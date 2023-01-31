@@ -47,10 +47,9 @@ class Items:
                 },
                 {"index": 1, "_id": False},
             )
-            res = list(json.loads(json_util.dumps(res)))
             res = [d["index"] for d in (json.loads(json_util.dumps(res)))]
         else:
             res = db.items.find({"equip_category": equip_category}, {"index": 1, "_id": False})
             res = [d["index"] for d in (json.loads(json_util.dumps(res)))]
-            print("asdf")
+
         return res

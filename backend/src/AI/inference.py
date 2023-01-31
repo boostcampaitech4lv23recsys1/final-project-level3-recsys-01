@@ -22,11 +22,8 @@ class InferenceNewMF(object):
         self.item_parts = list()
         self.n_items = 0
         for part in ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"]:
-            print(part)
             item_part = Items.find_by_item_names(part)
-            print("-")
             self.n_items += len(item_part)
-            print("--")
             self.item_parts.append(item_part)
 
         self.model = NewMF(

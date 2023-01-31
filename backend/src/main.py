@@ -34,4 +34,4 @@ app.add_middleware(
 )
 
 if __name__ == "__main__":
-    run("src.main:app", host="0.0.0.0", port=PORT, reload=True)
+    run("src.main:app", host="127.0.0.1", port=PORT, reload=True)
