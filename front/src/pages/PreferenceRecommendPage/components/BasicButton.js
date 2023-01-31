@@ -7,8 +7,8 @@ function BasicButton({ codiPart, inputImage, handleClick }) {
       Click!
     </Fab>
   );
-  if (inputImage != "") {
-    let basicButton = (
+  if (inputImage !== "") {
+    basicButton = (
       <Fab aria-label={codiPart} onclick={handleClick}>
         <img src={inputImage} alt="" />
       </Fab>

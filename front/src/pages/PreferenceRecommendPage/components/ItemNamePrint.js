@@ -1,7 +1,7 @@
 import * as React from "react";
 
 function ItemNamePrint(inputValue) {
-  if (inputValue != "") {
+  if (inputValue !== "") {
     return <div>{inputValue}</div>;
   }
 }

@@ -1,18 +1,14 @@
 import * as React from "react";
 import { useState } from "react";
 
-import Fab from "@mui/material/Fab";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
-import { ItemGetFromDB } from "../pages/PreferenceRecommendPage/components/ItemLabel";
-
-function CodiPartButton(props) {
+import maple_dino from "../assets/icons/maple_dino.png";
+function CodiPartButton({ codiPart, codiPartData }) {
   const [inputValue, setInputValue] = useState("");
-  const [inputImage, setInputImage] = useState("");
+  const [inputImage, setInputImage] = useState(maple_dino);
   const [inputId, setInputId] = useState("");
-
-  const codiPartData = ItemGetFromDB(props.codiPart);
 
   function handleInputValueChange(newInputValue, newInputImage, newInputId) {
     setInputValue(newInputValue);
@@ -22,10 +18,10 @@ function CodiPartButton(props) {
   return (
     <Stack direction="column" spacing={1} alignItems="center">
       <Typography>
-        <b> {props.codiPart}</b>
+        <b> {codiPart}</b>
       </Typography>
       <BasicPopover
-        codiPart={props.codiPart}
+        codiPart={codiPart}
         codiPartData={codiPartData}
         onInputValueChange={handleInputValueChange}
         inputValue={inputValue}

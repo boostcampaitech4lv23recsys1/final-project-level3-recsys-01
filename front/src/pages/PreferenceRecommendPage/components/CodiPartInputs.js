@@ -10,7 +10,6 @@ function CodiPartInputs() {
         <CodiPartButton codiPart="모자" />
         <CodiPartButton codiPart="헤어" />
         <CodiPartButton codiPart="성형" />
-        <CodiPartButton codiPart="한벌옷" />
       </Stack>
       <Stack direction="row" spacing={8} alignItems="center">
         <CodiPartButton codiPart="상의" />
