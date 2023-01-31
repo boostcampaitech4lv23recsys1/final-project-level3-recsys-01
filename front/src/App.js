@@ -1,5 +1,4 @@
 import "./App.css";
-import * as Api from "./api";
 import { useState } from "react";
 import {
   BrowserRouter as Router,

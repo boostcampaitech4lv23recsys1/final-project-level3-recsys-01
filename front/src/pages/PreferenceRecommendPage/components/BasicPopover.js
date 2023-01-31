@@ -1,8 +1,7 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Popover from "@mui/material/Popover";
 import Fab from "@mui/material/Fab";
-import maple_dino from "../../../assets/icons/maple_dino.png";
 import BasicSearch from "./BasicSearch";
 
 function BasicPopover({
@@ -15,31 +14,22 @@ function BasicPopover({
   inputCategory,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
   const handleClick = (event) => {
-    if (event) {
-      setAnchorEl(event.target);
-    }
+    setAnchorEl(event.target);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  useEffect(() => {
-    // Re-render BasicButton when inputImage changes
-  }, [inputLabel]);
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
-
   return (
     <div>
-      <Fab aria-label={codiPart}>
-        {inputImage === "" ? (
-          <img src={maple_dino} alt="" onClick={handleClick} />
-        ) : (
-          <img src={inputImage} alt="" onClick={handleClick} />
-        )}
+      <Fab>
+        <img src={inputImage} alt="" onClick={handleClick} />
       </Fab>
 
       <Popover
@@ -69,6 +59,7 @@ function BasicPopover({
             inputImage={inputImage}
             inputId={inputId}
             inputCategory={inputCategory}
+            setAnchorEl={setAnchorEl}
           />
         </div>
       </Popover>

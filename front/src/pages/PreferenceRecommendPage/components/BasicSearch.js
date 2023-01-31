@@ -2,60 +2,118 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import CircularProgress from "@mui/material/CircularProgress";
 
-function BasicSearch({
-  codiPart,
-  codiPartData,
-  onSearchChange,
-  inputValue,
-  inputId,
-  inputCategory,
-}) {
+import { useState, useEffect } from "react";
+
+import * as API from "../../../api";
+
+const codiPartToCategory = {
+  모자: "Hat",
+  헤어: "Hair",
+  성형: "Face",
+  상의: "Top",
+  하의: "Bottom",
+  신발: "Shoes",
+  무기: "Weapon",
+};
+
+function BasicSearch({ codiPart, onSearchChange, inputValue, setAnchorEl }) {
+  const [open, setOpen] = useState(false);
+  const [codiPartData, setCodiPartData] = useState([]);
+  const loading = open && codiPartData.length === 0;
+  const getCodiPartData = async (active) => {
+    const codiPartCategory = codiPartToCategory[codiPart];
+    if (!codiPart || !codiPartCategory) return;
+    try {
+      const res = await API.get(`items/${codiPartCategory}`);
+      const data = res.data.items;
+      if (active) {
+        setCodiPartData(
+          data.map((currentItem) => {
+            return {
+              label: currentItem["name"],
+              img: currentItem["gcs_image_url"],
+              id: currentItem["item_id"],
+            };
+          }),
+        );
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    let active = true;
+    if (!loading) {
+      return undefined;
+    }
+    getCodiPartData(active);
+    return () => {
+      active = false;
+    };
+  }, [loading]);
+
+  useEffect(() => {
+    if (!open) {
+      setCodiPartData([]);
+    }
+  }, [open]);
+
   return (
-    <>
-      <Autocomplete
-        id="popover-searchbox"
-        options={codiPartData}
-        sx={{ width: "300px" }}
-        autoHighlight
-        inputValue={inputValue}
-        loading={true}
-        onInputChange={(event, newInputValue) => {
-          if (event && event.target.children[0]) {
-            let newInputImage = event.target.children[0].src;
-            let alt = event.target.children[0].alt.split(" ");
-            let newInputId = alt[0];
-            let newInputCategory = alt[1];
-            onSearchChange(
-              newInputValue,
-              newInputImage,
-              newInputId,
-              newInputCategory,
-            );
-            console.log(newInputCategory);
-          } else {
-            onSearchChange(newInputValue);
-          }
-        }}
-        getOptionLabel={(options) => options.label}
-        renderOption={(props, options) => (
-          <Box
-            component="li"
-            sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-            {...props}>
-            <img
-              loading="lazy"
-              width="20"
-              src={options.img}
-              srcSet={`${options.img} 2x`}
-              alt={options.id + " " + options.category}
-            />
-            {options.label}
-          </Box>
-        )}
-        renderInput={(params) => <TextField {...params} label={codiPart} />}
-      />
-    </>
+    <Autocomplete
+      id="asynchronous-demo"
+      sx={{ width: 300 }}
+      open={open}
+      onOpen={() => {
+        setOpen(true);
+      }}
+      onClose={() => {
+        setOpen(false);
+      }}
+      options={codiPartData}
+      loading={loading}
+      onInputChange={(event, newInputValue) => {
+        let newInputImage = event.target.children[0].src;
+        let newInputId = event.target.id.split("-");
+        newInputId = newInputId[3];
+        onSearchChange(newInputValue, newInputImage, newInputId);
+        // handleClose();
+        setAnchorEl(null);
+      }}
+      renderOption={(props, codiPartData) => (
+        <Box
+          component="li"
+          sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+          {...props}>
+          <img
+            loading="lazy"
+            width="20"
+            src={codiPartData.img}
+            srcSet={`${codiPartData.img} 2x`}
+            alt={codiPartData.id}
+          />
+          {codiPartData.label}
+        </Box>
+      )}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={codiPart}
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <React.Fragment>
+                {loading ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
+                {params.InputProps.endAdornment}
+              </React.Fragment>
+            ),
+          }}
+        />
+      )}
+    />
   );
 }
 

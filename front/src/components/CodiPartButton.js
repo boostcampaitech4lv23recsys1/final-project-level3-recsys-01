@@ -1,18 +1,15 @@
 import * as React from "react";
 import { useState } from "react";
 
-import Fab from "@mui/material/Fab";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
-import { ItemGetFromDB } from "../pages/PreferenceRecommendPage/components/ItemLabel";
+import maple_dino from "../assets/icons/maple_dino.png";
 
-function CodiPartButton({ codiPart, inputValue, setInputValue }) {
-  function handleInputValueChange(newInputValue) {
+function CodiPartButton({ codiPart, codiPartData, inputValue, setInputValue }) {
+  function handleInputValueChange(newInputValue, newInputImage, newInputId) {
     setInputValue(newInputValue);
   }
-
-  const codiPartData = ItemGetFromDB();
 
   return (
     <Stack direction="column" spacing={1} alignItems="center">
