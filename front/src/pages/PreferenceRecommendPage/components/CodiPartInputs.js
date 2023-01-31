@@ -7,16 +7,16 @@ function CodiPartInputs() {
   return (
     <Stack direction="column" spacing={8} alignItems="center" sx={{ p: 8 }}>
       <Stack direction="row" spacing={6} alignItems="center">
-        <CodiPartButton codiPart="모자" clickable={true} />
-        <CodiPartButton codiPart="헤어" clickable={true} />
-        <CodiPartButton codiPart="성형" clickable={true} />
-        <CodiPartButton codiPart="한벌옷" clickable={true} />
+        <CodiPartButton codiPart="모자" />
+        <CodiPartButton codiPart="헤어" />
+        <CodiPartButton codiPart="성형" />
+        <CodiPartButton codiPart="한벌옷" />
       </Stack>
       <Stack direction="row" spacing={8} alignItems="center">
-        <CodiPartButton codiPart="상의" clickable={true} />
-        <CodiPartButton codiPart="하의" clickable={true} />
-        <CodiPartButton codiPart="신발" clickable={true} />
-        <CodiPartButton codiPart="무기" clickable={false} />
+        <CodiPartButton codiPart="상의" />
+        <CodiPartButton codiPart="하의" />
+        <CodiPartButton codiPart="신발" />
+        <CodiPartButton codiPart="무기" />
       </Stack>
     </Stack>
   );
