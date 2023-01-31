@@ -76,7 +76,7 @@ class MCNTrainer(object):
             self.model.zero_grad()
             total_loss.backward()
             self.optimizer.step()
-            if batch_num % 10 == 0:
+            if batch_num % 500 == 0:
                 print(
                     "[{}/{}] #{} clf_loss: {:.4f}, vse_loss: {:.4f}, features_loss: {:.4f}, tmasks_loss: {:.4f}, total_loss:{:.4f}".format(
                         epoch,
