@@ -1,0 +1,26 @@
+.text-hyperlink{
+    text-decoration: none;
+}
+
+.text-defaultsetting{
+    line-height: 30px;
+    white-space: pre-line;
+    padding-bottom: 20px;
+    padding-top:30px;
+    font-family: 'NanumSquareAcr';
+    text-align: center;
+}
+
+.img-github{
+    margin-top:30px;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-right:20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.body-two-margin {
+    display: inline-block;
+    vertical-align: middle;
+}
