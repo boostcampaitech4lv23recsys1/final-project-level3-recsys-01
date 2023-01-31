@@ -16,7 +16,7 @@ function ChoicePreferOrConcept() {
           optiondes={recOptionPrefer}
           optionbutton={recOptionButton}></RecOptionSquare>
       </Grid>
-      <Grid item xs={3} className="grid-center">
+      <Grid item xs={3} className="grid-drawer">
         <RecOptionSquare
           optiondes={recOptionConcept}
           optionbutton={recOptionButton}></RecOptionSquare>
