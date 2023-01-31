@@ -20,7 +20,7 @@ def get_models(config: Dict[str, Any]) -> nn.Module:
             pe_off=model_config["pe_off"],
             mlp_layers=model_config["mlp_layers"],
             conv_feats=model_config["conv_feats"],
-            pretrained=model_config["pretrained"]
+            pretrained=model_config["pretrained"],
         )
     else:
         raise NotImplementedError

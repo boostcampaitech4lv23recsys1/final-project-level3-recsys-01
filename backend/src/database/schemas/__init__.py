@@ -1,2 +1,2 @@
 from .items import ItemSchema
-from .codi_info import CodiInfo
+from .feedbacks import FeedbackSchema
