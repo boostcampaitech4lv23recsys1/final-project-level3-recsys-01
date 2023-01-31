@@ -8,14 +8,15 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import menu from "../assets/icons/menuicon.png";
 import reviewIcon from "../assets/icons/reviewicon.png";
 import recIcon from "../assets/icons/recicon.png";
 import dignosisIcon from "../assets/icons/dignosisicon.png";
 
+import { useNavigate } from "react-router-dom";
+
 function TemporaryDrawer() {
+  const navigate = useNavigate();
   const [state, setState] = React.useState({
     right: false,
   });
@@ -32,6 +33,8 @@ function TemporaryDrawer() {
   };
 
   const iconList = [recIcon, dignosisIcon, reviewIcon];
+  const pageList = ["preference/result", "preference/result", "preference/result"];
+  const infoList = ["preference/result", "preference/result", "preference/result"];
 
   const list = (anchor) => (
     <Box
@@ -41,25 +44,28 @@ function TemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}>
       <List>
         {["코디 추천", "코디 진단", "리뷰 남기기"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <img src={iconList[index]} width="30" height="30"></img>
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
+          <a onClick={() => navigate("recommend/" + pageList[index])} key={text}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <img src={iconList[index]} width="30" height="30"></img>
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          </a>
         ))}
       </List>
       <Divider />
       <List>
         {["Home", "About", "Contact"].map((text, index) => (
-          <ListItem key={text} alignItems="flex-start">
-            <ListItemButton>
-              <ListItemIcon></ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
+          <a onClick={() => navigate("recommend/" + pageList[index])} key={text}>
+            <ListItem alignItems="flex-start" disablePadding>
+              <ListItemButton>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          </a>
         ))}
       </List>
     </Box>
