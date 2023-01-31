@@ -1,19 +1,25 @@
-.headerAppBar{
+.headerAppBar {
     align-items: center;
 }
 
-.button-menu{
+.button-menu {
     padding-top: 2px;
 }
 
-.grid-center{
+.grid-center {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.grid-drawer{
+.grid-drawer {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+
+.button-title {
+    cursor: pointer;
+    border: 0;
+    background-color: inherit;
 }

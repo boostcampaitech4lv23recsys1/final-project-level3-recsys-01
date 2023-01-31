@@ -14,9 +14,6 @@ const headerTheme = createTheme({
       main: "#D6A5B6",
     },
   },
-  typography: {
-    fontFamily: ["PyeongChangPeace-Bold", "sans-serif"].join(","),
-  },
 });
 
 function Header() {
@@ -27,26 +24,24 @@ function Header() {
         <Grid container>
           <Grid item xs></Grid>
           <Grid item xs={4} className="grid-center">
-            <IconButton
-              onClick={() => navigate("/recommend")}
-              edge="start"
-              color="inherit"
-              aria-label="menu">
-              <Typography
-                align="center"
-                variant="h5"
-                color="white"
-                component="div">
-                MESINSA
-              </Typography>
-            </IconButton>
+            <button className="button-title">
+              <a onClick={() => navigate("/recommend")}>
+                <Typography
+                  align="center"
+                  variant="h5"
+                  color="white"
+                  component="div" fontFamily={'PyeongChangPeaceB'}>
+                  MESINSA
+                </Typography>
+              </a>
+            </button>
           </Grid>
           <Grid item xs={4} className="grid-drawer">
             <TemporaryDrawer></TemporaryDrawer>
           </Grid>
         </Grid>
       </AppBar>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }
 export default Header;
