@@ -12,9 +12,6 @@ function StickyFooter() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        position: "absolute",
-        bottom: 0,
-        width: "100%",
       }}>
       <Box
         component="footer"
