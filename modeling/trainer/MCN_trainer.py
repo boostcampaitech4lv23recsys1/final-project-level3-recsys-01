@@ -42,15 +42,15 @@ class MCNTrainer(object):
             vse_losses = AverageMeter()
 
             self.model.train()
-            accuracy = self.__train(
+            auc = self.__train(
                 epoch=epoch,
                 total_losses=total_losses,
                 clf_losses=clf_losses,
                 vse_losses=vse_losses,
             )
 
-            if accuracy > self.best:
-                self.best = accuracy
+            if auc > self.best:
+                self.best = auc
                 torch.save(self.model.state_dict(), self.model_save_path)
                 print("Saved best model to {}".format(self.model_save_path))
 
@@ -76,7 +76,7 @@ class MCNTrainer(object):
             self.model.zero_grad()
             total_loss.backward()
             self.optimizer.step()
-            if batch_num % 10 == 0:
+            if batch_num % 500 == 0:
                 print(
                     "[{}/{}] #{} clf_loss: {:.4f}, vse_loss: {:.4f}, features_loss: {:.4f}, tmasks_loss: {:.4f}, total_loss:{:.4f}".format(
                         epoch,
@@ -90,9 +90,9 @@ class MCNTrainer(object):
                     )
                 )
         print("Train Loss (clf_loss): {:.4f}".format(clf_losses.avg))
-        accuracy = self.__val(epoch)
+        auc = self.__val(epoch)
 
-        return accuracy
+        return auc
 
     def __val(self, epoch):
         print("Valid Phase, Epoch: {}".format(epoch))
@@ -115,8 +115,8 @@ class MCNTrainer(object):
         print("Valid Loss (clf_loss): {:.4f}".format(clf_losses.avg))
         outputs = torch.cat(outputs).cpu().data.numpy()
         targets = torch.cat(targets).cpu().data.numpy()
-        # auc = metrics.roc_auc_score(targets, outputs)
-        # print("AUC: {:.4f}".format(auc))
+        auc = metrics.roc_auc_score(targets, outputs)
+        print("AUC: {:.4f}".format(auc))
         predicts = np.where(outputs > 0.5, 1, 0)
         accuracy = metrics.accuracy_score(predicts, targets)
         print("Accuracy@0.5: {:.4f}".format(accuracy))
@@ -125,7 +125,7 @@ class MCNTrainer(object):
         positive_acc = sum(outputs[targets == 1] > 0.5) / len(outputs)
         print("Positive accuracy: {:.4f}".format(positive_acc))
 
-        return accuracy
+        return auc
 
 
 class AverageMeter(object):
