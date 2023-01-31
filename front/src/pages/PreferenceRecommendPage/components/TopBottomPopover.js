@@ -4,20 +4,23 @@ import Popover from "@mui/material/Popover";
 import Fab from "@mui/material/Fab";
 import maple_dino from "../../../assets/icons/maple_dino.png";
 import BasicSearch from "./BasicSearch";
+import Typography from "@mui/material/Typography";
 
-function BasicPopover({
+function TopPopover({
   codiPart,
   codiPartData,
   onInputValueChange,
-  inputLabel,
+  inputValue,
   inputImage,
   inputId,
   inputCategory,
+  setTopInput,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const handleClick = (event) => {
+  const handleClick = (event, inputCategory) => {
     if (event) {
       setAnchorEl(event.target);
+      setTopInput(inputCategory);
     }
   };
 
@@ -25,9 +28,13 @@ function BasicPopover({
     setAnchorEl(null);
   };
 
+  const handleInput = (inputCategory) => {
+    setTopInput(inputCategory);
+  };
+
   useEffect(() => {
     // Re-render BasicButton when inputImage changes
-  }, [inputLabel]);
+  }, [inputValue]);
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -36,9 +43,9 @@ function BasicPopover({
     <div>
       <Fab aria-label={codiPart}>
         {inputImage === "" ? (
-          <img src={maple_dino} alt="" onClick={handleClick} />
+          <img src={maple_dino} alt="" onClick={handleClick(inputCategory)} />
         ) : (
-          <img src={inputImage} alt="" onClick={handleClick} />
+          <img src={inputImage} alt="" onClick={handleClick(inputCategory)} />
         )}
       </Fab>
 
@@ -65,7 +72,7 @@ function BasicPopover({
             codiPart={codiPart}
             codiPartData={codiPartData}
             onSearchChange={onInputValueChange}
-            inputValue={inputLabel}
+            inputValue={inputValue}
             inputImage={inputImage}
             inputId={inputId}
             inputCategory={inputCategory}

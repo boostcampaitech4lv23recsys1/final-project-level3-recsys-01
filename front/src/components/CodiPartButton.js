@@ -7,32 +7,28 @@ import Typography from "@mui/material/Typography";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
 import { ItemGetFromDB } from "../pages/PreferenceRecommendPage/components/ItemLabel";
 
-function CodiPartButton(props) {
-  const [inputValue, setInputValue] = useState("");
-  const [inputImage, setInputImage] = useState("");
-  const [inputId, setInputId] = useState("");
-
-  const codiPartData = ItemGetFromDB(props.codiPart);
-
-  function handleInputValueChange(newInputValue, newInputImage, newInputId) {
+function CodiPartButton({ codiPart, inputValue, setInputValue }) {
+  function handleInputValueChange(newInputValue) {
     setInputValue(newInputValue);
-    setInputImage(newInputImage);
-    setInputId(newInputId);
   }
+
+  const codiPartData = ItemGetFromDB();
+
   return (
     <Stack direction="column" spacing={1} alignItems="center">
       <Typography>
-        <b> {props.codiPart}</b>
+        <b> {codiPart}</b>
       </Typography>
       <BasicPopover
-        codiPart={props.codiPart}
+        codiPart={codiPart}
         codiPartData={codiPartData}
         onInputValueChange={handleInputValueChange}
-        inputValue={inputValue}
-        inputImage={inputImage}
-        inputId={inputId}
+        inputLabel={inputValue["label"]}
+        inputImage={inputValue["img"]}
+        inputId={inputValue["id"]}
+        inputCategory={inputValue["category"]}
       />
-      <Typography>{inputValue}</Typography>
+      <Typography>{inputValue["label"]}</Typography>
     </Stack>
   );
 }

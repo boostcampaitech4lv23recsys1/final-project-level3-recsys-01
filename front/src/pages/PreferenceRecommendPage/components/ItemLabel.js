@@ -6,7 +6,7 @@ const codiPartToCategory = {
   모자: "Hat",
   헤어: "Hair",
   성형: "Face",
-  한벌옷: "Overall",
+  // 한벌옷: "Overall",
   상의: "Top",
   하의: "Bottom",
   신발: "Shoes",
@@ -27,6 +27,7 @@ function ItemGetFromDB(codiPart) {
           label: currentItem["name"],
           img: currentItem["gcs_image_url"],
           id: currentItem["item_id"],
+          category: currentItem["equip_category"],
         });
       }
       setCodiPartData(codiPartData);

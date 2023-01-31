@@ -2,9 +2,15 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import { InputAdornment } from "@mui/material";
 
-function BasicSearch({ codiPart, codiPartData, onSearchChange, inputValue }) {
+function BasicSearch({
+  codiPart,
+  codiPartData,
+  onSearchChange,
+  inputValue,
+  inputId,
+  inputCategory,
+}) {
   return (
     <>
       <Autocomplete
@@ -15,12 +21,24 @@ function BasicSearch({ codiPart, codiPartData, onSearchChange, inputValue }) {
         inputValue={inputValue}
         loading={true}
         onInputChange={(event, newInputValue) => {
-          let newInputImage = event.target.children[0].src;
-          let newInputId = event.target.id.split("-");
-          newInputId = newInputId[3];
-          onSearchChange(newInputValue, newInputImage, newInputId);
+          if (event && event.target.children[0]) {
+            let newInputImage = event.target.children[0].src;
+            let alt = event.target.children[0].alt.split(" ");
+            let newInputId = alt[0];
+            let newInputCategory = alt[1];
+            onSearchChange(
+              newInputValue,
+              newInputImage,
+              newInputId,
+              newInputCategory,
+            );
+            console.log(newInputCategory);
+          } else {
+            onSearchChange(newInputValue);
+          }
         }}
-        renderOption={(props, codiPartData) => (
+        getOptionLabel={(options) => options.label}
+        renderOption={(props, options) => (
           <Box
             component="li"
             sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
@@ -28,11 +46,11 @@ function BasicSearch({ codiPart, codiPartData, onSearchChange, inputValue }) {
             <img
               loading="lazy"
               width="20"
-              src={codiPartData.img}
-              srcSet={`${codiPartData.img} 2x`}
-              alt={codiPartData.id}
+              src={options.img}
+              srcSet={`${options.img} 2x`}
+              alt={options.id + " " + options.category}
             />
-            {codiPartData.label}
+            {options.label}
           </Box>
         )}
         renderInput={(params) => <TextField {...params} label={codiPart} />}
