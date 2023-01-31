@@ -75,10 +75,15 @@ function BasicSearch({ codiPart, onSearchChange, inputValue, setAnchorEl }) {
       loading={loading}
       onInputChange={(event, newInputValue) => {
         let newInputImage = event.target.children[0].src;
-        let newInputId = event.target.id.split("-");
-        newInputId = newInputId[3];
-        onSearchChange(newInputValue, newInputImage, newInputId);
-        // handleClose();
+        let newInputAlt = event.target.children[0].alt.split(" ");
+        let [newInputId, newInputCategory] = newInputAlt;
+        let updatedInputValue = {
+          label: newInputValue,
+          img: newInputImage,
+          id: newInputId,
+          category: newInputCategory,
+        };
+        onSearchChange(updatedInputValue);
         setAnchorEl(null);
       }}
       renderOption={(props, codiPartData) => (
@@ -91,7 +96,7 @@ function BasicSearch({ codiPart, onSearchChange, inputValue, setAnchorEl }) {
             width="20"
             src={codiPartData.img}
             srcSet={`${codiPartData.img} 2x`}
-            alt={codiPartData.id}
+            alt={codiPartData.id + " " + codiPartData.category}
           />
           {codiPartData.label}
         </Box>

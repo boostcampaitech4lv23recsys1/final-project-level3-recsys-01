@@ -6,7 +6,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-
+import maple_dino from "./assets/icons/maple_dino.png";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import LandingPage from "./pages/LandingPage_ver2/LandingPage"; // check Landing Page version
@@ -16,44 +16,44 @@ import PreferenceRecommendResultPage from "./pages/PreferenceRecommendResultPage
 function App() {
   const [inputHat, setInputHat] = useState({
     label: "",
-    img: "",
+    img: maple_dino,
     id: "",
     category: "",
   });
   const [inputHair, setInputHair] = useState({
     label: "",
-    img: "",
+    img: maple_dino,
     id: "",
     category: "",
   });
   const [inputFace, setInputFace] = useState({
     label: "",
-    img: "",
+    img: maple_dino,
     id: "",
     category: "",
   });
   const [inputTop, setInputTop] = useState({
     label: "",
-    img: "",
+    img: maple_dino,
     id: "",
     category: "",
   });
 
   const [inputBottom, setInputBottom] = useState({
     label: "",
-    img: "",
+    img: maple_dino,
     id: "",
     category: "",
   });
   const [inputShoes, setInputShoes] = useState({
     label: "",
-    img: "",
+    img: maple_dino,
     id: "",
     category: "",
   });
   const [inputWeapon, setInputWeapon] = useState({
     label: "",
-    img: "",
+    img: maple_dino,
     id: "",
     category: "",
   });
