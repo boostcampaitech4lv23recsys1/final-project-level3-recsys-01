@@ -6,9 +6,9 @@ from typing import Dict, Union
 
 
 class NewMFDataset(Dataset):
-    def __init__(self, data: pd.DataFrame) -> None:
+    def __init__(self, inter_data: pd.DataFrame, item_data: pd.DataFrame) -> None:
         super().__init__()
-        self.X = data
+        self.X = inter_data
         self.Y = [1] * len(self.X)  # existing interaction
 
     def __len__(self) -> int:

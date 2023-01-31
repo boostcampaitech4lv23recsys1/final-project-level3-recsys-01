@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 
 from src.routers.items_router import router as items_router
+from src.routers.feedback_router import router as feedback_router
 
 load_dotenv(verbose=True)
 
@@ -20,6 +21,7 @@ async def startup():
 
 
 app.include_router(items_router)
+app.include_router(feedback_router)
 
 app.add_middleware(
     CORSMiddleware,

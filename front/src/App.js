@@ -10,7 +10,7 @@ import {
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import LandingPage from "./pages/LandingPage/LandingPage";
+import LandingPage from "./pages/LandingPage_ver2/LandingPage"; // check Landing Page version
 import PreferenceRecommendPage from "./pages/PreferenceRecommendPage/PreferenceRecommendPage";
 import PreferenceRecommendResultPage from "./pages/PreferenceRecommendResultPage/PreferenceRecommendResultPage";
 

@@ -12,7 +12,7 @@ from modeling.utilities import read_json, set_seed, data_split
 
 def main(config: Dict[str, Any]) -> None:
     preprocess = Preprocess(config)
-    data = preprocess.load_data(is_train=True)
+    inter_data = preprocess.load_data(is_train=True)
     item_data = preprocess.load_data(is_train=False)
 
     if config["arch"]["type"] == "MCN":
@@ -20,14 +20,12 @@ def main(config: Dict[str, Any]) -> None:
 
     config["arch"]["args"]["n_items"] = item_data.shape[0]
 
-    train_data, valid_data = data_split(config, data)
+    train_data, valid_data = data_split(config, inter_data)
 
-    train_set = get_datasets(config, train_data)
-    valid_set = get_datasets(config, valid_data)
+    train_set = get_datasets(config, train_data, item_data)
+    valid_set = get_datasets(config, valid_data, item_data)
 
-    train_loader, valid_loader = get_loader(
-        config, train_set, valid_set
-    )
+    train_loader, valid_loader = get_loader(config, train_set, valid_set)
 
     model = models.get_models(config)
     trainer = get_trainers(config, model, train_loader, valid_loader)

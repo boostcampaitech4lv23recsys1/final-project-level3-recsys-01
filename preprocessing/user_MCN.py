@@ -140,35 +140,6 @@ def item_name_to_index(user: pd.DataFrame, item: pd.DataFrame) -> pd.DataFrame:
     )
 
 
-def index_to_image_path(user_df: pd.DataFrame, item_df: pd.DataFrame) -> pd.DataFrame:
-    index2path = item_df["local_image_path"].to_dict()
-    columns = [
-        "codi_hat",
-        "codi_hair",
-        "codi_face",
-        "codi_top",
-        "codi_bottom",
-        "codi_shoes",
-        "codi_weapon",
-    ]
-    for column in columns:
-        user_df[column] = user_df[column].map(index2path)
-
-    image_columns = [
-        "hat_image_path",
-        "hair_image_path",
-        "face_image_path",
-        "top_image_path",
-        "bottom_image_path",
-        "shoes_image_path",
-        "weapon_image_path",
-    ]
-
-    user_df.columns = image_columns
-
-    return user_df
-
-
 def main():
     key_path = "keys/gcs_key.json"
 
@@ -188,11 +159,8 @@ def main():
     user_df_item_name_to_index = item_name_to_index(
         user_df_item_name_processing, item_df
     )
-    user_df_index_to_image_path = index_to_image_path(
-        user_df_item_name_to_index, item_df
-    )
 
-    return user_df_index_to_image_path
+    return user_df_item_name_to_index
 
 
 if __name__ == "__main__":

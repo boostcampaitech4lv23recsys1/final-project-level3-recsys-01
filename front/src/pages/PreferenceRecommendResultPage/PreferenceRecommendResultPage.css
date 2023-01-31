@@ -1,0 +1,72 @@
+.PRRP .text-defaultsetting {
+    line-height: 80px;
+    white-space: pre-line;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    font-family: 'NanumSquareAcr';
+    text-align: center;
+}
+
+.PRRP .button-fixparts {
+    margin: 10px;
+    padding-bottom: 50px;
+}
+
+.PRRP .button-recitem {
+    margin: 10px;
+    padding-bottom: 50px;
+}
+
+.PRRP .button-fixitem {
+    margin: 10px;
+    padding-bottom: 50px;
+    border-style: dashed;
+    border-color: brown;
+    border-radius: 20px;
+    padding-right: 8px;
+}
+
+.PRRP .button-retry {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+}
+
+.PRRP .button-feedback {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 20px;
+}
+
+.PRRP .button-goodbad {
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 100%;
+    border-color: white;
+    background-color: white;
+}
+
+.PRRP .box-bestcodibox {
+    width: auto;
+    height: 200px;
+    border-color: grey;
+    border-style: dashed;
+    vertical-align: center;
+}
+
+.PRRP .block-bestorder {
+    margin: 30px;
+    font-family: 'PyeongChangPeaceB';
+}
+
+.PRRP .button-fixcheck {
+    border-color: black;
+    width: 40px;
+}
+
+.PPRP .block-recommenditem {
+    margin: auto 0;
+}
