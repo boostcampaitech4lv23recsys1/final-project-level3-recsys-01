@@ -15,13 +15,13 @@ MODELS = {
 }
 
 class TransferItem(BaseModel):
-    Hat: int
-    Hair: int
-    Face: int
-    Top: int
-    Bottom: int
-    Shoes: int
-    Weapon: int
+    Hat: Optional[int]
+    Hair: Optional[int]
+    Face: Optional[int]
+    Top: Optional[int]
+    Bottom: Optional[int]
+    Shoes: Optional[int]
+    Weapon: Optional[int]
 
 
 @router.get("/submit/newMF", description="codi recommendation")
@@ -31,11 +31,15 @@ async def newMF_output(equips: TransferItem):
     :param equips:
     :return:
     """
-    # equips = dict(equips)
+    equips = dict(equips)
+    for equip in equips:
+        if equips[equip]:
+            equips[equip] = [equips[equip], equips[equip], equips[equip]]
+        else:
+            equips[equip] = [1, 2, 3]
     # predicts = MODELS["newMF"].inference(equips)
 
-    # return JSONResponse(predicts)
-    return {"status": "success", "item": equips}
+    return JSONResponse(predicts)
 
 
 @router.get("/submit/MCN", description="codi recommendation")
