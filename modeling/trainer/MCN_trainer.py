@@ -3,10 +3,13 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision
+import datetime
 
+from pytz import timezone
 from sklearn import metrics
 from modeling.trainer.loss import get_loss
 from modeling.trainer.scheduler import get_scheduler
+from modeling.utils.gcs_helper import GCSHelper
 
 
 class MCNTrainer(object):
@@ -28,7 +31,11 @@ class MCNTrainer(object):
         self.epochs = config["trainer"]["epochs"]
         self.best = float("-inf")
 
-        self.model_save_path = self.config["trainer"]["save_dir"] + "/mcn.pt"
+        self.model_name = "MCN"
+        self.gcs_helper = GCSHelper(
+            key_path="keys/gcs_key.json",
+            bucket_name="maple_trained_model",
+        )
 
     def train(self):
         self.model = self.model.to(self.device)
@@ -51,8 +58,16 @@ class MCNTrainer(object):
 
             if auc > self.best:
                 self.best = auc
-                torch.save(self.model.state_dict(), self.model_save_path)
-                print("Saved best model to {}".format(self.model_save_path))
+
+                now = datetime.now(timezone("Asia/Seoul")).strftime(f"%Y%m%d-%H%M")
+                model_save_path = self.config["trainer"]["save_dir"] + f"/{self.model_name}_{now}.pt"
+                torch.save(self.model.state_dict(), model_save_path)
+                print("Saved best model to {}".format(model_save_path))
+
+                if self.config["GCS_upload"]:
+                    self.gcs_helper.upload_model_to_gcs(
+                        f"{self.model_name}/{self.model_name}_{now}.pt", model_save_path
+                    )
 
     def __train(self, epoch, total_losses, clf_losses, vse_losses):
         for batch_num, batch in enumerate(self.train_loader, 1):
