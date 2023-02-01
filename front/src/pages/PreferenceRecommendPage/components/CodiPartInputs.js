@@ -26,16 +26,19 @@ function CodiPartInputs({
           codiPart="모자"
           inputValue={inputHat}
           setInputValue={setInputHat}
+          openPopover={true}
         />
         <CodiPartButton
           codiPart="헤어"
           inputValue={inputHair}
           setInputValue={setInputHair}
+          openPopover={true}
         />
         <CodiPartButton
           codiPart="성형"
           inputValue={inputFace}
           setInputValue={setInputFace}
+          openPopover={true}
         />
       </Stack>
       <Stack direction="row" spacing={8} alignItems="center">
@@ -43,29 +46,34 @@ function CodiPartInputs({
           codiPart="상의"
           inputValue={inputTop}
           setInputValue={setInputTop}
+          openPopover={true}
         />
         {inputTop["category"] === "Overall" ? (
           <CodiPartButton
             codiPart="하의"
-            inputValue={inputBottom}
+            inputValue={{ label: "", img: "", category: "", id: "" }}
             setInputValue={setInputBottom}
+            openPopover={false}
           />
         ) : (
           <CodiPartButton
             codiPart="하의"
             inputValue={inputBottom}
             setInputValue={setInputBottom}
+            openPopover={true}
           />
         )}
         <CodiPartButton
           codiPart="신발"
           inputValue={inputShoes}
           setInputValue={setInputShoes}
+          openPopover={true}
         />
         <CodiPartButton
           codiPart="무기"
           inputValue={inputWeapon}
           setInputValue={setInputWeapon}
+          openPopover={true}
         />
       </Stack>
     </Stack>

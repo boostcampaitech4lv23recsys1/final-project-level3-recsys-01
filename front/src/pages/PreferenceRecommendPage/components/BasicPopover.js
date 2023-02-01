@@ -12,10 +12,15 @@ function BasicPopover({
   inputImage,
   inputId,
   inputCategory,
+  openPopover,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
-
-  const open = Boolean(anchorEl);
+  let open = false;
+  if (openPopover) {
+    open = Boolean(anchorEl);
+  } else {
+    open = false;
+  }
   const id = open ? "simple-popover" : undefined;
 
   const handleClick = (event) => {

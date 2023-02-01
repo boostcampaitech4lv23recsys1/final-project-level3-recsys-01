@@ -34,7 +34,7 @@ function BasicSearch({ codiPart, onSearchChange, inputValue, setAnchorEl }) {
             return {
               label: currentItem["name"],
               img: currentItem["gcs_image_url"],
-              id: currentItem["item_id"],
+              id: currentItem["item_id"] + " " + currentItem["equip_category"],
             };
           }),
         );

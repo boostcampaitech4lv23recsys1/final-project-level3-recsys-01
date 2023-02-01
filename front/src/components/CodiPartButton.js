@@ -5,13 +5,13 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
 
-function CodiPartButton({ codiPart, inputValue, setInputValue }) {
+function CodiPartButton({ codiPart, inputValue, setInputValue, openPopover }) {
   function handleInputValueChange(newInputValue) {
     let updatedInputValue = {
       label: newInputValue["label"],
       img: newInputValue["img"],
       id: newInputValue["id"],
-      inputCategory: newInputValue["category"],
+      category: newInputValue["category"],
     };
     setInputValue(updatedInputValue);
   }
@@ -28,6 +28,7 @@ function CodiPartButton({ codiPart, inputValue, setInputValue }) {
         inputImage={inputValue["img"]}
         inputId={inputValue["id"]}
         inputCategory={inputValue["category"]}
+        openPopover={openPopover}
       />
       <Typography>{inputValue["label"]}</Typography>
     </Stack>
