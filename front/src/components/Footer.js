@@ -19,7 +19,7 @@ function StickyFooter() {
           py: 3,
           px: 2,
           mt: "auto",
-          backgroundColor: "#FCCEAD",
+          backgroundColor: "black",
           marginTop: 10,
         }}>
         <div className="text-footer">

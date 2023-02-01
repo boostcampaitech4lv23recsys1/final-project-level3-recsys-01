@@ -1,6 +1,7 @@
 import "./LandingPage.css";
 import Grid from "@mui/material/Grid";
 import ProjectDescription from "./components/ProjectDescription";
+import back from "../../assets/images/LandingBack.png";
 
 function LandingPage() {
   return (
@@ -9,7 +10,7 @@ function LandingPage() {
         <ProjectDescription></ProjectDescription>
       </Grid>
       <Grid item xs className="grid-mainright">
-        dd
+        <div style={{ backgroundImage: { back } }} className="background"></div>
       </Grid>
     </Grid>
   );

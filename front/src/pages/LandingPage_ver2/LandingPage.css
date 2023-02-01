@@ -5,19 +5,23 @@
 }
 
 .grid-mainright {
-    display: flex;
-    justify-content: center;
+    background-image: url("../../assets/images/LandingBack.png");
+    background-repeat: no-repeat;
+    background-size:80%;
 }
 
 .text-defaultsetting {
     font-family: 'NanumSquareAcr';
+    text-align: left;
 }
 
 .text-slogan {
+    align-items: flex-start;
     color: #FCCEAD;
     margin-top: 300px;
     font-size: large;
     white-space: pre-line;
+    line-height: 20px
 }
 
 .text-ProjectSummary {
@@ -26,6 +30,7 @@
     font-family: 'NanumSquareAceb';
     font-size: xx-large;
     white-space: pre-line;
+    line-height: 40px;
 }
 
 .text-subsummary {
@@ -33,6 +38,7 @@
     margin-top: 30px;
     font-size: large;
     white-space: pre-line;
+    line-height: 20px
 }
 
 .button-gocodi {
@@ -48,4 +54,10 @@
     border: 0;
     margin-top: 20px;
     font-family: 'NanumSquareAcb';
+}
+
+.background {
+    background-image: url("../../assets/images/LandingBack.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
