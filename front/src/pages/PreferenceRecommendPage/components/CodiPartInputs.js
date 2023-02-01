@@ -1,4 +1,5 @@
 import * as React from "react";
+import clickIcon from "../../../assets/icons/click.png";
 import Stack from "@mui/material/Stack";
 import CodiPartButton from "../../../components/CodiPartButton";
 import "./CodiPartInputs.css";
@@ -51,7 +52,7 @@ function CodiPartInputs({
         {inputTop["category"] === "Overall" ? (
           <CodiPartButton
             codiPart="하의"
-            inputValue={{ label: "", img: "", category: "", id: "" }}
+            inputValue={{ label: "", img: clickIcon, category: "", id: "" }}
             setInputValue={setInputBottom}
             openPopover={false}
           />
