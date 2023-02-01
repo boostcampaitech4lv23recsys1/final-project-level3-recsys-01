@@ -1,13 +1,13 @@
 .grid-mainleft {
     display: flex;
     justify-content: center;
-    margin-left: 25px;
+    margin-left: 100px;
 }
 
 .grid-mainright {
-    background-image: url("../../assets/images/LandingBack.png");
+    background-image: url("../../assets/images/LandingBackVer2.png");
     background-repeat: no-repeat;
-    background-size:80%;
+    background-size:auto 100%;
 }
 
 .text-defaultsetting {
