@@ -1,13 +1,12 @@
 import "./App.css";
-import * as Api from "./api";
-// import { useState } from "react";
+import { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-
+import clickIcon from "./assets/icons/click.png";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import About from "./pages/About/About";
@@ -17,6 +16,49 @@ import PreferenceRecommendPage from "./pages/PreferenceRecommendPage/PreferenceR
 import PreferenceRecommendResultPage from "./pages/PreferenceRecommendResultPage/PreferenceRecommendResultPage";
 
 function App() {
+  const [inputHat, setInputHat] = useState({
+    label: "",
+    img: clickIcon,
+    id: "",
+    category: "",
+  });
+  const [inputHair, setInputHair] = useState({
+    label: "",
+    img: clickIcon,
+    id: "",
+    category: "",
+  });
+  const [inputFace, setInputFace] = useState({
+    label: "",
+    img: clickIcon,
+    id: "",
+    category: "",
+  });
+  const [inputTop, setInputTop] = useState({
+    label: "",
+    img: clickIcon,
+    id: "",
+    category: "",
+  });
+
+  const [inputBottom, setInputBottom] = useState({
+    label: "",
+    img: clickIcon,
+    id: "",
+    category: "",
+  });
+  const [inputShoes, setInputShoes] = useState({
+    label: "",
+    img: clickIcon,
+    id: "",
+    category: "",
+  });
+  const [inputWeapon, setInputWeapon] = useState({
+    label: "",
+    img: clickIcon,
+    id: "",
+    category: "",
+  });
   return (
     <Router>
       <Header />
@@ -27,7 +69,24 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route
           path="recommend/preference"
-          element={<PreferenceRecommendPage />}
+          element={
+            <PreferenceRecommendPage
+              inputHat={inputHat}
+              setInputHat={setInputHat}
+              inputHair={inputHair}
+              setInputHair={setInputHair}
+              inputFace={inputFace}
+              setInputFace={setInputFace}
+              inputTop={inputTop}
+              setInputTop={setInputTop}
+              inputBottom={inputBottom}
+              setInputBottom={setInputBottom}
+              inputShoes={inputShoes}
+              setInputShoes={setInputShoes}
+              inputWeapon={inputWeapon}
+              setInputWeapon={setInputWeapon}
+            />
+          }
         />
         <Route
           path="recommend/preference/result"
