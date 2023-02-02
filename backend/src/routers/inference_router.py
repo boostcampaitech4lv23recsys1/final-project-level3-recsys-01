@@ -3,6 +3,7 @@ from starlette.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Optional, List
 
+from collections import defaultdict
 from src.AI import InferenceNewMF
 from src.AI.config import MODEL_CONFIG
 
@@ -42,15 +43,16 @@ async def newMF_output(equips: InputItem):
     :param equips:
     :return:
     """
+    response = defaultdict(list)
     equips = dict(equips)
-    # for equip in equips:
-    #     if equips[equip]:
-    #         equips[equip] = [equips[equip], equips[equip], equips[equip]]
-    #     else:
-    #         equips[equip] = [1, 2, 3]
-    predicts = MODELS["newMF"].inference(equips)
 
-    return equips
+    predicts = MODELS["newMF"].inference(equips)
+    predicts = [list(map(lambda x: x[0], predict)) for predict in predicts]
+
+    for part, predicts in zip(["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"], predicts):
+        response[part] = predicts
+
+    return response
 
 
 @router.get("/submit/MCN", description="codi recommendation")

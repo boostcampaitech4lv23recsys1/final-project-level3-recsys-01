@@ -2,21 +2,21 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from uvicorn import run
 from dotenv import load_dotenv
-from
+load_dotenv(verbose=True)
+
+from pymongo import MongoClient
 import os
+import certifi
 
 from src.routers.items_router import router as items_router
 from src.routers.feedback_router import router as feedback_router
 from src.routers.inference_router import router as inference_router
 
 
-load_dotenv(verbose=True)
-
 # Port num
 PORT = int(os.getenv("PORT"))
 
 app = FastAPI()
-
 
 @app.on_event("startup")
 async def startup():

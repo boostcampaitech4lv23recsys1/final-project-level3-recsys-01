@@ -6,7 +6,6 @@ from src.database.init_db import db
 import json
 from bson import json_util
 
-
 class Items:
     def find_all() -> List[ItemSchema]:
         res = db.items.find({})

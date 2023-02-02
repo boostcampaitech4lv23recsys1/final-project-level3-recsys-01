@@ -22,7 +22,6 @@ class InferenceNewMF(object):
         self.item_parts = list()
         self.n_items = 0
         for part in ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"]:
-            print(part)
             item_part = Items.find_by_item_idxs(part)
             self.n_items += len(item_part)
             self.item_parts.append(item_part)
@@ -59,7 +58,7 @@ class InferenceNewMF(object):
                     else:
                         temp_equips[part_idx - 1] = any_item_in_part
 
-                    output = self.model(torch.tensor([temp_equips]))
+                    output = self.model(torch.tensor([temp_equips]).to(self.device))
 
                     part_scores.append(
                         (any_item_in_part, float(output))
