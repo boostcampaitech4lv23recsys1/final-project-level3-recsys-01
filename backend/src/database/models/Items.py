@@ -36,7 +36,7 @@ class Items:
 
         return res
 
-    def find_by_item_names(equip_category: str) -> List[str]:
+    def find_by_item_idxs(equip_category: str) -> List[str]:
         if equip_category == "Top":
             res = db.items.find(
                 {

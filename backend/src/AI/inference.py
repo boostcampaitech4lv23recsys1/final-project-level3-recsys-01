@@ -20,11 +20,12 @@ class InferenceNewMF(object):
                 file_name=self.model_path
             )
         self.item_parts = list()
-        self.n_items = 10101
-        # for part in ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"]:
-        #     item_part = Items.find_by_item_names(part)
-        #     self.n_items += len(item_part)
-        #     self.item_parts.append(item_part)
+        self.n_items = 0
+        for part in ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"]:
+            print(part)
+            item_part = Items.find_by_item_idxs(part)
+            self.n_items += len(item_part)
+            self.item_parts.append(item_part)
 
         self.model = NewMF(
             n_items=self.n_items,
@@ -40,7 +41,7 @@ class InferenceNewMF(object):
     @torch.no_grad()
     def inference(self, equips):
         predicts = list()
-
+        equips = list(equips.values())
         for part_idx, equip in enumerate(equips):
             if equip != -1:
                 predicts.append(
@@ -51,7 +52,7 @@ class InferenceNewMF(object):
 
                 item_part = self.item_parts[part_idx]
                 for any_item_in_part in item_part:
-                    temp_equips = equip[:]
+                    temp_equips = equips[:]
 
                     if part_idx < 4:
                         temp_equips[part_idx] = any_item_in_part

@@ -43,12 +43,12 @@ async def newMF_output(equips: InputItem):
     :return:
     """
     equips = dict(equips)
-    for equip in equips:
-        if equips[equip]:
-            equips[equip] = [equips[equip], equips[equip], equips[equip]]
-        else:
-            equips[equip] = [1, 2, 3]
-    # predicts = MODELS["newMF"].inference(equips)
+    # for equip in equips:
+    #     if equips[equip]:
+    #         equips[equip] = [equips[equip], equips[equip], equips[equip]]
+    #     else:
+    #         equips[equip] = [1, 2, 3]
+    predicts = MODELS["newMF"].inference(equips)
 
     return equips
 
