@@ -41,9 +41,9 @@ async def get_item_by_id(id: int) -> Dict:
     return {"status": "success", "item": res}
 
 
-@router.get("/items/name/{category}", description="장비 카테고리에 따른 정보를 불러옵니다.")
-async def get_items_by_category(category: str) -> Dict:
-    res = Items.find_by_item_names(category)
+@router.get("/items/idxs/{category}", description="장비 카테고리에 따른 정보를 불러옵니다.")
+async def get_item_idxs_by_category(category: str) -> Dict:
+    res = Items.find_by_item_idxs(category)
     if len(res) == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

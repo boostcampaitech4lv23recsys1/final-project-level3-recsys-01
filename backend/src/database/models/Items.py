@@ -6,7 +6,6 @@ from src.database.init_db import db
 import json
 from bson import json_util
 
-
 class Items:
     def find_all() -> List[ItemSchema]:
         res = db.items.find({})
@@ -36,7 +35,7 @@ class Items:
 
         return res
 
-    def find_by_item_names(equip_category: str) -> List[str]:
+    def find_by_item_idxs(equip_category: str) -> List[str]:
         if equip_category == "Top":
             res = db.items.find(
                 {
