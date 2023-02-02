@@ -21,9 +21,7 @@ function Feedback({ mode, setfeedback }) {
         className="button-goodbad"
         onClick={() => {
           onClickFeedback({ goodbad: "good" });
-          onClickDisabled();
-        }}
-        disabled={onClickDisabled({ mode })}>
+        }}>
         {mode === 1 ? (
           <img alt="" src={check} width="20" height="20"></img>
         ) : (
