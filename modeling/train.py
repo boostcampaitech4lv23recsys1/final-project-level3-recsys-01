@@ -9,6 +9,11 @@ from modeling.dataset import get_datasets
 from modeling.trainer import get_trainers
 from modeling.utilities import read_json, set_seed, data_split
 
+import wandb
+
+from pytz import timezone
+from datetime import datetime
+
 
 def main(config: Dict[str, Any]) -> None:
     preprocess = Preprocess(config)
@@ -30,6 +35,14 @@ def main(config: Dict[str, Any]) -> None:
     model = models.get_models(config)
     trainer = get_trainers(config, model, train_loader, valid_loader)
 
+    now = datetime.now(timezone("Asia/Seoul")).strftime(f"%Y-%m-%d_%H:%M")
+    wandb.init(
+        project=config["arch"]["type"],
+        entity="dino-final",
+        name=f"{now}_{args.user}",
+    )
+    wandb.watch(model)
+
     trainer.train()
 
 
@@ -45,6 +58,7 @@ if __name__ == "__main__":
     args.add_argument(
         "-g", "--gcs", default=False, type=bool, help="GCS 업로드 여부 선택 (default: False)"
     )
+    args.add_argument("--user", type=str, default=None)
     args = args.parse_args()
     config = read_json(args.config)
 

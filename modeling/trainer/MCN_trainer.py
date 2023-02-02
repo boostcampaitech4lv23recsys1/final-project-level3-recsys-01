@@ -11,6 +11,8 @@ from modeling.trainer.loss import get_loss
 from modeling.trainer.scheduler import get_scheduler
 from modeling.utils.gcs_helper import GCSHelper
 
+import wandb
+
 
 class MCNTrainer(object):
     def __init__(
@@ -60,7 +62,9 @@ class MCNTrainer(object):
                 self.best = auc
 
                 now = datetime.now(timezone("Asia/Seoul")).strftime(f"%Y%m%d-%H%M")
-                model_save_path = self.config["trainer"]["save_dir"] + f"/{self.model_name}_{now}.pt"
+                model_save_path = (
+                    self.config["trainer"]["save_dir"] + f"/{self.model_name}_{now}.pt"
+                )
                 torch.save(self.model.state_dict(), model_save_path)
                 print("Saved best model to {}".format(model_save_path))
 
@@ -104,7 +108,21 @@ class MCNTrainer(object):
                         total_losses.val,
                     )
                 )
+                log = {
+                    "clf_loss": clf_losses.val,
+                    "vse_loss": vse_losses.val,
+                    "features_loss": features_loss,
+                    "tmasks_loss": tmasks_loss,
+                    "total_loss": total_losses.val,
+                }
+                wandb.log(log, step=batch_num)
         print("Train Loss (clf_loss): {:.4f}".format(clf_losses.avg))
+        epoch_train_log = {
+            "train_clf_loss": clf_losses.avg,
+            "train_vse_loss": vse_losses.avg,
+            "train_total_loss": total_losses.avg,
+        }
+        wandb.log(epoch_train_log, step=epoch)
         auc = self.__val(epoch)
 
         return auc
@@ -139,6 +157,15 @@ class MCNTrainer(object):
         print("Positive loss: {:.4f}".format(positive_loss))
         positive_acc = sum(outputs[targets == 1] > 0.5) / len(outputs)
         print("Positive accuracy: {:.4f}".format(positive_acc))
+
+        epoch_valid_log = {
+            "valid_clf_loss": clf_losses.avg,
+            "aucroc": auc,
+            "accuracy@0.5": accuracy,
+            "positive_loss": positive_loss,
+            "positive_accuracy": positive_acc,
+        }
+        wandb.log(epoch_valid_log, step=epoch)
 
         return auc
 
