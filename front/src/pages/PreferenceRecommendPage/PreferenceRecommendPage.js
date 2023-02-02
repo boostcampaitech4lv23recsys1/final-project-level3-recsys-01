@@ -1,6 +1,8 @@
 import "./PreferenceRecommendPage.css";
+import Grid from "@mui/material/Grid";
 import CodiPartInputs from "./components/CodiPartInputs";
 import InfoTextAndVideo from "./components/InfoTextAndVideo";
+import GoCodiRecResult from "./components/GoCodiRecResult";
 
 function PreferenceRecommendPage({
   inputHat,
@@ -37,6 +39,14 @@ function PreferenceRecommendPage({
         inputWeapon={inputWeapon}
         setInputWeapon={setInputWeapon}
       />
+
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center">
+        <GoCodiRecResult />
+      </Grid>
     </div>
   );
 }
