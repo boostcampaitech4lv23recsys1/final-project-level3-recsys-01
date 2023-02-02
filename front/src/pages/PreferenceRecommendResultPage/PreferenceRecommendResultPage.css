@@ -49,6 +49,11 @@
     background-color: white;
 }
 
+.PRRP .button-goodbads {
+    display: inline-block;
+    vertical-align: middle;
+}
+
 .PRRP .box-bestcodibox {
     width: auto;
     height: 200px;
@@ -69,4 +74,8 @@
 
 .PPRP .block-recommenditem {
     margin: auto 0;
+}
+
+.button-good {
+
 }
