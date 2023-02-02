@@ -1,9 +1,10 @@
 .headerAppBar {
     align-items: center;
+    justify-content: center;
 }
 
 .button-menu {
-    padding-top: 2px;
+    padding-top: 8px;
 }
 
 .grid-center {

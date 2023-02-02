@@ -20,7 +20,11 @@ function Header() {
   const navigate = useNavigate();
   return (
     <ThemeProvider theme={headerTheme}>
-      <AppBar className="headerAppBar" position="static" color="primary">
+      <AppBar
+        className="headerAppBar"
+        position="static"
+        color="primary"
+        style={{ height: 60 }}>
         <Grid container>
           <Grid item xs></Grid>
           <Grid item xs={4} className="grid-center">
@@ -28,7 +32,7 @@ function Header() {
               <a onClick={() => navigate("/recommend")}>
                 <Typography
                   align="center"
-                  variant="h5"
+                  variant="h4"
                   color="white"
                   component="div"
                   fontFamily={"PyeongChangPeaceB"}>
