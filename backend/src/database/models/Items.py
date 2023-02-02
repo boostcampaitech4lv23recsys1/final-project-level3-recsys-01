@@ -27,9 +27,29 @@ class Items:
         else:
             res = db.items.find({"equip_category": equip_category})
             res = list(json.loads(json_util.dumps(res)))
+
         return res
 
     def find_by_item_id(item_id: int) -> Dict:
         res = db.items.find_one({"item_id": item_id})
         res = json.loads(json_util.dumps(res))
+
+        return res
+
+    def find_by_item_names(equip_category: str) -> List[str]:
+        if equip_category == "Top":
+            res = db.items.find(
+                {
+                    "$or": [
+                        {"equip_category": equip_category},
+                        {"equip_category": "Overall"},
+                    ],
+                },
+                {"index": 1, "_id": False},
+            )
+            res = [d["index"] for d in (json.loads(json_util.dumps(res)))]
+        else:
+            res = db.items.find({"equip_category": equip_category}, {"index": 1, "_id": False})
+            res = [d["index"] for d in (json.loads(json_util.dumps(res)))]
+
         return res

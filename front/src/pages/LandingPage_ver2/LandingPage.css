@@ -9,7 +9,7 @@
     justify-content: center;
 }
 
-.text-defaultsetting{
+.text-defaultsetting {
     font-family: 'NanumSquareAcr';
 }
 
@@ -37,4 +37,15 @@
 
 .button-gocodi {
     text-align: center;
+}
+
+.button-godig {
+    cursor: pointer;
+    width: 240px;
+    background-color: inherit;
+    font-size: 20px;
+    margin: "0auto";
+    border: 0;
+    margin-top: 20px;
+    font-family: 'NanumSquareAcb';
 }

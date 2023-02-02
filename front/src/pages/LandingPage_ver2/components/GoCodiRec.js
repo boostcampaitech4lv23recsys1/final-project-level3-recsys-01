@@ -16,9 +16,8 @@ function GoCodiRec() {
         backgroundColor: "#E5B8C8",
         color: "white",
         fontFamily: "NanumSquareAcb",
-        fontSize: 25,
-      }}
-      className="button-gorec">
+        fontSize: 30,
+      }}>
       <a onClick={() => navigate("preference")} style={{ color: "white" }}>
         {"코디 추천 받으러 가기"}
       </a>
