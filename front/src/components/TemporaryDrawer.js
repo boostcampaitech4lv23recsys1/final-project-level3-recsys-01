@@ -33,11 +33,7 @@ function TemporaryDrawer() {
   };
 
   const iconList = [recIcon, dignosisIcon, reviewIcon];
-  const pageList = [
-    "preference/result",
-    "preference/result",
-    "preference/result",
-  ];
+  const pageList = ["preference/", "preference/result", "preference/result"];
   const infoList = ["recommend", "about", "contact"];
 
   const list = (anchor) => (

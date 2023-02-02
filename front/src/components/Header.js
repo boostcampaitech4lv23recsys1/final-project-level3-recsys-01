@@ -11,7 +11,7 @@ import Grid from "@mui/material/Grid";
 const headerTheme = createTheme({
   palette: {
     primary: {
-      main: "#D6A5B6",
+      main: "#000000",
     },
   },
 });
@@ -30,7 +30,8 @@ function Header() {
                   align="center"
                   variant="h5"
                   color="white"
-                  component="div" fontFamily={'PyeongChangPeaceB'}>
+                  component="div"
+                  fontFamily={"PyeongChangPeaceB"}>
                   MESINSA
                 </Typography>
               </a>
@@ -41,7 +42,7 @@ function Header() {
           </Grid>
         </Grid>
       </AppBar>
-    </ThemeProvider >
+    </ThemeProvider>
   );
 }
 export default Header;

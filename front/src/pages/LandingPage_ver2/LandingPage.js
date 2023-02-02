@@ -9,7 +9,7 @@ function LandingPage() {
         <ProjectDescription></ProjectDescription>
       </Grid>
       <Grid item xs className="grid-mainright">
-        dd
+        <div className="background"></div>
       </Grid>
     </Grid>
   );
