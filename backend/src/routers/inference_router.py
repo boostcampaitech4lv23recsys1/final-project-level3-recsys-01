@@ -1,20 +1,14 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 from starlette.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Optional, List
 
 from collections import defaultdict
 from src.AI import InferenceNewMF
-from src.AI.config import MODEL_CONFIG
-
+from src.AI.inference import get_model
 
 router = APIRouter(prefix="/inference")
 
-MODELS = {
-    "newMF": InferenceNewMF(
-        model_config=MODEL_CONFIG["newMF"],
-    ),
-}
 
 class InputItem(BaseModel):
     Hat: Optional[int]
@@ -36,8 +30,10 @@ class OutputItem(BaseModel):
     Weapon: List[int]
 
 
-@router.post("/submit/newMF", response_model=OutputItem, description="codi recommendation")
-async def newMF_output(equips: InputItem):
+@router.post(
+    "/submit/newMF", response_model=OutputItem, description="codi recommendation"
+)
+async def newMF_output(equips: InputItem, model: InferenceNewMF = Depends(get_model)):
     """
     get_model_output 실행~
     :param equips:
@@ -46,16 +42,18 @@ async def newMF_output(equips: InputItem):
     response = defaultdict(list)
     equips = dict(equips)
 
-    predicts = MODELS["newMF"].inference(equips)
+    predicts = await model.inference(equips)
     predicts = [list(map(lambda x: x[0], predict)) for predict in predicts]
 
-    for part, predicts in zip(["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"], predicts):
+    for part, predicts in zip(
+        ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"], predicts
+    ):
         response[part] = predicts
 
     return response
 
 
-@router.get("/submit/MCN", description="codi recommendation")
+@router.get("/submit/MCN", response_model=OutputItem, description="codi recommendation")
 async def mcn_output(equips: InputItem):
     """
     get_model_output 실행~
