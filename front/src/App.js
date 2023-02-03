@@ -117,9 +117,26 @@ function App() {
             />
           }
         />
+        {console.log(inputHat)}
+        {console.log(inputHair)}
+        {console.log(inputFace)}
+        {console.log(inputTop)}
+        {console.log(inputBottom)}
+        {console.log(inputShoes)}
+        {console.log(inputWeapon)}
         <Route
           path="recommend/preference/result"
-          element={<PreferenceRecommendResultPage />}
+          element={
+            <PreferenceRecommendResultPage
+              inputHat={inputHat}
+              inputHair={inputHair}
+              inputFace={inputFace}
+              inputTop={inputTop}
+              inputBottom={inputBottom}
+              inputShoes={inputShoes}
+              inputWeapon={inputWeapon}
+            />
+          }
         />
       </Routes>
       <Footer />
