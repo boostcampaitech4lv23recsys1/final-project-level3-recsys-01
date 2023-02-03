@@ -2,6 +2,8 @@ import TitleFixItem from "./components/TitleFixItem";
 import BestCodiTopThree from "./components/BestCodiTopThree";
 import RetryButton from "./components/RetryButton";
 import "./PreferenceRecommendResultPage.css";
+import * as API from "../../api";
+import { useState, useEffect } from "react";
 
 function PreferenceRecommendResultPage({
   inputHat,
@@ -38,13 +40,26 @@ function PreferenceRecommendResultPage({
 
   for (let idx = 0; idx < propsParts.length; idx++) {
     if (propsParts[idx]["label"]) {
-      inputParts[codiPartEngName[idx]] = propsParts[idx]["index"];
+      inputParts[codiPartEngName[idx]] = Number(propsParts[idx]["index"]);
     } else {
       inputParts[codiPartEngName[idx]] = -1;
     }
   }
   console.log("asdfadsfdsafsfsadfdsafdasfdsafaf");
   console.log(inputParts);
+  const [recommendData, setRecommendData] = useState({});
+
+  const postCodiPartData = async () => {
+    const res = await API.post("inference/submit/newMF", inputParts);
+    const data = res.data;
+    console.log("ppp");
+    console.log(data);
+    setRecommendData(data);
+  };
+  useEffect(() => {
+    postCodiPartData();
+  }, []);
+  console.log(recommendData);
 
   // const postCodiPartData = async () => {
   //   try {
@@ -61,6 +76,7 @@ function PreferenceRecommendResultPage({
   //     continue;
   //   }
   // }
+  console.log("f");
   console.log("ffffffffffffffffffffffffffffffffffffffffffff");
   console.log(fixPartList);
   // const fixPartList = ["헤어", "상의", "하의", "신발", "무기"];
