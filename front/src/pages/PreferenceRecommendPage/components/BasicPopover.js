@@ -12,6 +12,7 @@ function BasicPopover({
   inputImage,
   inputId,
   inputCategory,
+  inputIndex,
   openPopover,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -64,6 +65,7 @@ function BasicPopover({
             inputImage={inputImage}
             inputId={inputId}
             inputCategory={inputCategory}
+            inputIndex={inputIndex}
             setAnchorEl={setAnchorEl}
           />
         </div>

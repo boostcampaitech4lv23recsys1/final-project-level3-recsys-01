@@ -34,7 +34,9 @@ function BasicSearch({ codiPart, onSearchChange, inputValue, setAnchorEl }) {
             return {
               label: currentItem["name"],
               img: currentItem["gcs_image_url"],
-              id: currentItem["item_id"] + " " + currentItem["equip_category"],
+              id: currentItem["item_id"],
+              category: currentItem["equip_category"],
+              index: currentItem["index"],
             };
           }),
         );
@@ -76,12 +78,13 @@ function BasicSearch({ codiPart, onSearchChange, inputValue, setAnchorEl }) {
       onInputChange={(event, newInputValue) => {
         let newInputImage = event.target.children[0].src;
         let newInputAlt = event.target.children[0].alt.split(" ");
-        let [newInputId, newInputCategory] = newInputAlt;
+        let [newInputId, newInputCategory, newInputIndex] = newInputAlt;
         let updatedInputValue = {
           label: newInputValue,
           img: newInputImage,
           id: newInputId,
           category: newInputCategory,
+          index: newInputIndex,
         };
         onSearchChange(updatedInputValue);
         setAnchorEl(null);
@@ -96,7 +99,13 @@ function BasicSearch({ codiPart, onSearchChange, inputValue, setAnchorEl }) {
             width="20"
             src={codiPartData.img}
             srcSet={`${codiPartData.img} 2x`}
-            alt={codiPartData.id + " " + codiPartData.category}
+            alt={
+              codiPartData.id +
+              " " +
+              codiPartData.category +
+              " " +
+              codiPartData.index
+            }
           />
           {codiPartData.label}
         </Box>

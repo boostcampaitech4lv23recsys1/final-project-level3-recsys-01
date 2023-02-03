@@ -60,7 +60,7 @@ function TemporaryDrawer() {
       </List>
       <Divider />
       <List>
-        {["Home", "About", "Contact"].map((text, index) => (
+        {["Home", "About"].map((text, index) => (
           <a onClick={() => navigate(infoList[index])} key={text}>
             <ListItem alignItems="flex-start" disablePadding>
               <ListItemButton>
