@@ -3,6 +3,8 @@ import BestCodi from "./BsetCodi";
 import Grid from "@mui/material/Grid";
 
 function BestCodiTopThree({ fixPartList }) {
+  console.log("beset");
+  console.log(fixPartList);
   return (
     <Grid>
       <Grid item xs={12}>

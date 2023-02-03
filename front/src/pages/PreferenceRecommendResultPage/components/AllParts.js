@@ -1,22 +1,30 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
-import FixCodiPartButton from "./FixCodiPartButton";
+import AllCodiPartButton from "./AllCodiPartButton";
 
 function AllParts({ fixPartList }) {
   const allPartsName = ["모자", "성형", "헤어", "상의", "하의", "신발", "무기"];
+  console.log(fixPartList);
+  console.log("aassssssaaa");
   const collectAllPart = () => {
     const all = [];
     for (let idx = 0; idx < allPartsName.length; idx++) {
-      if (fixPartList.includes(allPartsName[idx])) {
-        all.push(
-          <Grid item xs={1} className="button-fixitem" key={allPartsName[idx]}>
-            <FixCodiPartButton codiPart={allPartsName[idx]}></FixCodiPartButton>
-          </Grid>,
-        );
-      } else {
+      for (let id = 0; id < fixPartList.length; id++) {
+        if (allPartsName[idx] === fixPartList[id]) {
+          all.push(
+            <Grid
+              item
+              xs={1}
+              className="button-fixitem"
+              key={allPartsName[idx]}>
+              <AllCodiPartButton codiPart={fixPartList[id]}></AllCodiPartButton>
+            </Grid>,
+          );
+          continue;
+        }
         all.push(
           <Grid item xs={1} className="button-recitem" key={allPartsName[idx]}>
-            <FixCodiPartButton codiPart={allPartsName[idx]}></FixCodiPartButton>
+            <AllCodiPartButton codiPart={allPartsName[idx]}></AllCodiPartButton>
           </Grid>,
         );
       }
