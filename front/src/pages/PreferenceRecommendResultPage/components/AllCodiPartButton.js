@@ -11,11 +11,11 @@ function AllCodiPartButton({ partName, codiPart }) {
 
   return (
     <Stack direction="column" spacing={1} alignItems="center">
-      <Typography>{codiPart["name"]}</Typography>
       <Fab aria-label="NotClickable">
         <img alt="" src={codiPart["gcs_image_url"]} />
       </Fab>
-      <Typography>{partName}</Typography>{" "}
+      <Typography>{codiPart["name"]}</Typography>
+      <Typography>{partName}</Typography>
     </Stack>
   );
 }
