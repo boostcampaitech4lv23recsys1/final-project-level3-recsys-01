@@ -15,3 +15,10 @@ if MONGODB_URI is None:
 else:
     print("정상적으로 MongoDB 서버에 연결되었습니다.")
 db = client[MONGODB_DATABASE_NAME]
+
+
+async def get_db():
+    try:
+        yield db
+    finally:
+        pass

@@ -11,7 +11,7 @@ function RetryButton() {
       variant="extended"
       sx={{
         width: 250,
-        backgroundColor: "#E5B8C8",
+        backgroundColor: "#8A37FF",
         color: "white",
         fontFamily: "NanumSquareAcb",
         fontSize: 20,

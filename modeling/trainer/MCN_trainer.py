@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision
-import datetime
+from datetime import datetime
 
 from pytz import timezone
 from sklearn import metrics
@@ -17,10 +17,10 @@ import wandb
 class MCNTrainer(object):
     def __init__(
         self,
-        config,
-        model,
-        train_loader,
-        val_loader,
+            config,
+            model,
+            train_loader,
+            val_loader,
     ):
         self.config = config
         self.model = model
@@ -32,6 +32,7 @@ class MCNTrainer(object):
         self.scheduler = get_scheduler(self.optimizer, config["trainer"])
         self.epochs = config["trainer"]["epochs"]
         self.best = float("-inf")
+        self.print_every = config["trainer"]["print_every"]
 
         self.model_name = "MCN"
         self.gcs_helper = GCSHelper(
@@ -51,15 +52,15 @@ class MCNTrainer(object):
             vse_losses = AverageMeter()
 
             self.model.train()
-            auc = self.__train(
+            accuracy = self.__train(
                 epoch=epoch,
                 total_losses=total_losses,
                 clf_losses=clf_losses,
                 vse_losses=vse_losses,
             )
 
-            if auc > self.best:
-                self.best = auc
+            if accuracy > self.best:
+                self.best = accuracy
 
                 now = datetime.now(timezone("Asia/Seoul")).strftime(f"%Y%m%d-%H%M")
                 model_save_path = (
@@ -95,7 +96,7 @@ class MCNTrainer(object):
             self.model.zero_grad()
             total_loss.backward()
             self.optimizer.step()
-            if batch_num % 500 == 0:
+            if batch_num % self.print_every == 0:
                 print(
                     "[{}/{}] #{} clf_loss: {:.4f}, vse_loss: {:.4f}, features_loss: {:.4f}, tmasks_loss: {:.4f}, total_loss:{:.4f}".format(
                         epoch,
@@ -117,15 +118,18 @@ class MCNTrainer(object):
                 }
                 wandb.log(log, step=batch_num)
         print("Train Loss (clf_loss): {:.4f}".format(clf_losses.avg))
+
         epoch_train_log = {
             "train_clf_loss": clf_losses.avg,
             "train_vse_loss": vse_losses.avg,
             "train_total_loss": total_losses.avg,
         }
         wandb.log(epoch_train_log, step=epoch)
-        auc = self.__val(epoch)
 
-        return auc
+        accuracy = self.__val(epoch)
+
+
+        return accuracy
 
     def __val(self, epoch):
         print("Valid Phase, Epoch: {}".format(epoch))
@@ -148,8 +152,6 @@ class MCNTrainer(object):
         print("Valid Loss (clf_loss): {:.4f}".format(clf_losses.avg))
         outputs = torch.cat(outputs).cpu().data.numpy()
         targets = torch.cat(targets).cpu().data.numpy()
-        auc = metrics.roc_auc_score(targets, outputs)
-        print("AUC: {:.4f}".format(auc))
         predicts = np.where(outputs > 0.5, 1, 0)
         accuracy = metrics.accuracy_score(predicts, targets)
         print("Accuracy@0.5: {:.4f}".format(accuracy))
@@ -160,14 +162,13 @@ class MCNTrainer(object):
 
         epoch_valid_log = {
             "valid_clf_loss": clf_losses.avg,
-            "aucroc": auc,
             "accuracy@0.5": accuracy,
             "positive_loss": positive_loss,
             "positive_accuracy": positive_acc,
         }
         wandb.log(epoch_valid_log, step=epoch)
 
-        return auc
+        return accuracy
 
 
 class AverageMeter(object):

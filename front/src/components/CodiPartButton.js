@@ -12,6 +12,7 @@ function CodiPartButton({ codiPart, inputValue, setInputValue, openPopover }) {
       img: newInputValue["img"],
       id: newInputValue["id"],
       category: newInputValue["category"],
+      index: newInputValue["index"],
     };
     setInputValue(updatedInputValue);
   }
@@ -28,6 +29,7 @@ function CodiPartButton({ codiPart, inputValue, setInputValue, openPopover }) {
         inputImage={inputValue["img"]}
         inputId={inputValue["id"]}
         inputCategory={inputValue["category"]}
+        inputIndex={inputValue["index"]}
         openPopover={openPopover}
       />
       <Typography>{inputValue["label"]}</Typography>

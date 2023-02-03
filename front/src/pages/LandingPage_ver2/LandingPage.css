@@ -1,7 +1,7 @@
 .grid-mainleft {
     display: flex;
     justify-content: center;
-    margin-left: 100px;
+    margin-left: 50px;
 }
 
 .grid-mainright {
@@ -17,7 +17,7 @@
 
 .text-slogan {
     align-items: flex-start;
-    color: #FCCEAD;
+    color: #37F19C;
     margin-top: 300px;
     font-size: large;
     white-space: pre-line;
@@ -28,13 +28,13 @@
     color: black;
     margin-top: 10px;
     font-family: 'NanumSquareAceb';
-    font-size: xx-large;
+    font-size: 2.5em;
     white-space: pre-line;
     line-height: 40px;
 }
 
 .text-subsummary {
-    color: #FCCEAD;
+    color: #D9D9D9;
     margin-top: 30px;
     font-size: large;
     white-space: pre-line;

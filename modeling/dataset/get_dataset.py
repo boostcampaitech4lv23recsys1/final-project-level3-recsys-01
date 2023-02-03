@@ -16,4 +16,9 @@ def get_datasets(
             f"그런 모델은 없어요~ 입력한 모델: {model_name}, 가능한 모델: {available_models}"
         )
 
-    return getattr(datasets, config["arch"]["type"])(inter_data, item_data)
+    return getattr(datasets, config["arch"]["type"])(
+        inter_data=inter_data,
+        item_data=item_data,
+        negative_ratio=config["dataset"]["negative_ratio"],
+        n_change_parts=config["dataset"]["n_change_parts"],
+    )

@@ -1,6 +1,8 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import FixCodiPartButton from "./FixCodiPartButton";
+import basicItem from "../../../assets/images/basicItem.png";
+import fixItem from "../../../assets/images/fixItem.png";
 
 function AllParts({ fixPartList }) {
   const allPartsName = ["모자", "성형", "헤어", "상의", "하의", "신발", "무기"];
@@ -10,13 +12,17 @@ function AllParts({ fixPartList }) {
       if (fixPartList.includes(allPartsName[idx])) {
         all.push(
           <Grid item xs={1} className="button-fixitem" key={allPartsName[idx]}>
-            <FixCodiPartButton codiPart={allPartsName[idx]}></FixCodiPartButton>
+            <FixCodiPartButton
+              codiPart={allPartsName[idx]}
+              bgImage={fixItem}></FixCodiPartButton>
           </Grid>,
         );
       } else {
         all.push(
           <Grid item xs={1} className="button-recitem" key={allPartsName[idx]}>
-            <FixCodiPartButton codiPart={allPartsName[idx]}></FixCodiPartButton>
+            <FixCodiPartButton
+              codiPart={allPartsName[idx]}
+              bgImage={basicItem}></FixCodiPartButton>
           </Grid>,
         );
       }
