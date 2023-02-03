@@ -13,7 +13,7 @@ function GoCodiRec() {
         border: 1,
         width: 500,
         height: 60,
-        backgroundColor: "#E5B8C8",
+        backgroundColor: "#8A37FF",
         color: "white",
         fontFamily: "NanumSquareAcb",
         fontSize: 30,

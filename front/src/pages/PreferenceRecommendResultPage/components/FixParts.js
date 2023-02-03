@@ -1,6 +1,7 @@
 import React from "react";
 import FixCodiPartButton from "./FixCodiPartButton";
 import Grid from "@mui/material/Grid";
+import fixItem from "../../../assets/images/fixItem.png";
 
 function FixParts({ fixPartList }) {
   const collectFixPart = () => {
@@ -8,7 +9,9 @@ function FixParts({ fixPartList }) {
     for (let idx = 0; idx < fixPartList.length; idx++) {
       fixes.push(
         <Grid item xs={1} className="button-fixparts" key={fixPartList[idx]}>
-          <FixCodiPartButton codiPart={fixPartList[idx]}></FixCodiPartButton>
+          <FixCodiPartButton
+            codiPart={fixPartList[idx]}
+            bgImage={fixItem}></FixCodiPartButton>
         </Grid>,
       );
     }
