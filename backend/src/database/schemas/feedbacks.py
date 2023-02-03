@@ -2,14 +2,19 @@ from pydantic import BaseModel
 
 
 # 추천 결과에 대한 피드백 정보
+class FeedbackItem(BaseModel):
+    item_id: int
+    item_index: int
+
+
 class FeedbackSchema(BaseModel):
-    hat_item_id: int
-    hair_item_id: int
-    face_item_id: int
-    top_item_id: int
-    bottom_item_id: int
-    shoes_item_id: int
-    weapon_item_id: int
+    Hat: FeedbackItem
+    Hair: FeedbackItem
+    Face: FeedbackItem
+    Top: FeedbackItem
+    Bottom: FeedbackItem
+    Shoes: FeedbackItem
+    Weapon: FeedbackItem
     is_positive: bool
 
     class Config:
