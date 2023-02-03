@@ -1,5 +1,5 @@
 import React from "react";
-import BestCodi from "./BsetCodi";
+import BestCodi from "./BestCodi";
 import Grid from "@mui/material/Grid";
 
 function BestCodiTopThree({ fixPartList }) {

@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import * as API from "../../../api";
 
-function FixCodiPartButton({ codiPart }) {
+function FixCodiPartButton({ codiPart, bgImage }) {
   const itemImg = null;
   console.log(codiPart[0]["label"]);
   console.log("dkdkdkdkdkdkdkdkdkdkdkdkdkdkd");

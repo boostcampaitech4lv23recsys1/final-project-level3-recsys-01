@@ -1,5 +1,5 @@
 import TitleFixItem from "./components/TitleFixItem";
-import BestCodiTopThree from "./components/BsetCodiTopThree";
+import BestCodiTopThree from "./components/BestCodiTopThree";
 import RetryButton from "./components/RetryButton";
 import "./PreferenceRecommendResultPage.css";
 
