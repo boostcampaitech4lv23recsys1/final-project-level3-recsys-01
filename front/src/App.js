@@ -14,6 +14,7 @@ import Contact from "./pages/Contact/Contact";
 import LandingPage from "./pages/LandingPage_ver2/LandingPage"; // check Landing Page version
 import PreferenceRecommendPage from "./pages/PreferenceRecommendPage/PreferenceRecommendPage";
 import PreferenceRecommendResultPage from "./pages/PreferenceRecommendResultPage/PreferenceRecommendResultPage";
+import CodiDiagnosisPage from "./pages/CodiDiagnosisPage/CodiDiagnosisPage";
 
 function App() {
   const [inputHat, setInputHat] = useState({
@@ -66,7 +67,8 @@ function App() {
         <Route path="/" exact element={<Navigate to="/recommend" />} />
         <Route path="/recommend" exact element={<LandingPage />} />
         <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
+        {/* <Route path="/contact" element={<Contact />} /> */}
+        <Route path="/diagnosis" element={<CodiDiagnosisPage />} />
         <Route
           path="recommend/preference"
           element={
