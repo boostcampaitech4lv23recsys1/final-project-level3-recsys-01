@@ -4,8 +4,6 @@ import Grid from "@mui/material/Grid";
 import fixItem from "../../../assets/images/fixItem.png";
 
 function FixParts({ fixPartList }) {
-  console.log("fixpartsssssssssssssssss");
-  console.log(fixPartList);
   const collectFixPart = () => {
     const fixes = [];
     for (let idx = 0; idx < fixPartList.length; idx++) {

@@ -23,8 +23,7 @@ function PreferenceRecommendResultPage({
     inputShoes,
     inputWeapon,
   ];
-  // for part in parts:
-  //   part['label']!="": //사용자가 고정했다는 뜻
+
   const codiPartName = ["모자", "헤어", "성형", "상의", "하의", "신발", "무기"];
   const codiPartEngName = [
     "Hat",
@@ -36,18 +35,25 @@ function PreferenceRecommendResultPage({
     "Weapon",
   ];
   const fixPartList = [];
+  const fixPartListKorEng = [];
   let inputParts = {};
 
   for (let idx = 0; idx < propsParts.length; idx++) {
     if (propsParts[idx]["label"]) {
       inputParts[codiPartEngName[idx]] = Number(propsParts[idx]["index"]);
+      fixPartList.push([
+        propsParts[idx],
+        codiPartName[idx],
+        codiPartEngName[idx],
+      ]);
+      fixPartListKorEng.push(codiPartEngName[idx]);
     } else {
       inputParts[codiPartEngName[idx]] = -1;
     }
   }
-  console.log("asdfadsfdsafsfsadfdsafdasfdsafaf");
-  console.log(inputParts);
+
   const [recommendData, setRecommendData] = useState({});
+  const [loadingPage, setLoadingPage] = useState(false);
 
   const postCodiPartData = async () => {
     const res = await API.post("inference/submit/newMF", inputParts);
@@ -55,37 +61,24 @@ function PreferenceRecommendResultPage({
     console.log("ppp");
     console.log(data);
     setRecommendData(data);
+    setLoadingPage(true);
   };
   useEffect(() => {
     postCodiPartData();
   }, []);
-  console.log(recommendData);
 
-  // const postCodiPartData = async () => {
-  //   try {
-  //     const res = await API.post(`inference/submit/newMF/${inputParts}`);
-  //     const data = res.data.items;
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-  // for (let idx = 0; idx < 7; idx++) {
-  //   if (propsParts[idx]["label"]) {
-  //     fixPartList.push([propsParts[idx], codiPartName[idx]]);
-  //   } else {
-  //     continue;
-  //   }
-  // }
-  console.log("f");
-  console.log("ffffffffffffffffffffffffffffffffffffffffffff");
-  console.log(fixPartList);
-  // const fixPartList = ["헤어", "상의", "하의", "신발", "무기"];
-  return (
-    <div className="PRRP">
-      <TitleFixItem fixPartList={fixPartList}></TitleFixItem>
-      <BestCodiTopThree fixPartList={fixPartList}></BestCodiTopThree>
-      <RetryButton></RetryButton>
-    </div>
-  );
+  if (!loadingPage) {
+    return <h1>please wait</h1>;
+  } else {
+    return (
+      <div className="PRRP">
+        <TitleFixItem fixPartList={fixPartList}></TitleFixItem>
+        <BestCodiTopThree
+          fixPartList={fixPartListKorEng}
+          recommendData={recommendData}></BestCodiTopThree>
+        <RetryButton></RetryButton>
+      </div>
+    );
+  }
 }
 export default PreferenceRecommendResultPage;

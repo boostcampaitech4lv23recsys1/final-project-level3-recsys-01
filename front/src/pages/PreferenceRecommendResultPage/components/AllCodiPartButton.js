@@ -4,29 +4,18 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import * as API from "../../../api";
 
-function AllCodiPartButton({ codiPart }) {
-  const postCodiPartData = async (active) => {
-    try {
-      const res = await API.get(`inference/submit/newMF/`);
-      const data = res.data.items;
-      if (active) {
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+function AllCodiPartButton({ partName, codiPart }) {
   const itemImg = null;
-  console.log(codiPart[0]["label"]);
+  console.log(codiPart);
   console.log("dkdkdkdkdkdkdkdkdkdkdkdkdkdkd");
 
   return (
     <Stack direction="column" spacing={1} alignItems="center">
-      <Typography>{codiPart}</Typography>
+      <Typography>{codiPart["name"]}</Typography>
       <Fab aria-label="NotClickable">
-        <img alt="" src="" />
+        <img alt="" src={codiPart["gcs_image_url"]} />
       </Fab>
-      <Typography>{}</Typography>{" "}
+      <Typography>{partName}</Typography>{" "}
     </Stack>
   );
 }
