@@ -58,3 +58,10 @@ async def find_by_item_idxs(equip_category: str, db: Database) -> List[str]:
         res = [d["index"] for d in (json.loads(json_util.dumps(res)))]
 
     return res
+
+
+async def find_by_index(index: int, db: Database) -> Dict:
+    res = db.items.find_one({"index": index})
+    res = json.loads(json_util.dumps(res))
+
+    return res
