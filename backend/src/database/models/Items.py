@@ -37,18 +37,36 @@ class Items:
 
     def find_by_item_idxs(equip_category: str) -> List[str]:
         if equip_category == "Top":
-            res = db.items.find(
-                {
-                    "$or": [
-                        {"equip_category": equip_category},
-                        {"equip_category": "Overall"},
-                    ],
-                },
-                {"index": 1, "_id": False},
+            # res = db.items.find({
+            #     "$and":
+            #     [{
+            #         "$or": [
+            #             {"equip_category": equip_category},
+            #             {"equip_category": "Overall"},
+            #         ]},
+            #         {"$not": {"overall_category": "dummy"}}
+            #     ]
+            # },
+            #     {"index": 1, "_id": False},
+            # )
+            # res = [d["index"] for d in (json.loads(json_util.dumps(res)))]
+            res = db.items.find({
+                    "$and": [
+                        {"equip_category": { "$in": [equip_category, "Overall"]}},
+                        {"overall_category": {"$ne": "dummy"}}
+                    ]
+            },
+                    {"index": 1, "_id": False}
             )
             res = [d["index"] for d in (json.loads(json_util.dumps(res)))]
         else:
-            res = db.items.find({"equip_category": equip_category}, {"index": 1, "_id": False})
+            res = db.items.find({
+                "$and": [
+                    {"equip_category": equip_category},
+                    {"overall_category": {"$ne": "dummy"}}
+                ]},
+                {"index": 1, "_id": False}
+            )
             res = [d["index"] for d in (json.loads(json_util.dumps(res)))]
 
         return res

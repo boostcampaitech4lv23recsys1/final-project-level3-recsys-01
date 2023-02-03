@@ -15,15 +15,15 @@ class InferenceNewMF(object):
                 key_path="src/utils/gcs_key.json",
                 bucket_name="maple_trained_model"
             )
+            os.makedirs('/'.join(self.model_path.split("/")[:-1]), exist_ok=True)
             gcs_helper.download_file_from_gcs(
                 blob_name="NewMF/NewMF_latest.pt",
                 file_name=self.model_path
             )
         self.item_parts = list()
-        self.n_items = 0
+        self.n_items = 10101
         for part in ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"]:
             item_part = Items.find_by_item_idxs(part)
-            self.n_items += len(item_part)
             self.item_parts.append(item_part)
 
         self.model = NewMF(
