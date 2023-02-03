@@ -1,16 +1,22 @@
 from fastapi import APIRouter, HTTPException, status, Depends
+from pymongo.database import Database
 from starlette.responses import JSONResponse
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, Dict, List
 
 from collections import defaultdict
 from src.AI import InferenceNewMF
 from src.AI.inference import get_model
 
+from src.database.init_db import get_db
+from src.database.models.crud_item import (
+    find_by_index,
+)
+
 router = APIRouter(prefix="/inference")
 
 
-class InputItem(BaseModel):
+class InferenceInput(BaseModel):
     Hat: Optional[int]
     Hair: Optional[int]
     Face: Optional[int]
@@ -20,41 +26,65 @@ class InputItem(BaseModel):
     Weapon: Optional[int]
 
 
-class OutputItem(BaseModel):
-    Hat: List[int]
-    Hair: List[int]
-    Face: List[int]
-    Top: List[int]
-    Bottom: List[int]
-    Shoes: List[int]
-    Weapon: List[int]
+class ResultItem(BaseModel):
+    item_id: int
+    name: str
+    gcs_image_url: str
+
+
+class InferenceResult(BaseModel):
+    Hat: ResultItem
+    Hair: ResultItem
+    Face: ResultItem
+    Top: ResultItem
+    Bottom: ResultItem
+    Shoes: ResultItem
+    Weapon: ResultItem
 
 
 @router.post(
-    "/submit/newMF", response_model=OutputItem, description="codi recommendation"
+    "/submit/newMF",
+    response_model=List[InferenceResult],
+    description="codi recommendation",
 )
-async def newMF_output(equips: InputItem, model: InferenceNewMF = Depends(get_model)):
+async def newMF_output(
+    equips: InferenceInput,
+    model: InferenceNewMF = Depends(get_model),
+    db: Database = Depends(get_db),
+):
     """
     get_model_output 실행~
     :param equips:
     :return:
     """
-    response = defaultdict(list)
-    equips = dict(equips)
+    equips_dict = equips.dict(exclude_none=False)
+    res = []
 
-    predicts = await model.inference(equips)
+    predicts = await model.inference(equips_dict)
+    parts = ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"]
     predicts = [list(map(lambda x: x[0], predict)) for predict in predicts]
+    predicts = list(zip(*predicts))
 
-    for part, predicts in zip(
-        ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"], predicts
-    ):
-        response[part] = predicts
+    for idx in range(len(predicts)):
+        codi_set = dict()
+        for i, part in enumerate(parts):
+            item = await find_by_index(predicts[idx][i], db)
+            codi_set[part] = {
+                "item_id": item["item_id"],
+                "name": item["name"],
+                "gcs_image_url": item["gcs_image_url"],
+            }
+        res.append(codi_set)
 
-    return response
+    return res
 
 
-@router.get("/submit/MCN", response_model=OutputItem, description="codi recommendation")
-async def mcn_output(equips: InputItem):
+@router.get(
+    "/submit/MCN",
+    response_model=List[InferenceResult],
+    description="codi recommendation",
+)
+async def mcn_output(equips: InferenceInput):
     """
     get_model_output 실행~
     :param equips:
