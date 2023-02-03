@@ -12,10 +12,9 @@ from tqdm import tqdm
 
 def drop_columns(data: pd.DataFrame) -> pd.DataFrame:
     """
-    사용하는 컬럼만 놔두고 나머진 버리기
+    사용하는 컬럼만 놔두고 나머진 버리기. nickname도 이젠 고려 안함
     """
     use_columns = [
-        "nickname",
         "codi-hat",
         "codi-hair",
         "codi-face",
@@ -27,20 +26,20 @@ def drop_columns(data: pd.DataFrame) -> pd.DataFrame:
     return data[use_columns]
 
 
+def drop_exact_same(data: pd.DataFrame) -> pd.DataFrame:
+    """
+    장비가 모두 다 동일한 경우는 하나만 고려
+    """
+    return data.drop_duplicates().reset_index(drop=True)
+
+
 def drop_na(data: pd.DataFrame) -> pd.DataFrame:
     """
-    모든 데이터가 다 - 인 경우 버리기
+    4개 이상 - 인 경우 버리기
     """
-    drop_index = data[
-        (data["codi-hat"] == "-")
-        & (data["codi-hair"] == "-")
-        & (data["codi-face"] == "-")
-        & (data["codi-top"] == "-")
-        & (data["codi-bottom"] == "-")
-        & (data["codi-shoes"] == "-")
-        & (data["codi-weapon"] == "-")
-    ].index
-    data = data.drop(drop_index, axis=0).reset_index(drop=True)
+    data["count"] = data.apply(lambda x: sum(x == "-"), axis=1)
+
+    data = data[data["count"] <= 4].drop(["count"], axis=1).reset_index(drop=True)
     return data
 
 
@@ -51,13 +50,6 @@ def fill_hat_and_shoes_as_transparency(data: pd.DataFrame) -> pd.DataFrame:
     data.loc[data["codi-hat"] == "-", "codi-hat"] = "투명모자"
     data.loc[data["codi-shoes"] == "-", "codi-shoes"] = "투명신발"
     return data
-
-
-def drop_exact_same(data: pd.DataFrame) -> pd.DataFrame:
-    """
-    닉네임, 장비가 모두 다 동일한 경우는 하나만 고려
-    """
-    return data.drop_duplicates().reset_index(drop=True)
 
 
 def item_name_processing(data: pd.DataFrame) -> pd.DataFrame:
@@ -114,7 +106,7 @@ def item_name_to_index(user: pd.DataFrame, item: pd.DataFrame) -> pd.DataFrame:
     for _, row in tqdm(user.iterrows()):
         temp_item = [-1] * 7
         is_matched = True
-        for i, codi_item in enumerate(row[1:]):  # 닉네임 제외
+        for i, codi_item in enumerate(row):
             if codi_item == "":  # 착용하지 않은 경우 더미로 맵핑
                 temp_item[i] = dummy_index[i]
             else:  # 착용 한 경우
@@ -151,16 +143,14 @@ def main():
     item_df = gcs_helper_preprocessed.read_df_from_gcs("item_KMST_1149_latest.csv")
     user_df = gcs_helper_raw.read_df_from_gcs("csv/user_detail_jeong.csv")
 
-    user_df_drop_columns = drop_columns(user_df)
-    user_df_drop_na = drop_na(user_df_drop_columns)
-    user_df_fill_trans = fill_hat_and_shoes_as_transparency(user_df_drop_na)
-    user_df_drop_exact_same = drop_exact_same(user_df_fill_trans)
-    user_df_item_name_processing = item_name_processing(user_df_drop_exact_same)
-    user_df_item_name_to_index = item_name_to_index(
-        user_df_item_name_processing, item_df
-    )
+    user_df = drop_columns(user_df)
+    user_df = drop_exact_same(user_df)
+    user_df = drop_na(user_df)
+    user_df = fill_hat_and_shoes_as_transparency(user_df)
+    user_df = item_name_processing(user_df)
+    user_df = item_name_to_index(user_df, item_df)
 
-    return user_df_item_name_to_index
+    return user_df
 
 
 if __name__ == "__main__":
