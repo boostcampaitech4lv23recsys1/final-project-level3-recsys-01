@@ -1,7 +1,6 @@
 import React from "react";
 import FixCodiPartButton from "./FixCodiPartButton";
 import Grid from "@mui/material/Grid";
-import fixItem from "../../../assets/images/fixItem.png";
 
 function FixParts({ fixPartList }) {
   const collectFixPart = () => {

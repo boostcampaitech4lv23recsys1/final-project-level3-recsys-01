@@ -17,9 +17,6 @@ function AllParts({ fixPartList, recommendData }) {
     const all = [];
     const codiPartEngName = Object.keys(codiPartName);
     for (let idx = 0; idx < codiPartEngName.length; idx++) {
-      console.log(fixPartList);
-      console.log(fixPartList.includes(codiPartEngName[idx]));
-
       if (fixPartList.includes(codiPartEngName[idx])) {
         all.push(
           <Grid
@@ -28,7 +25,7 @@ function AllParts({ fixPartList, recommendData }) {
             className="button-fixitem"
             key={codiPartEngName[idx]}>
             <AllCodiPartButton
-              partName={codiPartEngName[idx]}
+              partName={codiPartName[codiPartEngName[idx]]}
               codiPart={
                 recommendData[codiPartEngName[idx]]
               }></AllCodiPartButton>

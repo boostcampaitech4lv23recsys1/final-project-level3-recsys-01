@@ -10,7 +10,6 @@ import clickIcon from "./assets/icons/click.png";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import About from "./pages/About/About";
-import Contact from "./pages/Contact/Contact";
 import LandingPage from "./pages/LandingPage_ver2/LandingPage"; // check Landing Page version
 import PreferenceRecommendPage from "./pages/PreferenceRecommendPage/PreferenceRecommendPage";
 import PreferenceRecommendResultPage from "./pages/PreferenceRecommendResultPage/PreferenceRecommendResultPage";
@@ -74,7 +73,6 @@ function App() {
         <Route path="/" exact element={<Navigate to="/recommend" />} />
         <Route path="/recommend" exact element={<LandingPage />} />
         <Route path="/about" element={<About />} />
-        {/* <Route path="/contact" element={<Contact />} /> */}
         <Route
           path="/recommend/diagnosis"
           element={
@@ -117,13 +115,6 @@ function App() {
             />
           }
         />
-        {console.log(inputHat)}
-        {console.log(inputHair)}
-        {console.log(inputFace)}
-        {console.log(inputTop)}
-        {console.log(inputBottom)}
-        {console.log(inputShoes)}
-        {console.log(inputWeapon)}
         <Route
           path="recommend/preference/result"
           element={

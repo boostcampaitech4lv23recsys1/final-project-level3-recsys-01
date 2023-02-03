@@ -14,7 +14,8 @@ function BestCodi({ order, fixPartList, recommendData }) {
         mode={feedback}
         setfeedback={setfeedback}
         disabled={disabled}
-        setdisabled={setdisabled}></Feedback>
+        setdisabled={setdisabled}
+        recommendData={recommendData}></Feedback>
       <AllParts
         fixPartList={fixPartList}
         recommendData={recommendData}></AllParts>

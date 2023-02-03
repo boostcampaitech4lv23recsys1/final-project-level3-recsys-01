@@ -2,12 +2,8 @@ import React from "react";
 import Fab from "@mui/material/Fab";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import * as API from "../../../api";
 
-function FixCodiPartButton({ codiPart, bgImage }) {
-  const itemImg = null;
-  console.log(codiPart[0]["label"]);
-  console.log("dkdkdkdkdkdkdkdkdkdkdkdkdkdkd");
+function FixCodiPartButton({ codiPart }) {
   const isFix = (codi) => {
     let codiPrint = null;
     if (typeof codi == "string") {
@@ -17,17 +13,17 @@ function FixCodiPartButton({ codiPart, bgImage }) {
           <Fab aria-label="NotClickable">
             <img alt="" src="" />
           </Fab>
-          <Typography>{""}</Typography>{" "}
+          <Typography>{""}</Typography> <Typography>{codiPart}</Typography>
         </div>
       );
     } else {
       codiPrint = (
         <div>
-          <Typography>{codiPart[1]}</Typography>
           <Fab aria-label="NotClickable">
             <img alt="" src={codiPart[0]["img"]} />
           </Fab>
           <Typography>{codiPart[0]["label"]}</Typography>
+          <Typography>{codiPart[1]}</Typography>
         </div>
       );
     }

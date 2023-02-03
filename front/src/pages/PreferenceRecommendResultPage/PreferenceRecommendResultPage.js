@@ -58,8 +58,6 @@ function PreferenceRecommendResultPage({
   const postCodiPartData = async () => {
     const res = await API.post("inference/submit/newMF", inputParts);
     const data = res.data;
-    console.log("ppp");
-    console.log(data);
     setRecommendData(data);
     setLoadingPage(true);
   };
@@ -68,7 +66,14 @@ function PreferenceRecommendResultPage({
   }, []);
 
   if (!loadingPage) {
-    return <h1>please wait</h1>;
+    return (
+      <div className="PRRP">
+        <TitleFixItem fixPartList={fixPartList}></TitleFixItem>
+        <center>
+          <h1>please wait</h1>
+        </center>
+      </div>
+    );
   } else {
     return (
       <div className="PRRP">
