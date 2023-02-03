@@ -2,14 +2,14 @@
   "project": "MCN",
   "seed": 417,
   "dataset": {
-    "test_size": 0.3,
+    "test_size": 0.1,
     "shuffle": true,
     "negative_ratio": 0.5,
     "n_change_parts": 3
   },
   "dataloader": {
     "args": {
-      "batch_size": 32,
+      "batch_size": 128,
       "num_workers": 0
     }
   },
@@ -19,6 +19,7 @@
     "learning_rate": 0.001,
     "early_stopping": 5,
     "loss": "bce",
+    "print_every": 50,
     "lr_scheduler": {
       "type": "steplr",
       "args": {
@@ -36,7 +37,8 @@
       "pe_off": false,
       "mlp_layers": 2,
       "conv_feats": "1234",
-      "pretrained": true
+      "pretrained": true,
+      "resnet_layer_num": 18
     }
   },
   "inference": {

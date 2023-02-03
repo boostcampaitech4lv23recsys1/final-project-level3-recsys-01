@@ -21,6 +21,7 @@ def get_models(config: Dict[str, Any]) -> nn.Module:
             mlp_layers=model_config["mlp_layers"],
             conv_feats=model_config["conv_feats"],
             pretrained=model_config["pretrained"],
+            resnet_layer_num=model_config["resnet_layer_num"]
         )
     else:
         raise NotImplementedError
