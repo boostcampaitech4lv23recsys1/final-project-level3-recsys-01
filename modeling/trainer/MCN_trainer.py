@@ -9,10 +9,10 @@ from pytz import timezone
 from sklearn import metrics
 from modeling.trainer.loss import get_loss
 from modeling.trainer.scheduler import get_scheduler
+from modeling.trainer.optimizer import get_optimizer
 from modeling.utils.gcs_helper import GCSHelper
 
 import wandb
-
 
 class MCNTrainer(object):
     def __init__(
@@ -28,7 +28,7 @@ class MCNTrainer(object):
         self.train_loader = train_loader
         self.val_loader = val_loader
         self.criterion = get_loss(config["trainer"])
-        self.optimizer = torch.optim.SGD(self.model.parameters(), lr=1e-2, momentum=0.9)
+        self.optimizer = get_optimizer(self.model, config["trainer"]["optimizer"])
         self.scheduler = get_scheduler(self.optimizer, config["trainer"])
         self.epochs = config["trainer"]["epochs"]
         self.best = float("-inf")
@@ -52,15 +52,15 @@ class MCNTrainer(object):
             vse_losses = AverageMeter()
 
             self.model.train()
-            accuracy = self.__train(
+            avg_score = self.__train(
                 epoch=epoch,
                 total_losses=total_losses,
                 clf_losses=clf_losses,
                 vse_losses=vse_losses,
             )
 
-            if accuracy > self.best:
-                self.best = accuracy
+            if avg_score > self.best:
+                self.best = avg_score
 
                 now = datetime.now(timezone("Asia/Seoul")).strftime(f"%Y%m%d-%H%M")
                 model_save_path = (
@@ -126,10 +126,9 @@ class MCNTrainer(object):
         }
         wandb.log(epoch_train_log, step=epoch)
 
-        accuracy = self.__val(epoch)
+        avg_score = self.__val(epoch)
 
-
-        return accuracy
+        return avg_score
 
     def __val(self, epoch):
         print("Valid Phase, Epoch: {}".format(epoch))
@@ -155,21 +154,20 @@ class MCNTrainer(object):
         predicts = np.where(outputs > 0.5, 1, 0)
         accuracy = metrics.accuracy_score(predicts, targets)
         print("Accuracy@0.5: {:.4f}".format(accuracy))
+        avg_score = np.mean(outputs)
+        print("avg_score: {:.4f}".format(avg_score))
         positive_loss = -np.log(outputs[targets == 1]).mean()
         print("Positive loss: {:.4f}".format(positive_loss))
-        positive_acc = sum(outputs[targets == 1] > 0.5) / len(outputs)
-        print("Positive accuracy: {:.4f}".format(positive_acc))
 
         epoch_valid_log = {
             "valid_clf_loss": clf_losses.avg,
             "accuracy@0.5": accuracy,
             "positive_loss": positive_loss,
-            "positive_accuracy": positive_acc,
+            "avg_score": avg_score,
         }
         wandb.log(epoch_valid_log, step=epoch)
 
-        return accuracy
-
+        return avg_score
 
 class AverageMeter(object):
     """Computes and stores the average and current value.
