@@ -20,6 +20,14 @@
     "early_stopping": 5,
     "loss": "bce",
     "print_every": 50,
+    "optimizer": {
+      "type": "adam",
+      "args": {
+        "lr": 1e-2,
+        "weight_decay": 0,
+        "momentum": 0.9
+      }
+    },
     "lr_scheduler": {
       "type": "steplr",
       "args": {
