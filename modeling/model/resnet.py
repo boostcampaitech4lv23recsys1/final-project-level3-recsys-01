@@ -12,6 +12,25 @@ model_urls = {
     "resnet152": "https://download.pytorch.org/models/resnet152-b121ed2d.pth",
 }
 
+def get_resnet(layer_num, pretrained, need_rep):
+    if not layer_num in [18, 34, 50, 101, 152]:
+        raise ValueError(
+            f"resnet의 layer_num은 [18, 34, 50, 101, 152]의 값 중 하나로 설정해야합니다. 현재 값: {layer_num}"
+        )
+
+    if layer_num == 18:
+        cnn = resnet18(pretrained=pretrained, need_rep=need_rep)
+    if layer_num == 34:
+        cnn = resnet34(pretrained=pretrained, need_rep=need_rep)
+    if layer_num == 50:
+        cnn = resnet50(pretrained=pretrained, need_rep=need_rep)
+    if layer_num == 101:
+        cnn = resnet101(pretrained=pretrained, need_rep=need_rep)
+    if layer_num == 152:
+        cnn = resnet152(pretrained=pretrained, need_rep=need_rep)
+
+    return cnn
+
 
 def conv3x3(in_planes, out_planes, stride=1):
     """3x3 convolution with padding"""

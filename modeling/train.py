@@ -15,6 +15,8 @@ def main(config: Dict[str, Any]) -> None:
     inter_data = preprocess.load_data(is_train=True)
     item_data = preprocess.load_data(is_train=False)
 
+    print(f"len inter_data: {inter_data.shape[0]}...")
+    print(f"len item_data: {item_data.shape[0]}...")
     if config["arch"]["type"] == "MCN":
         preprocess.download_images()
 
