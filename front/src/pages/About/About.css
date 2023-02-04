@@ -39,10 +39,15 @@
 
 .AP .aboutBox-text{
     position: absolute;
-    top: 6%; left: 40%;
+    top: 12%;
+    padding-left: 39%;
     text-align: left;
 }
-
+.Ap .memberBox{
+    align-items:center;
+    text-align:center;
+    justify-content: center;
+}
 
 .AP .memberBox-title{
     margin-left: 20px;
@@ -64,24 +69,25 @@
     margin : 20px 50px;
 }
 
-.AP .memberBox-stepper{
-    align-items: center;
-    /* justify-content: center; */
-}
-
-.AP .memberBox-members{
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    /* margin-left: 50%; */
-}
-
 .AP .memberBox-box{
-    align-items: center;
+    left:0;
+    right:0;
+    margin: 0 auto;
 }
 
-.AP .memberBox{
+.AP .memberBox-paper{
+    padding: 0;
+}
+
+.AP .memberBox-autoPlay{
+    right:0;
+    left:0;
+    margin:0 auto;
+}
+
+.AP .memberBox-img{
     align-items: center;
-    text-align:center;
-    justify-content: center;
+    right:0;
+    left:0;
+    margin:0 auto;
 }
