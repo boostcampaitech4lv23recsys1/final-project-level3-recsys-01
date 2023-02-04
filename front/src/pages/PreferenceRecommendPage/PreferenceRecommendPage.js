@@ -49,6 +49,16 @@ function PreferenceRecommendPage({
       />
       <button
         className="button-reload"
+        style={{
+          borderRadius: 30,
+          width: 100,
+          height: 30,
+          border: 1,
+          backgroundColor: "#b9b9b9",
+          color: "black",
+          fontFamily: "NanumSquareAcb",
+          fontSize: 20,
+        }}
         onClick={() => {
           setInputHat(defaultFixObject);
           setInputHair(defaultFixObject);

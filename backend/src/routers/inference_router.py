@@ -12,35 +12,10 @@ from src.database.init_db import get_db
 from src.database.models.crud_item import (
     find_by_index,
 )
+from src.routers.schemas import InferenceInput, ResultItem, InferenceResult
+
 
 router = APIRouter(prefix="/inference")
-
-
-class InferenceInput(BaseModel):
-    Hat: Optional[int]
-    Hair: Optional[int]
-    Face: Optional[int]
-    Top: Optional[int]
-    Bottom: Optional[int]
-    Shoes: Optional[int]
-    Weapon: Optional[int]
-
-
-class ResultItem(BaseModel):
-    item_id: int
-    index: int
-    name: str
-    gcs_image_url: str
-
-
-class InferenceResult(BaseModel):
-    Hat: ResultItem
-    Hair: ResultItem
-    Face: ResultItem
-    Top: ResultItem
-    Bottom: ResultItem
-    Shoes: ResultItem
-    Weapon: ResultItem
 
 
 @router.post(
@@ -72,7 +47,6 @@ async def newMF_output(
             item = await find_by_index(predicts[idx][i], db)
             codi_set[part] = {
                 "item_id": item["item_id"],
-                "index": item["index"],
                 "name": item["name"],
                 "gcs_image_url": item["gcs_image_url"],
             }
