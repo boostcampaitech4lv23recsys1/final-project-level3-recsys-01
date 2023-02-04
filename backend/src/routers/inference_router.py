@@ -6,7 +6,7 @@ from typing import Optional, Dict, List
 
 from collections import defaultdict
 from src.AI import InferenceNewMF
-from src.AI.inference import get_model
+from src.AI.inference import get_model, get_model_newMF
 
 from src.database.init_db import get_db
 from src.database.models.crud_item import (
@@ -25,7 +25,7 @@ router = APIRouter(prefix="/inference")
 )
 async def newMF_output(
     equips: InferenceInput,
-    model: InferenceNewMF = Depends(get_model),
+    model: InferenceNewMF = Depends(get_model_newMF),
     db: Database = Depends(get_db),
 ):
     """

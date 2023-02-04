@@ -103,7 +103,9 @@ class MCNInference:
         self.top_k = model_config["top_k"]
 
     async def load_model(self):
-        self.model.load_state_dict(torch.load(self.model_path, map_location=self.device))
+        self.model.load_state_dict(
+            torch.load(self.model_path, map_location=self.device)
+        )
         print(self.device)
         self.model.to(self.device)
         self.model.eval()
@@ -138,5 +140,12 @@ if is_load:
 async def get_model():
     try:
         yield MODELS["MCN"]
+    finally:
+        pass
+
+
+async def get_model_newMF():
+    try:
+        yield MODELS["newMF"]
     finally:
         pass
