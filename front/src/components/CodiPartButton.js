@@ -1,8 +1,6 @@
 import * as React from "react";
-import { useState } from "react";
-
+import "./CodiPartButton.css";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
 
 function CodiPartButton({ codiPart, inputValue, setInputValue, openPopover }) {
@@ -18,10 +16,7 @@ function CodiPartButton({ codiPart, inputValue, setInputValue, openPopover }) {
   }
 
   return (
-    <Stack direction="column" spacing={1} alignItems="center">
-      <Typography>
-        <b> {codiPart}</b>
-      </Typography>
+    <div className="codiPartButton">
       <BasicPopover
         codiPart={codiPart}
         onInputValueChange={handleInputValueChange}
@@ -32,8 +27,7 @@ function CodiPartButton({ codiPart, inputValue, setInputValue, openPopover }) {
         inputIndex={inputValue["index"]}
         openPopover={openPopover}
       />
-      <Typography>{inputValue["label"]}</Typography>
-    </Stack>
+    </div>
   );
 }
 

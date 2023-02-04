@@ -3,6 +3,11 @@ import { useState } from "react";
 import Popover from "@mui/material/Popover";
 import Fab from "@mui/material/Fab";
 import BasicSearch from "./BasicSearch";
+import click from "../../../assets/icons/click.png";
+import basicItem from "../../../assets/images/basicItem.png";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import "./BasicPopover.css";
 
 function BasicPopover({
   codiPart,
@@ -33,10 +38,10 @@ function BasicPopover({
   };
 
   return (
-    <div>
-      <Fab>
+    <div className="basicPopover">
+      {/* <Fab>
         <img src={inputImage} alt="" onClick={handleClick} />
-      </Fab>
+      </Fab> */}
 
       <Popover
         id={id}
@@ -70,6 +75,39 @@ function BasicPopover({
           />
         </div>
       </Popover>
+      <Stack
+        className="itemSelectionStack"
+        direction="column"
+        spacing={0}
+        alignItems="center">
+        <div className="itemSelection">
+          <img
+            className="itemSelection-bg"
+            src={basicItem}
+            onClick={handleClick}
+            alt=""
+          />
+          {inputId === "" ? (
+            <p className="itemSelection-text" onClick={handleClick}>
+              {" "}
+              Click Here!{" "}
+            </p>
+          ) : (
+            <img
+              className="itemSelection-img"
+              src={inputImage}
+              onClick={handleClick}
+              alt={inputLabel}
+            />
+          )}
+        </div>
+        <Typography className="itemSelectionStack-codiPart">
+          <b> {codiPart}</b>
+        </Typography>
+        <Typography className="itemSelectionStack-itemLabel">
+          {inputLabel}
+        </Typography>
+      </Stack>
     </div>
   );
 }

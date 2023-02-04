@@ -1,0 +1,52 @@
+.basicPopover .itemSelection{
+    position: relative;
+    width: 100px;
+    height: 200px;
+}
+
+.basicPopover .itemSelection-bg{
+    position: absolute;
+    width:150px;
+    margin: auto;
+    top: 0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+.basicPopover .itemSelection-img{
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom:0;
+    left:40px;
+    right:0;
+    width: 70px;
+}
+
+.basicPopover .itemSelection-text{
+    position: absolute;
+    text-align:center;
+    margin-top: 60px;
+    margin-left: 50px;
+}
+
+.basicPopover .itemSelectionStack{
+    text-align:center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.basicPopover .itemSelectionStack-itemLabel{
+    position:absolute;;
+    margin: auto;
+    margin-left:50px;
+    margin-top: -250px;
+}
+
+.basicPopover .itemSelectionStack-codiPart{
+    position:absolute;
+    margin-top: 178px;
+    margin-left:45px;
+}
