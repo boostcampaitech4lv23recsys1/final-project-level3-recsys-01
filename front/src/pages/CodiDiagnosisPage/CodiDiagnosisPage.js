@@ -1,8 +1,9 @@
 import "./CodiDiagnosisPage.css";
 import CodiSimulator from "../../components/CodiSimulator";
 import CodiPartInputs from "./components/CodiPartInputs";
-import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
 import GetDiagnosisResult from "./components/GetDiagnosisResult";
+import basicItem from "../../assets/images/basicItem.png";
 
 function CodiDiagnosisPage({
   inputHat,
@@ -22,38 +23,37 @@ function CodiDiagnosisPage({
 }) {
   return (
     <div className="CDP">
-      <Grid container>
+      <Stack className="simulatorAndItem" direction="row" spacing={20}>
         {" "}
-        <Grid item xs={3} paddingTop={"15%"} paddingLeft={"20%"}>
-          <CodiSimulator
-            inputHat={inputHat}
-            inputHair={inputHair}
-            inputFace={inputFace}
-            inputTop={inputTop}
-            inputBottom={inputBottom}
-            inputShoes={inputShoes}
-            inputWeapon={inputWeapon}
-          />
-        </Grid>
-        <Grid item xs={9}>
-          <CodiPartInputs
-            inputHat={inputHat}
-            setInputHat={setInputHat}
-            inputHair={inputHair}
-            setInputHair={setInputHair}
-            inputFace={inputFace}
-            setInputFace={setInputFace}
-            inputTop={inputTop}
-            setInputTop={setInputTop}
-            inputBottom={inputBottom}
-            setInputBottom={setInputBottom}
-            inputShoes={inputShoes}
-            setInputShoes={setInputShoes}
-            inputWeapon={inputWeapon}
-            setInputWeapon={setInputWeapon}
-          />
-        </Grid>
-      </Grid>
+        <CodiSimulator
+          className="codiSimulator"
+          inputHat={inputHat}
+          inputHair={inputHair}
+          inputFace={inputFace}
+          inputTop={inputTop}
+          inputBottom={inputBottom}
+          inputShoes={inputShoes}
+          inputWeapon={inputWeapon}
+          size={4.5}
+        />
+        <CodiPartInputs
+          className="item"
+          inputHat={inputHat}
+          setInputHat={setInputHat}
+          inputHair={inputHair}
+          setInputHair={setInputHair}
+          inputFace={inputFace}
+          setInputFace={setInputFace}
+          inputTop={inputTop}
+          setInputTop={setInputTop}
+          inputBottom={inputBottom}
+          setInputBottom={setInputBottom}
+          inputShoes={inputShoes}
+          setInputShoes={setInputShoes}
+          inputWeapon={inputWeapon}
+          setInputWeapon={setInputWeapon}
+        />
+      </Stack>
       <GetDiagnosisResult
         inputHat={inputHat}
         inputHair={inputHair}

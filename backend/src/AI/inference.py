@@ -1,11 +1,13 @@
-from src.AI.models.model_object import NewMF
+from src.AI.models.model_object import NewMF, MCN
 from src.utils.gcs_helper import GCSHelper
 from src.database.models.crud_item import find_by_item_idxs
 from src.database.init_db import get_db
 from src.AI.config import MODEL_CONFIG
+from src.AI.image_processing import image_to_tensor
 
 import os
 import torch
+import asyncio
 
 
 class InferenceNewMF(object):
@@ -68,8 +70,15 @@ class InferenceNewMF(object):
         self.top_k = self.model_config["top_k"]
 
 
-class MCNInference(object):
-    def __init__(self):
+is_load = True
+if is_load:
+    image_tensors, item_data = asyncio.run(image_to_tensor())
+    dummy = item_data[item_data["category"] == "dummy"]
+
+
+class MCNInference:
+    def __init__(self, model_config):
+        self.model_config = model_config
         self.model_path = model_config["model_path"]
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         if not os.path.exists(self.model_path):
@@ -90,21 +99,42 @@ class MCNInference(object):
             conv_feats=model_config["conv_feats"],
             pretrained=model_config["pretrained"],
         )
-        load_state = torch.load(self.model_path)
-        self.model.load_state_dict(load_state["state_dict"])
-        self.model.to(self.device)
-        self.model.eval()
         self.top_k = model_config["top_k"]
 
+    async def load_model(self):
+        self.model.load_state_dict(torch.load(self.model_path))
+        self.model.to(self.device)
+        self.model.eval()
 
-newMF = InferenceNewMF(model_config=MODEL_CONFIG["newMF"])
-MODELS = {"newMF": newMF}
+    @torch.no_grad()
+    async def diagnosis(self, equips: dict):
+        images = []
+
+        for equip_part, equip_index in equips.items():
+            if equip_index == -1:
+                equip_index = dummy[dummy["equip_category"] == equip_part][
+                    "index"
+                ].values[0]
+
+            images.append(image_tensors[equip_index])
+
+        images = torch.stack(images).unsqueeze(0).to(self.device)
+        score, _, __, ___ = self.model.forward(images)
+        return float(score)
+
+
+if is_load:
+    newMF = InferenceNewMF(model_config=MODEL_CONFIG["newMF"])
+
+    asyncio.run(newMF.load_model())
+    mcn = MCNInference(model_config=MODEL_CONFIG["MCN"])
+    asyncio.run(mcn.load_model())
+    MODELS = {"newMF": newMF, "MCN": mcn}
+    is_load = False
 
 
 async def get_model():
-    if newMF.n_items == 0:
-        await newMF.load_model()
     try:
-        yield MODELS["newMF"]
+        yield MODELS["MCN"]
     finally:
         pass

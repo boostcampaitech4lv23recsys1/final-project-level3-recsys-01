@@ -98,25 +98,26 @@ function GetDiagnosisResult({
     sendCodiData();
   }, []);
   return (
-    <Fab
-      className="getDiagnosisResult"
-      variant="extended"
-      sx={{
-        marginTop: 5,
-        borderRadius: 3,
-        border: 1,
-        width: 500,
-        height: 60,
-        backgroundColor: "#8A37FF",
-        color: "white",
-        fontFamily: "NanumSquareAcb",
-        fontSize: 30,
-      }}>
-      <a onClick={() => sendCodiData()} style={{ color: "black" }}>
-        {"코디 점수 받기"}
-      </a>
-      {console.log(recommendData)}
-    </Fab>
+    <div className="getDiagnosisResult">
+      <Fab
+        variant="extended"
+        sx={{
+          marginTop: 5,
+          borderRadius: 3,
+          border: 1,
+          width: 500,
+          height: 60,
+          backgroundColor: "#8A37FF",
+          color: "white",
+          fontFamily: "NanumSquareAcb",
+          fontSize: 30,
+        }}>
+        <a onClick={() => sendCodiData()} style={{ color: "black" }}>
+          {"코디 점수 받기"}
+        </a>
+        {console.log(recommendData)}
+      </Fab>
+    </div>
   );
 }
 
