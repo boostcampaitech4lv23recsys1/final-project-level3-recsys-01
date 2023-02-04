@@ -12,6 +12,7 @@ from modeling.trainer.scheduler import get_scheduler
 from modeling.trainer.optimizer import get_optimizer
 from modeling.utils.gcs_helper import GCSHelper
 
+import wandb
 
 class MCNTrainer(object):
     def __init__(
@@ -62,7 +63,9 @@ class MCNTrainer(object):
                 self.best = avg_score
 
                 now = datetime.now(timezone("Asia/Seoul")).strftime(f"%Y%m%d-%H%M")
-                model_save_path = self.config["trainer"]["save_dir"] + f"/{self.model_name}_{now}.pt"
+                model_save_path = (
+                    self.config["trainer"]["save_dir"] + f"/{self.model_name}_{now}.pt"
+                )
                 torch.save(self.model.state_dict(), model_save_path)
                 print("Saved best model to {}".format(model_save_path))
 
@@ -106,7 +109,25 @@ class MCNTrainer(object):
                         total_losses.val,
                     )
                 )
+                log = {
+                    "train/clf_loss": clf_losses.val,
+                    "train/vse_loss": vse_losses.val,
+                    "train/features_loss": features_loss,
+                    "train/tmasks_loss": tmasks_loss,
+                    "train/total_loss": total_losses.val,
+                    "batch_num": batch_num
+                }
+                wandb.log(log, commit=True)
         print("Train Loss (clf_loss): {:.4f}".format(clf_losses.avg))
+
+        epoch_train_log = {
+            "train_epoch/clf_loss": clf_losses.avg,
+            "train_epoch/vse_loss": vse_losses.avg,
+            "train_epoch/total_loss": total_losses.avg,
+            "train_step": epoch
+        }
+        wandb.log(epoch_train_log, commit=True)
+
         avg_score = self.__val(epoch)
 
         return avg_score
@@ -140,8 +161,16 @@ class MCNTrainer(object):
         positive_loss = -np.log(outputs[targets == 1]).mean()
         print("Positive loss: {:.4f}".format(positive_loss))
 
-        return avg_score
+        epoch_valid_log = {
+            "valid/clf_loss": clf_losses.avg,
+            "valid/accuracy": accuracy,
+            "valid/positive_loss": positive_loss,
+            "valid/avg_score": avg_score,
+            "valid_step": epoch
+        }
+        wandb.log(epoch_valid_log, commit=True)
 
+        return avg_score
 
 class AverageMeter(object):
     """Computes and stores the average and current value.
