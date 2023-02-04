@@ -111,6 +111,7 @@ class MCNInference:
             mlp_layers=self.model_config["mlp_layers"],
             conv_feats=self.model_config["conv_feats"],
             pretrained=self.model_config["pretrained"],
+            resnet_layer_num=self.model_config["resnet_layer_num"]
         )
         self.model.load_state_dict(torch.load(self.model_path, map_location=self.device))
         print(self.device)
