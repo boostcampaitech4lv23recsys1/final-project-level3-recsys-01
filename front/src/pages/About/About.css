@@ -39,13 +39,10 @@
 
 .AP .aboutBox-text{
     position: absolute;
-    top: 6%; left: 38.5%;
+    top: 6%; left: 40%;
     text-align: left;
 }
 
-.Ap .memberBox{
-    padding-top: 30%;
-}
 
 .AP .memberBox-title{
     margin-left: 20px;
@@ -65,4 +62,26 @@
     font-size: 0px;
     line-height: 0px;
     margin : 20px 50px;
+}
+
+.AP .memberBox-stepper{
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.AP .memberBox-members{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    /* margin-left: 50%; */
+}
+
+.AP .memberBox-box{
+    align-items: center;
+}
+
+.AP .memberBox{
+    align-items: center;
+    text-align:center;
+    justify-content: center;
 }

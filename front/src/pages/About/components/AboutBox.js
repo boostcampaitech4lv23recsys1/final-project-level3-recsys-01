@@ -3,11 +3,11 @@ import quests from "../../../assets/images/quests.png";
 
 function AboutBox() {
   return (
-    <div class="aboutBox">
-      <div class="aboutBox-title"> About </div>
-      <div class="aboutBox-wrap">
-        <img class="aboutBox-bg" src={quests} alt="" />
-        <p class="aboutBox-text"> 안녕 </p>
+    <div className="aboutBox">
+      <div className="aboutBox-title"> About </div>
+      <div className="aboutBox-wrap">
+        <img className="aboutBox-bg" src={quests} alt="" />
+        <p className="aboutBox-text"> 안녕 </p>
       </div>
     </div>
   );
