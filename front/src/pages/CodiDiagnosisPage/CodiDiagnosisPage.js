@@ -1,9 +1,11 @@
 import "./CodiDiagnosisPage.css";
+import * as React from "react";
 import CodiSimulator from "../../components/CodiSimulator";
 import CodiPartInputs from "./components/CodiPartInputs";
 import Stack from "@mui/material/Stack";
 import GetDiagnosisResult from "./components/GetDiagnosisResult";
-import basicItem from "../../assets/images/basicItem.png";
+import ShowDiagnosisResult from "./components/ShowDiagnosisResult";
+import { useState } from "react";
 
 function CodiDiagnosisPage({
   inputHat,
@@ -21,6 +23,7 @@ function CodiDiagnosisPage({
   inputWeapon,
   setInputWeapon,
 }) {
+  const [diagnosisScore, setDiagnosisScore] = useState(0);
   return (
     <div className="CDP">
       <Stack className="simulatorAndItem" direction="row" spacing={20}>
@@ -62,7 +65,14 @@ function CodiDiagnosisPage({
         inputBottom={inputBottom}
         inputShoes={inputShoes}
         inputWeapon={inputWeapon}
+        diagnosisScore={diagnosisScore}
+        setDiagnosisScore={setDiagnosisScore}
       />
+      {diagnosisScore != 0 ? (
+        <ShowDiagnosisResult diagnosisScore={diagnosisScore} />
+      ) : (
+        <p></p>
+      )}
     </div>
   );
 }

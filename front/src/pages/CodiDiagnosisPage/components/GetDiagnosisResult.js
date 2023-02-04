@@ -1,7 +1,6 @@
 import * as React from "react";
 import Fab from "@mui/material/Fab";
 import * as API from "../../../api";
-import { useState, useEffect } from "react";
 
 function getEquippedItem({
   inputHat,
@@ -78,8 +77,9 @@ function GetDiagnosisResult({
   inputBottom,
   inputShoes,
   inputWeapon,
+  diagnosisScore,
+  setDiagnosisScore,
 }) {
-  const [recommendData, setRecommendData] = useState({});
   const equippedItem = getEquippedItem({
     inputHat,
     inputHair,
@@ -90,13 +90,11 @@ function GetDiagnosisResult({
     inputWeapon,
   });
   const sendCodiData = async () => {
-    const res = await API.post("inference/submit/newMF", equippedItem);
-    setRecommendData(res.data);
-    return recommendData;
+    const res = await API.post("diagnosis/submit/MCN", equippedItem);
+    setDiagnosisScore(res.data);
+    return diagnosisScore;
   };
-  useEffect(() => {
-    sendCodiData();
-  }, []);
+
   return (
     <div className="getDiagnosisResult">
       <Fab
@@ -112,10 +110,9 @@ function GetDiagnosisResult({
           fontFamily: "NanumSquareAcb",
           fontSize: 30,
         }}>
-        <a onClick={() => sendCodiData()} style={{ color: "black" }}>
+        <a onClick={() => sendCodiData()} style={{ color: "white" }}>
           {"코디 점수 받기"}
         </a>
-        {console.log(recommendData)}
       </Fab>
     </div>
   );
