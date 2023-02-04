@@ -23,8 +23,8 @@
 
 .CDP .codiSimulator-container{
     position: relative;
-    height:600px;
-    width:450px;
+    height:400px;
+    width:300px;
     padding-top: 20px;
     padding-left: 100px;
 }
@@ -42,7 +42,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 0;
+    left: 50px;
     right: 0;
     margin: auto;
 }
