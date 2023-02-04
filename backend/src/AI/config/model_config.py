@@ -13,6 +13,8 @@ MODEL_CONFIG = {
         "mlp_layers": 2,
         "conv_feats": "1234",
         "pretrained": True,
+        "resnet_layer_num": 18,
         "top_k": 5,
+        "batch_size": 16
     },
 }
