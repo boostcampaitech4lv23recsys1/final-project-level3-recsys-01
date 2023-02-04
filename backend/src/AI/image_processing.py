@@ -14,7 +14,7 @@ from src.database.models.crud_item import find_all
 from src.database.init_db import get_db
 
 
-gcs_helper = GCSHelper(key_path="src/utils/gcs_key.json", bucket_name="maple_raw_data")
+gcs_helper = GCSHelper(key_path="keys/gcs_key.json", bucket_name="maple_raw_data")
 
 
 async def image_to_tensor() -> Tuple[List[Tensor], DataFrame]:

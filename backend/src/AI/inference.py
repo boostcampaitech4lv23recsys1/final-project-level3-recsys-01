@@ -17,9 +17,9 @@ class InferenceNewMF(object):
         self.model_path = model_config["model_path"]
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         if not os.path.exists(self.model_path):
-            os.makedirs('/'.join(self.model_path.split("/")[:-1]))
+            os.makedirs("/".join(self.model_path.split("/")[:-1]))
             gcs_helper = GCSHelper(
-                key_path="src/utils/gcs_key.json", bucket_name="maple_trained_model"
+                key_path="keys/gcs_key.json", bucket_name="maple_trained_model"
             )
             gcs_helper.download_file_from_gcs(
                 blob_name="NewMF/NewMF_latest.pt", file_name=self.model_path
@@ -85,8 +85,9 @@ class MCNInference:
         self.model_path = model_config["model_path"]
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         if not os.path.exists(self.model_path):
+            os.makedirs("/".join(self.model_path.split("/")[:-1]))
             gcs_helper = GCSHelper(
-                key_path="src/utils/gcs_key.json", bucket_name="maple_trained_model"
+                key_path="keys/gcs_key.json", bucket_name="maple_trained_model"
             )
             gcs_helper.download_file_from_gcs(
                 blob_name="MCN/MCN_latest.pt", file_name=self.model_path
@@ -111,9 +112,11 @@ class MCNInference:
             mlp_layers=self.model_config["mlp_layers"],
             conv_feats=self.model_config["conv_feats"],
             pretrained=self.model_config["pretrained"],
-            resnet_layer_num=self.model_config["resnet_layer_num"]
+            resnet_layer_num=self.model_config["resnet_layer_num"],
         )
-        self.model.load_state_dict(torch.load(self.model_path, map_location=self.device))
+        self.model.load_state_dict(
+            torch.load(self.model_path, map_location=self.device)
+        )
         print(self.device)
         self.model.to(self.device)
         self.model.eval()
@@ -144,7 +147,7 @@ class MCNInference:
             4: 10098,
             5: 10099,
             6: 10100,
-            7: 10101
+            7: 10101,
         }
         equips = list(equips.values())
         pred_part_idxs = list()
@@ -153,14 +156,14 @@ class MCNInference:
         for part_idx, equip in enumerate(equips):
             part_scores = list()
 
-            if equip != -1: # Fix item
+            if equip != -1:  # Fix item
                 continue
 
             pred_part_idxs.append(part_idx)
             item_part = self.item_parts[part_idx]
 
             for idx in range(0, len(item_part), self.batch_size):
-                items = item_part[idx:idx + self.batch_size]
+                items = item_part[idx : idx + self.batch_size]
                 input_tensors = list()
 
                 for item in items:
@@ -181,9 +184,11 @@ class MCNInference:
                     part_scores.append((item_idx, float(score)))
 
             part_scores.sort(key=lambda x: x[1], reverse=True)
-            topk_each_part.append(part_scores[:self.top_k])
+            topk_each_part.append(part_scores[: self.top_k])
 
-        topk_items_each_part = [list(map(lambda x: x[0], topk_part)) for topk_part in topk_each_part]
+        topk_items_each_part = [
+            list(map(lambda x: x[0], topk_part)) for topk_part in topk_each_part
+        ]
         topk_predict_combs = list(product(*topk_items_each_part))
 
         equip_combs = list()
@@ -196,7 +201,7 @@ class MCNInference:
 
         codi_scores = list()
         for idx in range(0, len(equip_combs), self.batch_size):
-            equip_comb_batch = equip_combs[idx:idx + self.batch_size]
+            equip_comb_batch = equip_combs[idx : idx + self.batch_size]
             input_tensors = list()
 
             for equip_comb in equip_comb_batch:
@@ -212,7 +217,7 @@ class MCNInference:
                 codi_scores.append((equip_comb, float(score)))
 
         codi_scores.sort(key=lambda x: x[1], reverse=True)
-        predict_codis = codi_scores[:self.top_k]
+        predict_codis = codi_scores[: self.top_k]
         predict_codis = [list(predict_codi[0]) for predict_codi in predict_codis]
 
         return predict_codis

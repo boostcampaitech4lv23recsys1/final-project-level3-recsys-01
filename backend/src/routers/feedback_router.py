@@ -8,7 +8,7 @@ from src.database.models.Feedbacks import Feedbacks
 from src.utils import BigQueryHelper
 
 router = APIRouter()
-big_query_helper = BigQueryHelper(key_path="src/utils/gcs_key.json", dataset_name="log")
+big_query_helper = BigQueryHelper(key_path="keys/gcs_key.json", dataset_name="log")
 
 
 @router.post("/feedback", description="따봉 비따봉 결과 전송")
