@@ -7,7 +7,7 @@ function GoCodiDiagnosis() {
   return (
     <div>
       <button className="button-godig">
-        <a onClick={() => navigate("preference")}>
+        <a onClick={() => navigate("diagnosis", { replace: true })}>
           {"코디 진단부터 받으러 가기"}
         </a>
       </button>
