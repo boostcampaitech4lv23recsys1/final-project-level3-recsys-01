@@ -1,0 +1,44 @@
+/* .codiPartButton .itemSelection{
+    position: relative;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.codiPartButton .itemSelection-bg{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+    width: 50px;
+    
+}
+
+.codiPartButton .itemSelection-img{
+    position: absolute;
+    left: 20px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+
+}
+
+/* .codiPartButton .codiPart{
+    position:absolute;
+    padding-top:120px;
+    padding-left:100px;
+}
+
+.codiPartButton .itemLabel{
+    position: absolute;
+    padding-top:150px;
+    padding-left:90px;
+} */
+
+/* .codiPartButton .item{
+    position: absolute;
+} */

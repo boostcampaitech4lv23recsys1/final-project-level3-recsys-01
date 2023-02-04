@@ -21,8 +21,8 @@ function CodiPartInputs({
   setInputWeapon,
 }) {
   return (
-    <Stack direction="column" spacing={8} alignItems="center" sx={{ p: 8 }}>
-      <Stack direction="row" spacing={6} alignItems="center">
+    <Stack direction="column" spacing={10} alignItems="center" sx={{ p: 8 }}>
+      <Stack direction="row" spacing={8} alignItems="center">
         <CodiPartButton
           codiPart="모자"
           inputValue={inputHat}
