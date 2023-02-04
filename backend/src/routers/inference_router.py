@@ -47,7 +47,6 @@ async def newMF_output(
             item = await find_by_index(predicts[idx][i], db)
             codi_set[part] = {
                 "item_id": item["item_id"],
-                "index": item["index"],
                 "name": item["name"],
                 "gcs_image_url": item["gcs_image_url"],
             }
