@@ -7,7 +7,7 @@ function FixParts({ fixPartList }) {
     const fixes = [];
     for (let idx = 0; idx < fixPartList.length; idx++) {
       fixes.push(
-        <Grid item xs={1} className="button-fixparts">
+        <Grid item xs={1}>
           <FixCodiPartButton codiPart={fixPartList[idx]}></FixCodiPartButton>
         </Grid>,
       );
@@ -17,7 +17,7 @@ function FixParts({ fixPartList }) {
   };
 
   const buttonCollection = (
-    <Grid container spacing={1}>
+    <Grid container spacing={1} className="fiximage">
       <Grid item xs></Grid>
       {collectFixPart()}
       <Grid item xs></Grid>

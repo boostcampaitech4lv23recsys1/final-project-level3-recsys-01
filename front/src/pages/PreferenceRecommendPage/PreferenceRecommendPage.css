@@ -1,3 +1,11 @@
 .PreferenceRecommendPage .infoTextAndVideo {
     text-align: center,
 }
+
+.PreferenceRecommendPage .button-reload {
+    margin: 0 auto;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
