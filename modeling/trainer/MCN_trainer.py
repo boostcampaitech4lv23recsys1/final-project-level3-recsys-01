@@ -110,21 +110,23 @@ class MCNTrainer(object):
                     )
                 )
                 log = {
-                    "clf_loss": clf_losses.val,
-                    "vse_loss": vse_losses.val,
-                    "features_loss": features_loss,
-                    "tmasks_loss": tmasks_loss,
-                    "total_loss": total_losses.val,
+                    "train/clf_loss": clf_losses.val,
+                    "train/vse_loss": vse_losses.val,
+                    "train/features_loss": features_loss,
+                    "train/tmasks_loss": tmasks_loss,
+                    "train/total_loss": total_losses.val,
+                    "batch_num": batch_num
                 }
-                wandb.log(log, step=batch_num)
+                wandb.log(log, commit=True)
         print("Train Loss (clf_loss): {:.4f}".format(clf_losses.avg))
 
         epoch_train_log = {
-            "train_clf_loss": clf_losses.avg,
-            "train_vse_loss": vse_losses.avg,
-            "train_total_loss": total_losses.avg,
+            "train_epoch/clf_loss": clf_losses.avg,
+            "train_epoch/vse_loss": vse_losses.avg,
+            "train_epoch/total_loss": total_losses.avg,
+            "train_step": epoch
         }
-        wandb.log(epoch_train_log, step=epoch)
+        wandb.log(epoch_train_log, commit=True)
 
         avg_score = self.__val(epoch)
 
@@ -160,12 +162,13 @@ class MCNTrainer(object):
         print("Positive loss: {:.4f}".format(positive_loss))
 
         epoch_valid_log = {
-            "valid_clf_loss": clf_losses.avg,
-            "accuracy@0.5": accuracy,
-            "positive_loss": positive_loss,
-            "avg_score": avg_score,
+            "valid/clf_loss": clf_losses.avg,
+            "valid/accuracy": accuracy,
+            "valid/positive_loss": positive_loss,
+            "valid/avg_score": avg_score,
+            "valid_step": epoch
         }
-        wandb.log(epoch_valid_log, step=epoch)
+        wandb.log(epoch_valid_log, commit=True)
 
         return avg_score
 

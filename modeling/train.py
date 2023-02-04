@@ -43,6 +43,9 @@ def main(config: Dict[str, Any]) -> None:
         entity="dino-final",
         name=f"{now}_{args.user}",
     )
+    wandb.define_metric("train/*", step_metric="batch_num")
+    wandb.define_metric("train_epoch/*", step_metric="train_step")
+    wandb.define_metric("valid/*", step_metric="valid_step")
     wandb.watch(model)
 
     trainer.train()
