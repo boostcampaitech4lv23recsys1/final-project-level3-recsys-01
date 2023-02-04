@@ -15,7 +15,7 @@ from src.routers.inference_router import router as inference_router
 from src.routers.diagnosis_router import router as diagnosis_router
 
 # Port num
-PORT = int(os.getenv("PORT"))
+PORT = int(os.getenv("BACKEND_PORT"))
 
 app = FastAPI()
 
