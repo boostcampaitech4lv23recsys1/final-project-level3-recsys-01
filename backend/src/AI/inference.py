@@ -63,7 +63,8 @@ class InferenceNewMF(object):
         self.model = NewMF(
             n_items=self.n_items, n_factors=self.model_config["n_factors"]
         )
-        load_state = torch.load(self.model_path)
+        load_state = torch.load(self.model_path, map_location=self.device)
+        print(self.device)
         self.model.load_state_dict(load_state["state_dict"])
         self.model.to(self.device)
         self.model.eval()
@@ -102,7 +103,8 @@ class MCNInference:
         self.top_k = model_config["top_k"]
 
     async def load_model(self):
-        self.model.load_state_dict(torch.load(self.model_path))
+        self.model.load_state_dict(torch.load(self.model_path, map_location=self.device))
+        print(self.device)
         self.model.to(self.device)
         self.model.eval()
 

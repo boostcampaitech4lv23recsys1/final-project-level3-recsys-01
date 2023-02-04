@@ -10,6 +10,9 @@ from typing import Tuple, List
 
 from src.utils import GCSHelper
 
+from src.database.models.crud_item import find_all
+from src.database.init_db import get_db
+
 
 gcs_helper = GCSHelper(key_path="src/utils/gcs_key.json", bucket_name="maple_raw_data")
 
@@ -34,7 +37,8 @@ async def image_to_tensor() -> Tuple[List[Tensor], DataFrame]:
     # 2. 이미지 텐서로 변환
     print("이미지를 텐서로 변환합니다. ")
     gcs_helper.change_bucket("maple_preprocessed_data")
-    item_data = gcs_helper.read_df_from_gcs(blob_name="item_KMST_1149_latest.csv")
+    db = await get_db().__anext__()
+    item_data = DataFrame(await find_all(db))
     image_tensors = [None for _ in range(len(item_data))]
 
     # 간혹 이미지가 오류가 나는 친구들도 존재
