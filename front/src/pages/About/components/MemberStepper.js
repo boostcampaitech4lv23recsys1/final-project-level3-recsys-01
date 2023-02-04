@@ -14,7 +14,6 @@ import characterJEONG from "../../../assets/images/characterJEONG.png";
 import characterJANG from "../../../assets/images/characterJANG.png";
 import characterRYU from "../../../assets/images/characterRYU.png";
 import characterKIM from "../../../assets/images/characterKIM.png";
-import characterInfo from "../../../assets/images/characterInfo.png";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const images = [
@@ -43,7 +42,7 @@ function SwipeableMemberStepper() {
   };
 
   return (
-    <Box sx={{ maxWidth: 500, flexGrow: 1 }}>
+    <Box sx={{ maxWidth: 600, flexGrow: 1 }} className="memberBox-box">
       <MobileStepper
         className="memberBox-stepper"
         steps={maxSteps}
@@ -83,19 +82,18 @@ function SwipeableMemberStepper() {
           display: "flex",
           alignItems: "center",
           width: 600,
-          pl: 2,
         }}>
         <AutoPlaySwipeableViews
           className="memberBox-autoPlay"
           axis={theme.direction == "rtl" ? "x-reverse" : "x"}
           index={activeStep}
           onChangeIndex={handleStepChange}
-          enableMouseEvents
-          cellPadding={"20px"}>
+          enableMouseEvents>
           {images.map((step, index) => (
             <div key={step.label}>
               {Math.abs(activeStep - index) <= 2 ? (
                 <Box
+                  className="memberBox-img"
                   component="img"
                   sx={{
                     height: "100%",
