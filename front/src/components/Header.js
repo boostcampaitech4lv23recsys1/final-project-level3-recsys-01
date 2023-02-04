@@ -29,7 +29,10 @@ function Header() {
           <Grid item xs></Grid>
           <Grid item xs={4} className="grid-center">
             <button className="button-title">
-              <a onClick={() => navigate("/recommend")}>
+              <a
+                onClick={() => {
+                  window.location.reload(navigate("/recommend"));
+                }}>
                 <Typography
                   align="center"
                   variant="h4"
