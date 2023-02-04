@@ -69,7 +69,7 @@ function App() {
   return (
     <Router>
       <Header />
-      <Routes id="wrapper">
+      <Routes>
         <Route path="/" exact element={<Navigate to="/recommend" />} />
         <Route path="/recommend" exact element={<LandingPage />} />
         <Route path="/about" element={<About />} />
