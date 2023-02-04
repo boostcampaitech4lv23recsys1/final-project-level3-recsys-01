@@ -33,8 +33,8 @@ function TemporaryDrawer() {
   };
 
   const iconList = [recIcon, dignosisIcon, reviewIcon];
-  const pageList = ["preference/", "preference/result", "preference/result"];
-  const infoList = ["recommend", "about", "contact"];
+  const pageList = ["preference/", "diagnosis", "preference/result"];
+  const infoList = ["recommend", "about"];
 
   const list = (anchor) => (
     <Box
@@ -45,7 +45,9 @@ function TemporaryDrawer() {
       <List>
         {["코디 추천", "코디 진단", "리뷰 남기기"].map((text, index) => (
           <a
-            onClick={() => navigate("recommend/" + pageList[index])}
+            onClick={() =>
+              window.location.reload(navigate("recommend/" + pageList[index]))
+            }
             key={text}>
             <ListItem disablePadding>
               <ListItemButton>
@@ -61,7 +63,9 @@ function TemporaryDrawer() {
       <Divider />
       <List>
         {["Home", "About"].map((text, index) => (
-          <a onClick={() => navigate(infoList[index])} key={text}>
+          <a
+            onClick={() => window.location.reload(navigate(infoList[index]))}
+            key={text}>
             <ListItem alignItems="flex-start" disablePadding>
               <ListItemButton>
                 <ListItemText primary={text} />

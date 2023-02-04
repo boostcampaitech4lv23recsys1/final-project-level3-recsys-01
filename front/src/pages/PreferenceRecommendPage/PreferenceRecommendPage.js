@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import CodiPartInputs from "./components/CodiPartInputs";
 import InfoTextAndVideo from "./components/InfoTextAndVideo";
 import GoCodiRecResult from "./components/GoCodiRecResult";
+import clickIcon from "../../assets/icons/click.png";
 
 function PreferenceRecommendPage({
   inputHat,
@@ -20,6 +21,13 @@ function PreferenceRecommendPage({
   inputWeapon,
   setInputWeapon,
 }) {
+  const defaultFixObject = {
+    label: "",
+    img: clickIcon,
+    id: "",
+    category: "",
+    index: "",
+  };
   return (
     <div className="PreferenceRecommendPage">
       <InfoTextAndVideo />
@@ -39,7 +47,19 @@ function PreferenceRecommendPage({
         inputWeapon={inputWeapon}
         setInputWeapon={setInputWeapon}
       />
-
+      <button
+        className="button-reload"
+        onClick={() => {
+          setInputHat(defaultFixObject);
+          setInputHair(defaultFixObject);
+          setInputFace(defaultFixObject);
+          setInputTop(defaultFixObject);
+          setInputBottom(defaultFixObject);
+          setInputShoes(defaultFixObject);
+          setInputWeapon(defaultFixObject);
+        }}>
+        Reset
+      </button>
       <Grid
         container
         direction="row"

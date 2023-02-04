@@ -5,13 +5,11 @@ import Typography from "@mui/material/Typography";
 
 function AllCodiPartButton({ partName, codiPart }) {
   return (
-    <Stack direction="column" spacing={1} alignItems="center">
-      <Fab aria-label="NotClickable">
-        <img alt="" src={codiPart["gcs_image_url"]} />
-      </Fab>
+    <div>
+      <img alt="" src={codiPart["gcs_image_url"]} width="70%" height="70%" />
       <Typography>{codiPart["name"]}</Typography>
       <Typography>{partName}</Typography>
-    </Stack>
+    </div>
   );
 }
 export default AllCodiPartButton;

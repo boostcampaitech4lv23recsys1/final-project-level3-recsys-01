@@ -7,6 +7,7 @@ function GoCodiRec() {
   return (
     <Fab
       variant="extended"
+      onClick={() => navigate("preference")}
       sx={{
         marginTop: 5,
         borderRadius: 3,
@@ -18,9 +19,7 @@ function GoCodiRec() {
         fontFamily: "NanumSquareAcb",
         fontSize: 30,
       }}>
-      <a onClick={() => navigate("preference")} style={{ color: "white" }}>
-        {"코디 추천 받으러 가기"}
-      </a>
+      <a style={{ color: "white" }}>{"코디 추천 받으러 가기"}</a>
     </Fab>
   );
 }

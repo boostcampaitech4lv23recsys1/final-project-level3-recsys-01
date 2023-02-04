@@ -2,15 +2,38 @@
     font-family: 'NanumSquareAcr';
     text-align: center;
     position: absolute;
-    top: 10%;
-    right: 34%;
+    top:100px;
+    left:50%;
+    transform: translate(-50%,0);
+    z-index: 3;
 }
+.PRRP .fiximage {
+    z-index: 3;
+    text-align: center;
+    font-family: 'NanumSquareAcr';
+    line-height: 50px;
+}
+
+.bgtop {
+    overflow: visible;
+}
+
 
 .PRRP .titleFixItem-BG {
     width: 100%;
+    height: 250px;
     background-size: cover;
     position: relative;
     background-repeat: no-repeat;
+    z-index: 2;
+    
+}
+
+.PRRP .top-BG {
+    background-image: url("../../assets/images/resultBackground.png");
+    background-repeat: no-repeat;
+    background-size:100%;
+    height: auto;
 }
 
 .PRRP .button-fixparts {
@@ -46,11 +69,52 @@
 .PRRP .button-fixitem {
     margin: 10px;
     padding-bottom: 50px;
-    /* border-style: dashed;
-    border-color: brown; */
-    /* border-radius: 20px;
-    padding-right: 8px; */
+    position: relative;
+    
 }
+
+.PRRP .img-instack {
+    position: absolute;
+    width:150px;
+    margin: auto;
+    top: 0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+.PRRP .img-inbox {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom:65px;
+    left:50px;
+    right:0;
+    width: 50%;
+    height:fit-content;
+}
+
+.PRRP .text-inboxname {
+    position: absolute;
+    margin: auto;
+    top: 180px;
+    bottom:0;
+    left:40px;
+    right:0;
+    width: 120px;
+    
+}
+
+.PRRP .text-inboxpart {
+    position: absolute;
+    margin: auto;
+    top: 215px;
+    bottom:0;
+    left:96px;
+    right:0;
+    width: 120px;
+}
+
 
 .PRRP .button-retry {
     display: block;
@@ -81,10 +145,9 @@
 }
 
 .PRRP .box-bestcodibox {
-    width: auto;
-    height: 200px;
-    /* border-color: grey;
-    border-style: dashed; */
+    width:100%;
+    height: 300px;
+    background-color: grey;
     vertical-align: center;
 }
 
