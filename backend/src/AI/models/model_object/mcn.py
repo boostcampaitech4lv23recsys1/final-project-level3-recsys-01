@@ -7,7 +7,7 @@ import torch.nn.functional as F
 import torch.nn.utils.rnn as rnn_utils
 import torchvision.models as models
 
-from src.AI.models.model_object.resnet import resnet50
+from src.AI.models.model_object.resnet import get_resnet
 
 
 class MCN(nn.Module):
@@ -21,6 +21,7 @@ class MCN(nn.Module):
         mlp_layers=2,
         conv_feats="1234",
         pretrained=True,
+        resnet_layer_num=18
     ):
         """The Multi-Layered Comparison Network (MCN) for outfit compatibility
         prediction and diagnosis.
@@ -41,11 +42,12 @@ class MCN(nn.Module):
         self.mlp_layers = mlp_layers
         self.conv_feats = conv_feats
 
-        cnn = resnet50(pretrained=pretrained, need_rep=need_rep)
+        print(f"using resnet{resnet_layer_num}...")
+        cnn = get_resnet(layer_num=resnet_layer_num, pretrained=pretrained, need_rep=need_rep)
         cnn.fc = nn.Linear(cnn.fc.in_features, embed_size)
         self.cnn = cnn
         self.need_rep = need_rep
-        self.num_rela = 15 * len(conv_feats)
+        self.num_rela = 28 * len(conv_feats)
         self.bn = nn.BatchNorm1d(
             self.num_rela
         )  # 5x5 relationship matrix have 25 elements
@@ -72,13 +74,13 @@ class MCN(nn.Module):
         # Type specified masks
         # l1, l2, l3 is the masks for feature maps for the beginning layers
         # not suffix one is for the last layer
-        self.masks = nn.Embedding(15, embed_size)
+        self.masks = nn.Embedding(28, embed_size)
         self.masks.weight.data.normal_(0.9, 0.7)
-        self.masks_l1 = nn.Embedding(15, 256)
+        self.masks_l1 = nn.Embedding(28, 64)
         self.masks_l1.weight.data.normal_(0.9, 0.7)
-        self.masks_l2 = nn.Embedding(15, 512)
+        self.masks_l2 = nn.Embedding(28, 128)
         self.masks_l2.weight.data.normal_(0.9, 0.7)
-        self.masks_l3 = nn.Embedding(15, 1024)
+        self.masks_l3 = nn.Embedding(28, 256)
         self.masks_l3.weight.data.normal_(0.9, 0.7)
 
         # Semantic embedding model
@@ -193,7 +195,7 @@ class MCN(nn.Module):
         # Comparison matrix
         if "4" in self.conv_feats:
             for mi, (i, j) in enumerate(
-                itertools.combinations_with_replacement([0, 1, 2, 3, 4], 2)
+                itertools.combinations_with_replacement([0, 1, 2, 3, 4, 5, 6], 2)
             ):
                 if self.pe_off:
                     left = F.normalize(
@@ -227,18 +229,14 @@ class MCN(nn.Module):
             masks_li = F.relu(masks_li.weight)
             # Enumerate all pairwise combination among the outfit then compare their features
             for mi, (i, j) in enumerate(
-                itertools.combinations_with_replacement([0, 1, 2, 3, 4], 2)
+                itertools.combinations_with_replacement([0, 1, 2, 3, 4, 5, 6], 2)
             ):
                 if self.pe_off:
-                    left = F.normalize(
-                        masks_li[mi] * rep_li[:, i : i + 1, :], dim=-1
-                    )  # (32, 1, 1000)
-                    right = F.normalize(masks_li[mi] * rep_li[:, j : j + 1, :], dim=-1)
+                    left = F.normalize(masks_li[mi] * rep_li[:, i:i + 1, :], dim=-1)  # (32, 1, 1000)
+                    right = F.normalize(masks_li[mi] * rep_li[:, j:j + 1, :], dim=-1)
                 else:
-                    left = F.normalize(
-                        masks_li[mi] * rep_li[:, i : i + 1, :], dim=-1
-                    )  # (32, 1, 1000)
-                    right = F.normalize(masks_li[mi] * rep_li[:, j : j + 1, :], dim=-1)
+                    left = F.normalize(masks_li[mi] * rep_li[:, i:i + 1, :], dim=-1)  # (32, 1, 1000)
+                    right = F.normalize(masks_li[mi] * rep_li[:, j:j + 1, :], dim=-1)
                 rela = torch.matmul(left, right.transpose(1, 2)).squeeze()  # (32)
                 relations.append(rela)
 
