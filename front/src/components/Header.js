@@ -24,7 +24,7 @@ function Header() {
         className="headerAppBar"
         position="static"
         color="primary"
-        style={{ height: 60 }}>
+        style={{ height: 70 }}>
         <Grid container>
           <Grid item xs></Grid>
           <Grid item xs={4} className="grid-center">
