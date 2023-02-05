@@ -3,11 +3,11 @@ import ResultTitle from "./ResultTitle";
 import FixParts from "./FixParts";
 import resultBackground from "../../../assets/images/resultBackground.png";
 
-function TitleFixItem({ fixPartList }) {
+function TitleFixItem({ fixPartList, loading }) {
   return (
     <div>
       <img className="titleFixItem-BG" src={resultBackground} alt="" />
-      <ResultTitle></ResultTitle>
+      <ResultTitle loading={loading}></ResultTitle>
       <FixParts fixPartList={fixPartList}></FixParts>
     </div>
   );
