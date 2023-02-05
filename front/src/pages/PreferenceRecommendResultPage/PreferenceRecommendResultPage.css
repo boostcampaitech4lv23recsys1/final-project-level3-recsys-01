@@ -6,6 +6,8 @@
     left:50%;
     transform: translate(-50%,0);
     z-index: 3;
+    white-space:pre-line;
+    line-height: 25px;
 }
 .PRRP .fiximage {
     z-index: 3;

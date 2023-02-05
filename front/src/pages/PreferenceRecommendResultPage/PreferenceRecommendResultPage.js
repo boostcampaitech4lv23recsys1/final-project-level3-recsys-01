@@ -1,6 +1,7 @@
 import TitleFixItem from "./components/TitleFixItem";
 import BestCodiTopThree from "./components/BestCodiTopThree";
 import RetryButton from "./components/RetryButton";
+import LoadingAnimation from "./components/LoadingAnimation";
 import "./PreferenceRecommendResultPage.css";
 import * as API from "../../api";
 import { useState, useEffect } from "react";
@@ -68,16 +69,20 @@ function PreferenceRecommendResultPage({
   if (!loadingPage) {
     return (
       <div className="PRRP">
-        <TitleFixItem fixPartList={fixPartList}></TitleFixItem>
+        <TitleFixItem
+          fixPartList={fixPartList}
+          loading={loadingPage}></TitleFixItem>
         <center>
-          <h1>please wait</h1>
+          <LoadingAnimation></LoadingAnimation>
         </center>
       </div>
     );
   } else {
     return (
       <div className="PRRP">
-        <TitleFixItem fixPartList={fixPartList}></TitleFixItem>
+        <TitleFixItem
+          fixPartList={fixPartList}
+          loading={loadingPage}></TitleFixItem>
         <BestCodiTopThree
           fixPartList={fixPartListKorEng}
           recommendData={recommendData}></BestCodiTopThree>

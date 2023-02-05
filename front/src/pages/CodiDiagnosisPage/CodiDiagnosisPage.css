@@ -50,3 +50,7 @@
 .CDP .getDiagnosisResult{
     padding-top: 80px;
 }
+
+.CDP .infoText {
+    text-align: center,
+}

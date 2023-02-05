@@ -6,6 +6,7 @@ import Stack from "@mui/material/Stack";
 import GetDiagnosisResult from "./components/GetDiagnosisResult";
 import ShowDiagnosisResult from "./components/ShowDiagnosisResult";
 import { useState } from "react";
+import InfoText from "./components/InfoText";
 
 function CodiDiagnosisPage({
   inputHat,
@@ -26,6 +27,7 @@ function CodiDiagnosisPage({
   const [diagnosisScore, setDiagnosisScore] = useState(0);
   return (
     <div className="CDP">
+      <InfoText></InfoText>
       <Stack className="simulatorAndItem" direction="row" spacing={20}>
         {" "}
         <CodiSimulator
