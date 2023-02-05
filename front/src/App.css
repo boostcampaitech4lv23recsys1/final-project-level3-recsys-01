@@ -1,5 +1,6 @@
 body {
     background-color: rgb(247, 247, 247);
+    overflow: scroll; /* Show scrollbars */
 }
 
 footer{
