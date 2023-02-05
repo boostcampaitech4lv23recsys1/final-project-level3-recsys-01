@@ -14,6 +14,7 @@ import LandingPage from "./pages/LandingPage_ver2/LandingPage"; // check Landing
 import PreferenceRecommendPage from "./pages/PreferenceRecommendPage/PreferenceRecommendPage";
 import PreferenceRecommendResultPage from "./pages/PreferenceRecommendResultPage/PreferenceRecommendResultPage";
 import CodiDiagnosisPage from "./pages/CodiDiagnosisPage/CodiDiagnosisPage";
+import Review from "./pages/Review/Review";
 
 function App() {
   const [inputHat, setInputHat] = useState({
@@ -73,8 +74,9 @@ function App() {
         <Route path="/" exact element={<Navigate to="/recommend" />} />
         <Route path="/recommend" exact element={<LandingPage />} />
         <Route path="/about" element={<About />} />
+        <Route path="/recommend/review" element={<Review />} />
         <Route
-          path="/recommend/diagnosis"
+          path="recommend/diagnosis"
           element={
             <CodiDiagnosisPage
               inputHat={inputHat}
@@ -130,6 +132,7 @@ function App() {
           }
         />
       </Routes>
+
       <Footer />
     </Router>
   );
