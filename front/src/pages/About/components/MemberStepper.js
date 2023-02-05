@@ -48,7 +48,7 @@ function SwipeableMemberStepper() {
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
-        sx={{ p: 2 }}
+        sx={{ p: 2, backgroundColor: "#F7F7F7" }}
         nextButton={
           <Button
             size="small"
@@ -79,6 +79,7 @@ function SwipeableMemberStepper() {
         square
         elevation={0}
         sx={{
+          backgroundColor: "#F7F7F7",
           display: "flex",
           alignItems: "center",
           width: 600,
