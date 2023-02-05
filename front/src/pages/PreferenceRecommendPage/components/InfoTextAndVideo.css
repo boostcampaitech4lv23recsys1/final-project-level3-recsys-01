@@ -19,4 +19,6 @@
     top: 35%;
     right: 34%;
     transform: translate(40%, -50%);
+    white-space: pre-wrap;
+    font-family: 'NanumSquareAcr';
 }
