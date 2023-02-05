@@ -17,9 +17,10 @@
 
 .text-slogan {
     align-items: flex-start;
-    color: #37F19C;
+    color: #30D78C;
     margin-top: 300px;
     font-size: large;
+    font-family: 'NanumSquareAcb';
     white-space: pre-line;
     line-height: 20px
 }
@@ -34,7 +35,7 @@
 }
 
 .text-subsummary {
-    color: #b6b6b6;
+    color: #c8c8c8;
     margin-top: 10px;
     font-size: large;
     white-space: pre-line;
