@@ -1,23 +1,26 @@
-from src.AI.models.model_object import NewMF, MCN
+from src.AI.models.model_object import NewMF, MCN, MCNTopkDataset, MCNProductDataset
 from src.utils.gcs_helper import GCSHelper
 from src.database.models.crud_item import find_by_item_idxs
 from src.database.init_db import get_db
 from src.AI.config import MODEL_CONFIG
 from src.AI.image_processing import image_to_tensor
-from itertools import product
+
+import torch
+from torch.utils.data import DataLoader
 
 import os
-import torch
 import asyncio
+
+from typing import Dict, List, Any
 
 
 class InferenceNewMF(object):
-    def __init__(self, model_config):
+    def __init__(self, model_config: Dict[str, Any]) -> None:
         self.model_config = model_config
         self.model_path = model_config["model_path"]
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         if not os.path.exists(self.model_path):
-            os.makedirs('/'.join(self.model_path.split("/")[:-1]))
+            os.makedirs("/".join(self.model_path.split("/")[:-1]))
             gcs_helper = GCSHelper(
                 key_path="src/utils/gcs_key.json", bucket_name="maple_trained_model"
             )
@@ -28,7 +31,7 @@ class InferenceNewMF(object):
         self.n_items = 0
 
     @torch.no_grad()
-    async def inference(self, equips):
+    async def inference(self, equips: Dict[str, int]):
         predicts = list()
         equips = list(equips.values())
         for part_idx, equip in enumerate(equips):
@@ -55,16 +58,14 @@ class InferenceNewMF(object):
 
         return predicts
 
-    async def load_model(self):
+    async def load_model(self) -> None:
         for part in ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"]:
             db = await get_db().__anext__()
             item_part = await find_by_item_idxs(part, db)
             self.n_items += len(item_part)
             self.item_parts.append(item_part)
-            
-        self.model = NewMF(
-            n_items=10101, n_factors=self.model_config["n_factors"]
-        )
+
+        self.model = NewMF(n_items=10101, n_factors=self.model_config["n_factors"])
         load_state = torch.load(self.model_path, map_location=self.device)
         print(self.device)
         self.model.load_state_dict(load_state["state_dict"])
@@ -80,7 +81,7 @@ if is_load:
 
 
 class MCNInference:
-    def __init__(self, model_config):
+    def __init__(self, model_config: Dict[str, Any]) -> None:
         self.model_config = model_config
         self.model_path = model_config["model_path"]
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -96,7 +97,7 @@ class MCNInference:
         self.top_k = model_config["top_k"]
         self.batch_size = model_config["batch_size"]
 
-    async def load_model(self):
+    async def load_model(self) -> None:
         for part in ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"]:
             db = await get_db().__anext__()
             item_part = await find_by_item_idxs(part, db)
@@ -111,15 +112,17 @@ class MCNInference:
             mlp_layers=self.model_config["mlp_layers"],
             conv_feats=self.model_config["conv_feats"],
             pretrained=self.model_config["pretrained"],
-            resnet_layer_num=self.model_config["resnet_layer_num"]
+            resnet_layer_num=self.model_config["resnet_layer_num"],
         )
-        self.model.load_state_dict(torch.load(self.model_path, map_location=self.device))
+        self.model.load_state_dict(
+            torch.load(self.model_path, map_location=self.device)
+        )
         print(self.device)
         self.model.to(self.device)
         self.model.eval()
 
     @torch.no_grad()
-    async def diagnosis(self, equips: dict):
+    async def diagnosis(self, equips: Dict[str, int]):
         images = []
 
         for equip_part, equip_index in equips.items():
@@ -135,7 +138,9 @@ class MCNInference:
         return float(score)
 
     @torch.no_grad()
-    async def get_topk_codi(self, equips):
+    async def get_topk_codi(self, equips: Dict[str, int]) -> List[List[int]]:
+        # 한벌옷은 top으로 취급.
+        # "Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon" 순서
         dummy_to_idx = {
             0: 10093,
             1: 10094,
@@ -144,78 +149,62 @@ class MCNInference:
             4: 10098,
             5: 10099,
             6: 10100,
-            7: 10101
         }
-        equips = list(equips.values())
-        pred_part_idxs = list()
-        topk_each_part = list()
 
-        for part_idx, equip in enumerate(equips):
+        part_index_and_topk = dict()
+
+        # 착용하지 않은 부위 모두 dummy로 변환
+        equips_list = list(equips.values())
+        equips_list = [
+            dummy_to_idx[i] if equips_list[i] == -1 else equips_list[i]
+            for i in range(7)
+        ]
+
+        # 부위 별 top k 탐색 시작
+        for part_idx, equip in enumerate(equips_list):
             part_scores = list()
 
-            if equip != -1: # Fix item
+            # 더미데이터 인 경우만 봐야함
+            if equip not in dummy_to_idx.values():  # Fix item
                 continue
 
-            pred_part_idxs.append(part_idx)
+            # 해당 부위의 모든 아이템
             item_part = self.item_parts[part_idx]
 
-            for idx in range(0, len(item_part), self.batch_size):
-                items = item_part[idx:idx + self.batch_size]
-                input_tensors = list()
+            dataset_per_part = MCNTopkDataset(equips_list, part_idx, item_part)
+            dataloader_per_part = DataLoader(
+                dataset=dataset_per_part, batch_size=self.batch_size, shuffle=False
+            )
 
-                for item in items:
-                    input_items = equips[:]
-                    input_items[part_idx] = item
-
-                    input_tensor = list()
-                    for input_item_part, input_item in enumerate(input_items):
-                        if input_item == -1:
-                            input_item = dummy_to_idx[input_item_part]
-
-                        input_tensor.append(image_tensors[input_item])
-
-                    input_tensors.append(torch.stack(input_tensor))
-
-                output, _, _, _ = self.model(torch.stack(input_tensors).to(self.device))
-                for item_idx, score in zip(items, output):
-                    part_scores.append((item_idx, float(score)))
+            for batch_idx, batch in enumerate(dataloader_per_part):
+                # batch shape (batch, 7) == (16, 7)
+                images = image_tensors[batch]
+                output, _, _, _ = self.model(images.to(self.device))
+                result = [
+                    (batch[i, part_idx], float(output[i]))
+                    for i in range(batch.shape[0])
+                ]
+                part_scores.extend(result)
 
             part_scores.sort(key=lambda x: x[1], reverse=True)
-            topk_each_part.append(part_scores[:self.top_k])
+            part_index_and_topk[part_idx] = [x[0] for x in part_scores[: self.top_k]]
 
-        topk_items_each_part = [list(map(lambda x: x[0], topk_part)) for topk_part in topk_each_part]
-        topk_predict_combs = list(product(*topk_items_each_part))
+        # topk 개 다 뽑았으니, 모든 경우의 수 고려 시작
+        dataset_for_product = MCNProductDataset(equips_list, part_index_and_topk)
+        dataloader_for_product = DataLoader(
+            dataset=dataset_for_product, batch_size=self.batch_size, shuffle=False
+        )
 
-        equip_combs = list()
-        for topk_predict_comb in topk_predict_combs:
-            input_items = equips[:]
-            for part_idx, item_idx in zip(pred_part_idxs, topk_predict_comb):
-                input_items[part_idx] = item_idx
+        codi_scores = []
+        for batch_idx, batch in enumerate(dataloader_for_product):
+            # batch shape (batch, 7) == (16, 7)
+            images = image_tensors[batch]
+            output, _, _, _ = self.model(images.to(self.device))
+            result = [(batch[i, :], float(output[i])) for i in range(batch.shape[0])]
+            codi_scores.extend(result)
 
-            equip_combs.append(input_items)
-
-        codi_scores = list()
-        for idx in range(0, len(equip_combs), self.batch_size):
-            equip_comb_batch = equip_combs[idx:idx + self.batch_size]
-            input_tensors = list()
-
-            for equip_comb in equip_comb_batch:
-                input_tensor = list()
-                for item_idx in equip_comb:
-                    input_tensor.append(image_tensors[item_idx])
-
-                input_tensors.append(torch.stack(input_tensor))
-
-            output, _, _, _ = self.model(torch.stack(input_tensors).to(self.device))
-
-            for equip_comb, score in zip(equip_comb_batch, output):
-                codi_scores.append((equip_comb, float(score)))
-
-        codi_scores.sort(key=lambda x: x[1], reverse=True)
-        predict_codis = codi_scores[:self.top_k]
-        predict_codis = [list(predict_codi[0]) for predict_codi in predict_codis]
-
-        return predict_codis
+        part_scores.sort(key=lambda x: x[1], reverse=True)
+        return [x[0].tolist() for x in codi_scores[: self.top_k]]
 
 
 if is_load:
