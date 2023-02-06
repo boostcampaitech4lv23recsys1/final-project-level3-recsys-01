@@ -1,0 +1,172 @@
+.PRRP .text-defaultsetting {
+    font-family: 'NanumSquareAcr';
+    text-align: center;
+    position: absolute;
+    top:100px;
+    left:50%;
+    transform: translate(-50%,0);
+    z-index: 3;
+    white-space:pre-line;
+    line-height: 25px;
+}
+.PRRP .fiximage {
+    z-index: 3;
+    text-align: center;
+    font-family: 'NanumSquareAcr';
+    line-height: 50px;
+}
+
+.bgtop {
+    overflow: visible;
+}
+
+
+.PRRP .titleFixItem-BG {
+    width: 100%;
+    height: 250px;
+    background-size: cover;
+    position: relative;
+    background-repeat: no-repeat;
+    z-index: 2;
+    
+}
+
+.PRRP .top-BG {
+    background-image: url("../../assets/images/resultBackground.png");
+    background-repeat: no-repeat;
+    background-size:100%;
+    height: auto;
+}
+
+.PRRP .button-fixparts {
+    margin: 10px;
+    padding-bottom: 50px;
+}
+
+.PRRP .fixCodiPartButton-BG{
+    width:100px;
+    height:150px;
+    position: relative;
+    background-size: cover;
+}
+
+.PRRP .fixCodiPartButton-item{
+    position: relative;
+    top: -120px;
+}
+
+.PRRP .fixCodiPartButton-part{
+    position:relative;
+    top:-40px;
+    color:white;
+    text-shadow: -0.6px 0 #000, 0 0.6px #000, 0.6px 0 #000, 0 -0.6px #000;
+    font-size: 14px;
+
+}
+.PRRP .button-recitem {
+    margin: 10px;
+    padding-bottom: 50px;
+}
+
+.PRRP .button-fixitem {
+    margin: 10px;
+    padding-bottom: 50px;
+    position: relative;
+    
+}
+
+.PRRP .img-instack {
+    position: absolute;
+    width:150px;
+    margin: auto;
+    top: 0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+.PRRP .img-inbox {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom:65px;
+    left:50px;
+    right:0;
+    width: 50%;
+    height:fit-content;
+}
+
+.PRRP .text-inboxname {
+    position: absolute;
+    margin: auto;
+    top: 180px;
+    bottom:0;
+    left:40px;
+    right:0;
+    width: 120px;
+    
+}
+
+.PRRP .text-inboxpart {
+    position: absolute;
+    margin: auto;
+    top: 215px;
+    bottom:0;
+    left:96px;
+    right:0;
+    width: 120px;
+}
+
+
+.PRRP .button-retry {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+}
+
+.PRRP .button-feedback {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 20px;
+}
+
+.PRRP .button-goodbad {
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 100%;
+    border-color: white;
+    background-color: white;
+}
+
+.PRRP .button-goodbads {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.PRRP .box-bestcodibox {
+    width:100%;
+    height: 300px;
+    background-color: grey;
+    vertical-align: center;
+}
+
+.PRRP .block-bestorder {
+    margin: 30px;
+    font-family: 'PyeongChangPeaceB';
+}
+
+.PRRP .button-fixcheck {
+    border-color: black;
+    width: 40px;
+}
+
+.PPRP .block-recommenditem {
+    margin: auto 0;
+}
+
+.button-good {
+
+}

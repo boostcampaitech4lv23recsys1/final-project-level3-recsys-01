@@ -1,0 +1,64 @@
+.grid-mainleft {
+    display: flex;
+    justify-content: center;
+    margin-left: 50px;
+}
+
+.grid-mainright {
+    background-image: url("../../assets/images/LandingBackVer2.png");
+    background-repeat: no-repeat;
+    background-size:auto 100%;
+}
+
+.text-defaultsetting {
+    font-family: 'NanumSquareAcr';
+    text-align: left;
+}
+
+.text-slogan {
+    align-items: flex-start;
+    color: #30D78C;
+    margin-top: 300px;
+    font-size: large;
+    font-family: 'NanumSquareAcb';
+    white-space: pre-line;
+    line-height: 20px
+}
+
+.text-ProjectSummary {
+    color: black;
+    margin-top: 10px;
+    font-family: 'NanumSquareAceb';
+    font-size: 2.5em;
+    white-space: pre-line;
+    line-height: 60px;
+}
+
+.text-subsummary {
+    color: #c8c8c8;
+    margin-top: 10px;
+    font-size: large;
+    white-space: pre-line;
+    line-height: 25px
+}
+
+.button-gocodi {
+    text-align: center;
+}
+
+.button-godig {
+    cursor: pointer;
+    width: 240px;
+    background-color: inherit;
+    font-size: 20px;
+    margin: "0auto";
+    border: 0;
+    margin-top: 20px;
+    font-family: 'NanumSquareAcb';
+}
+
+.background {
+    background-image: url("../../assets/images/LandingBack.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}

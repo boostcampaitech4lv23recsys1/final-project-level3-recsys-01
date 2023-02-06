@@ -1,0 +1,60 @@
+.CDP {
+    text-align: center;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+.CDP .simulatorAndItem {
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 80px;
+}
+
+.CDP .codiSimulator {
+    padding-top: 20%;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.CDP .codiSimulator-container {
+    position: relative;
+    height: 400px;
+    width: 300px;
+    padding-top: 20px;
+    padding-left: 100px;
+}
+
+.CDP .codiSimulator-bg {
+    position: absolute;
+    height: 400px;
+    width: 300px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.CDP .codiSimulator-simulator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50px;
+    right: 0;
+    margin: auto;
+}
+
+.CDP .diagnosisResult p {
+    /* padding-top: 80px; */
+    margin-bottom: 30px;
+}
+
+.CDP .infoText {
+    text-align: center;
+}
+

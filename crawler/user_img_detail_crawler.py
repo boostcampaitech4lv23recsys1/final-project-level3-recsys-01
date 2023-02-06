@@ -11,7 +11,7 @@ import sys
 sys.path.append(
     os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 )  # 상위 폴더의 파일을 import 하기 위한 방법
-from utils import GCS_helper
+from utils import GCSHelper
 
 from typing import List
 
@@ -39,6 +39,7 @@ COLUMNS = [
     "achievement",
     "cur_chr",
     "gcs_image_path",
+    "updated_at"
     # "past_chr_img_1",
     # "past_chr_img_2",
     # "past_chr_img_3",
@@ -87,7 +88,7 @@ def get_guild_ranking(soup):
 
 def get_last_access(soup):
     last = soup.find("div", attrs={"class": "col-6 col-md-8 col-lg-6"})
-    if type(last) is None:
+    if last is None:
         last_visit = "CHECK"
     else:
         last = last.text.replace("\n", "")
@@ -104,6 +105,7 @@ def get_last_access(soup):
 
 def get_mureung_theseed_union_achieve(soup):
     datas = soup.findAll("div", "col-lg-3 col-6 mt-3 px-1")
+    mureung, theseed, union, achieve = ["기록이 없습니다"] * 4
     for idx, data in enumerate(datas):
         if idx == 0:
             mureung = data.find("h1")
@@ -161,7 +163,7 @@ def get_past_chr_img_date(soup):
     return past_chr_img_list
 
 
-def upload_character_img(user_info: List[str], gcs_helper: GCS_helper) -> List[str]:
+def upload_character_img(user_info: List[str], gcs_helper: GCSHelper) -> List[str]:
     nickname = user_info[0]
     last_access = user_info[16].replace("/", "_")
     image_url = user_info[21]
@@ -195,6 +197,10 @@ def crawler(url):
             # past_chr,
         )
     )
+
+    # 업데이트 날짜 추가
+    final_list.append("None")
+    final_list.append(datetime.datetime.now())
     return final_list
 
 
@@ -210,7 +216,7 @@ if __name__ == "__main__":
     if args.your_name not in ["eunhye", "jeong", "ryu", "wonjun", "sssu", "test"]:
         raise ValueError("이름 제대로 입력하세요~")
 
-    gcs_helper = GCS_helper("../key.json")
+    gcs_helper = GCSHelper("../keys/gcs_key.json", bucket_name="maple_raw_data")
     existed_df = gcs_helper.read_df_from_gcs(f"csv/user_detail_{args.your_name}.csv")
 
     # 혹시 모르니까 이거 시작하기 전에 로컬에 저장 한번 하고 시작
@@ -221,23 +227,24 @@ if __name__ == "__main__":
 
     user_num_list = os.listdir(args.url_dir)
 
-    for user_num in user_num_list:
+    for csv_count, user_num in enumerate(user_num_list):
         data = pd.read_csv(os.path.join(args.url_dir, user_num))
         user_num = user_num.split("user_info_")[1]
         print(f"----------{user_num}----------")
+        print(f"----------{csv_count + 1}/{len(user_num_list)}----------")
         final_list = []
         for idx, row in enumerate(tqdm(data.values)):
-            user = [row[2]]
-            user.extend(crawler(row[1]))
-            user = upload_character_img(user, gcs_helper)
-            final_list.append(user)
-
+            try:
+                user = [row[2]]
+                user.extend(crawler(row[1]))
+                # user = upload_character_img(user, gcs_helper)
+                final_list.append(user)
+            except:
+                continue
         final_df = pd.DataFrame(final_list, columns=COLUMNS)
 
         # gcs 상의 DataFrame 뒤에 1만명 크롤링 결과 붙이고, 업로드
         existed_df = pd.concat([existed_df, final_df])
         gcs_helper.upload_df_to_gcs(f"csv/user_detail_{args.your_name}.csv", existed_df)
 
-        final_df.to_csv(
-            f"{args.save_dir}/user_detail_{user_num}", index=False, encoding="utf-8-sig"
-        )
+    print("----------Done----------")

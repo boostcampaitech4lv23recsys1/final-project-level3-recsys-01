@@ -1,0 +1,30 @@
+{
+  "seed": 417,
+  "dataset": {
+    "test_size": 0.3,
+    "shuffle": true
+  },
+  "dataloader": {
+    "args": {
+      "batch_size": 2048,
+      "num_workers": 1
+    }
+  },
+  "trainer": {
+    "type": "사용할 Trainer",
+    "epochs": 2,
+    "save_dir": "modeling/save_models",
+    "learning_rate": 0.001,
+    "early_stopping": 5
+  },
+  "arch": {
+    "type": "NewMF",
+    "args": {
+      "n_factors": 20
+    }
+  },
+  "inference": {
+    "top_k": 20,
+    "result_dir": "modeling/result"
+  }
+}

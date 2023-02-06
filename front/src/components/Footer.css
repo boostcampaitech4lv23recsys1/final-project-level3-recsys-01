@@ -1,0 +1,11 @@
+.text-footer {
+    white-space: pre-line;
+    line-height: 25px;
+    /* font-weight: bold; */
+    color: black;
+    font-family: 'NanumSquareAcb';
+}
+
+footer {
+    bottom: 0;
+}

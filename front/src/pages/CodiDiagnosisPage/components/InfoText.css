@@ -1,0 +1,26 @@
+.infoText {
+    text-align: left;
+    display: table;
+    margin-left: auto;
+    margin-right:auto;
+}
+
+.infoText .infoText-BG{
+    width: 600px;
+    height: 250px;
+    background-size: cover;
+    position: relative;
+    margin-top: 100px;
+    background-repeat: no-repeat;
+
+}
+
+.infoText .infoText-text{
+    position: absolute;
+    top: 40%;
+    right: 34%;
+    transform: translate(40%, -50%);
+    white-space: pre-wrap;
+    font-family: 'NanumSquareAcr';
+    text-align: left;
+}

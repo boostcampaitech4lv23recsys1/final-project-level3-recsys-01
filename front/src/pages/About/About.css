@@ -1,0 +1,93 @@
+.AP .aboutBox{
+    margin-top:80px;
+    margin-left:20px;
+}
+
+.AP .aboutBox-title{
+    margin-left: 20px;
+    font-size: 30px;
+    align-items: center;
+    font-family: 'MaplestoryBold';
+    display: flex;
+    flex-basis: 100%;
+    margin: 0px 8px;
+}
+.AP .aboutBox-title::before,
+.AP .aboutBox-title::after{
+    content: "";
+    flex-grow: 1;
+    background: black;
+    height: 1px;
+    font-size: 0px;
+    line-height: 0px;
+    margin : 20px 50px;
+}
+
+.AP .aboutBox-wrap{
+    position: relative;
+}
+
+.AP .aboutBox-bg{
+    margin-top: 20px;
+    margin-bottom: 60px;
+    width: 600px;
+    height: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.AP .aboutBox-text{
+    position: absolute;
+    top: 12%;
+    padding-left: 39%;
+    text-align: left;
+}
+.Ap .memberBox{
+    align-items:center;
+    text-align:center;
+    justify-content: center;
+}
+
+.AP .memberBox-title{
+    margin-left: 20px;
+    font-size: 30px;
+    align-items: center;
+    font-family: 'MaplestoryBold';
+    display: flex;
+    flex-basis: 100%;
+    margin: 0px 8px;
+}
+.AP .memberBox-title::before,
+.AP .memberBox-title::after{
+    content: "";
+    flex-grow: 1;
+    background: black;
+    height: 1px;
+    font-size: 0px;
+    line-height: 0px;
+    margin : 20px 50px;
+}
+
+.AP .memberBox-box{
+    left:0;
+    right:0;
+    margin: 0 auto;
+}
+
+.AP .memberBox-paper{
+    padding: 0;
+}
+
+.AP .memberBox-autoPlay{
+    right:0;
+    left:0;
+    margin:0 auto;
+}
+
+.AP .memberBox-img{
+    align-items: center;
+    right:0;
+    left:0;
+    margin:0 auto;
+}

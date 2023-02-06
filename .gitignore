@@ -14,6 +14,7 @@
 *.tax2010
 *.vcf
 *.xml
+*.pt
 
 ### Images ###
 # JPEG
@@ -38,7 +39,6 @@
 *.wdp
 
 # Graphics Interchange Format
-*.gif
 
 # RAW
 *.raw
@@ -47,7 +47,7 @@
 *.webp
 
 # Portable Network Graphics
-*.png
+# *.png
 
 # Animated Portable Network Graphics
 *.apng
@@ -74,7 +74,7 @@
 *.dib
 
 # ICO
-*.ico
+# *.ico
 
 # 3D Images
 *.3dm
@@ -410,3 +410,14 @@ sketch
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/data,linux,react,python,pycharm,visualstudiocode,images
+
+# Key 파일들 제외
+keys/
+
+# saved models
+*.pt
+
+# item indexing txt file
+idx2item.txt
+item2idx.txt
+user_item_len.txt
