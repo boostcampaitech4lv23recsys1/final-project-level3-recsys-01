@@ -11,11 +11,11 @@ function ShowDiagnosisResult({ diagnosisScore }) {
     scoreDes = "정말 멋있는 코디네요! AI와 함께 더 멋진 옷을 골라볼까요?";
   } else if (50 <= resultScore && resultScore < 75) {
     scoreDes = "오... 코디 좀 하시는데요? AI와 코디 실력을 겨뤄보세요!";
-  } else if (50 <= resultScore && resultScore < 75) {
+  } else if (75 <= resultScore && resultScore <= 100) {
     scoreDes = "코디를 정말 잘하시네요! AI에게 한 수 가르쳐 주세요!";
   }
   return (
-    <div>
+    <div className="diagnosisResult">
       <h2> 당신의 점수는 {resultScore} 점입니다!</h2> <p>{scoreDes}</p>
       <NextCodiRec></NextCodiRec>
     </div>

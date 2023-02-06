@@ -55,7 +55,7 @@ function PreferenceRecommendPage({
           height: 30,
           border: 1,
           backgroundColor: "#b9b9b9",
-          color: "black",
+          color: "white",
           fontFamily: "NanumSquareAcb",
           fontSize: 20,
         }}

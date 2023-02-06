@@ -61,9 +61,9 @@ class InferenceNewMF(object):
             item_part = await find_by_item_idxs(part, db)
             self.n_items += len(item_part)
             self.item_parts.append(item_part)
-
+            
         self.model = NewMF(
-            n_items=self.n_items, n_factors=self.model_config["n_factors"]
+            n_items=10101, n_factors=self.model_config["n_factors"]
         )
         load_state = torch.load(self.model_path, map_location=self.device)
         print(self.device)

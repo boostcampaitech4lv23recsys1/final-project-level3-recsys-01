@@ -75,8 +75,18 @@ async def mcn_output(
 
     for predict in predicts:
         codi_set = dict()
+        overall_flag = False
         for part, item_idx in zip(parts, predict):
+            if overall_flag and part == "Bottom":
+                codi_set[part] = {
+                    "item_id": -1,
+                    "name": "상의가 한벌옷입니다",
+                    "gcs_image_url": "https://storage.googleapis.com/maple_web/image/item/None.png"
+                }
+                continue
             item_info = await find_by_index(item_idx, db)
+            if item_info["equip_category"] == "Overall":
+                overall_flag = True
             codi_set[part] = {
                 "item_id": item_info["item_id"],
                 "name": item_info["name"],

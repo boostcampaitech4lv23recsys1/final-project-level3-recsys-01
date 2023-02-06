@@ -59,6 +59,11 @@ function CodiDiagnosisPage({
           setInputWeapon={setInputWeapon}
         />
       </Stack>
+      {diagnosisScore != 0 ? (
+        <ShowDiagnosisResult diagnosisScore={diagnosisScore} />
+      ) : (
+        <p></p>
+      )}
       <GetDiagnosisResult
         inputHat={inputHat}
         inputHair={inputHair}
@@ -70,11 +75,6 @@ function CodiDiagnosisPage({
         diagnosisScore={diagnosisScore}
         setDiagnosisScore={setDiagnosisScore}
       />
-      {diagnosisScore != 0 ? (
-        <ShowDiagnosisResult diagnosisScore={diagnosisScore} />
-      ) : (
-        <p></p>
-      )}
     </div>
   );
 }

@@ -37,7 +37,7 @@ function CodiSimulator({
   const finalURL = baseURL + endURL;
   return (
     <div className="codiSimulator-container">
-      <img className="codiSimulator-bg" src={simulatorBg} alt=""></img>
+      {/* <img className="codiSimulator-bg" src={simulatorBg} alt=""></img> */}
       <img className="codiSimulator-simulator" src={finalURL} alt=""></img>
     </div>
   );
