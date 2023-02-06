@@ -47,13 +47,13 @@ async def find_by_item_idxs(equip_category: str, db: Database) -> List[str]:
                     {"equip_category": equip_category},
                     {"equip_category": "Overall"},
                 ],
+                "is_cash": True,
             },
-            {"index": 1, "_id": False},
         )
         res = [d["index"] for d in (json.loads(json_util.dumps(res)))]
     else:
         res = db.items.find(
-            {"equip_category": equip_category}, {"index": 1, "_id": False}
+            {"equip_category": equip_category, "is_cash": True},
         )
         res = [d["index"] for d in (json.loads(json_util.dumps(res)))]
 

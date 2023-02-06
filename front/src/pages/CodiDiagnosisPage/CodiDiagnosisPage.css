@@ -1,10 +1,10 @@
 .CDP {
     text-align: center;
-    margin-right:10%;
-    margin-left:10%;
+    margin-right: 10%;
+    margin-left: 10%;
 }
 
-.CDP .simulatorAndItem{
+.CDP .simulatorAndItem {
     align-items: center;
     align-content: center;
     justify-content: center;
@@ -12,7 +12,7 @@
     padding-top: 80px;
 }
 
-.CDP .codiSimulator{
+.CDP .codiSimulator {
     padding-top: 20%;
     align-content: center;
     align-items: center;
@@ -21,14 +21,15 @@
     justify-content: center;
 }
 
-.CDP .codiSimulator-container{
+.CDP .codiSimulator-container {
     position: relative;
-    height:400px;
-    width:300px;
+    height: 400px;
+    width: 300px;
     padding-top: 20px;
     padding-left: 100px;
 }
-.CDP .codiSimulator-bg{
+
+.CDP .codiSimulator-bg {
     position: absolute;
     height: 400px;
     width: 300px;
@@ -38,7 +39,8 @@
     right: 0;
     margin: auto;
 }
-.CDP .codiSimulator-simulator{
+
+.CDP .codiSimulator-simulator {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -47,10 +49,12 @@
     margin: auto;
 }
 
-.CDP .getDiagnosisResult{
-    padding-top: 80px;
+.CDP .diagnosisResult p {
+    /* padding-top: 80px; */
+    margin-bottom: 30px;
 }
 
 .CDP .infoText {
-    text-align: center,
+    text-align: center;
 }
+

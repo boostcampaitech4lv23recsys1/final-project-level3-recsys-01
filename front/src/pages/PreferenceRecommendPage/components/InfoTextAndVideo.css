@@ -16,7 +16,7 @@
 
 .infoTextAndVideo .infoTextAndVideo-text{
     position: absolute;
-    top: 35%;
+    top: 40%;
     right: 34%;
     transform: translate(40%, -50%);
     white-space: pre-wrap;
