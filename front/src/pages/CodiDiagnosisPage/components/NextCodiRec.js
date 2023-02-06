@@ -12,12 +12,8 @@ function NextCodiRec() {
         fontSize: "25px",
         cursor: "pointer",
       }}
-      onClick={() =>
-        window.location.reload(
-          navigate("/recommend/preference", { replace: true }),
-        )
-      }>
-      {"코디 추천 받으러 가기"}
+      onClick={() => navigate("/recommend/preference", { replace: true })}>
+      {"이 상태에서 추천 받아보기"}
     </a>
   );
 }

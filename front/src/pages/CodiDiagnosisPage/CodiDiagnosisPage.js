@@ -40,6 +40,7 @@ function CodiDiagnosisPage({
           inputShoes={inputShoes}
           inputWeapon={inputWeapon}
           size={4.5}
+          isResult={false}
         />
         <CodiPartInputs
           className="item"
