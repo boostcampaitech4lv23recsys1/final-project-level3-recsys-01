@@ -10,6 +10,7 @@ from torch.utils.data import DataLoader
 
 import os
 import asyncio
+import random
 
 from typing import Dict, List, Any
 
@@ -171,6 +172,7 @@ class MCNInference:
             # 해당 부위의 모든 아이템
             item_part = self.item_parts[part_idx]
 
+            # 저 중에 특정 비율만 보자. 나는 그냥 임의로 50%만 봤다.
             dataset_per_part = MCNTopkDataset(equips_list, part_idx, item_part)
             dataloader_per_part = DataLoader(
                 dataset=dataset_per_part, batch_size=self.batch_size, shuffle=False
@@ -189,7 +191,7 @@ class MCNInference:
             part_scores.sort(key=lambda x: x[1], reverse=True)
             part_index_and_topk[part_idx] = [x[0] for x in part_scores[: self.top_k]]
 
-        # topk 개 다 뽑았으니, 모든 경우의 수 고려 시작
+        # topk 개 다 뽑았으니, 경우의 수 고려 시작
         dataset_for_product = MCNProductDataset(equips_list, part_index_and_topk)
         dataloader_for_product = DataLoader(
             dataset=dataset_for_product, batch_size=self.batch_size, shuffle=False
@@ -203,8 +205,10 @@ class MCNInference:
             result = [(batch[i, :], float(output[i])) for i in range(batch.shape[0])]
             codi_scores.extend(result)
 
-        part_scores.sort(key=lambda x: x[1], reverse=True)
-        return [x[0].tolist() for x in codi_scores[: self.top_k]]
+        codi_scores.sort(key=lambda x: x[1], reverse=True)
+        random_index = [0] + random.sample((range(1, len(codi_scores) - 1)), 2)
+
+        return [codi_scores[x][0].tolist() for x in random_index]
 
 
 if is_load:

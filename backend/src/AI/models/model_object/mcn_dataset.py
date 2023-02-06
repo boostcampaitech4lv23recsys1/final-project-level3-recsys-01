@@ -1,6 +1,7 @@
 import torch
 from torch.utils.data import Dataset
 
+import random
 from itertools import product
 
 from typing import List, Dict
@@ -13,7 +14,11 @@ class MCNTopkDataset(Dataset):
         super().__init__()
         self.equips = equips  # 현재 착용 장비 정보
         self.part_index = part_index  # 빈 곳. 바꿔야 할 아이템 자리
-        self.item_part = item_part  # 바꿔야 할 아이템들의 모든 index 값
+
+        # 랜덤하게 섞어서 절반만 보기.
+        # 바꿔야 할 아이템들의 모든 index 값
+        random.shuffle(item_part)
+        self.item_part = item_part[: len(item_part) // 2]
 
     def __len__(self) -> int:
         return len(self.item_part)
