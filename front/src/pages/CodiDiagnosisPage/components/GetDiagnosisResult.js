@@ -109,10 +109,9 @@ function GetDiagnosisResult({
           color: "white",
           fontFamily: "NanumSquareAcb",
           fontSize: 30,
-        }}>
-        <a onClick={() => sendCodiData()} style={{ color: "white" }}>
-          {"코디 점수 받기"}
-        </a>
+        }}
+        onClick={() => sendCodiData()}>
+        <a style={{ color: "white" }}>{"코디 점수 받기"}</a>
       </Fab>
     </div>
   );

@@ -4,6 +4,8 @@ import CodiPartInputs from "./components/CodiPartInputs";
 import InfoTextAndVideo from "./components/InfoTextAndVideo";
 import GoCodiRecResult from "./components/GoCodiRecResult";
 import clickIcon from "../../assets/icons/click.png";
+import CodiSimulator from "../../components/CodiSimulator";
+import Stack from "@mui/material/Stack";
 
 function PreferenceRecommendPage({
   inputHat,
@@ -31,45 +33,36 @@ function PreferenceRecommendPage({
   return (
     <div className="PreferenceRecommendPage">
       <InfoTextAndVideo />
-      <CodiPartInputs
-        inputHat={inputHat}
-        setInputHat={setInputHat}
-        inputHair={inputHair}
-        setInputHair={setInputHair}
-        inputFace={inputFace}
-        setInputFace={setInputFace}
-        inputTop={inputTop}
-        setInputTop={setInputTop}
-        inputBottom={inputBottom}
-        setInputBottom={setInputBottom}
-        inputShoes={inputShoes}
-        setInputShoes={setInputShoes}
-        inputWeapon={inputWeapon}
-        setInputWeapon={setInputWeapon}
-      />
-      <button
-        className="button-reload"
-        style={{
-          borderRadius: 30,
-          width: 100,
-          height: 30,
-          border: 1,
-          backgroundColor: "#b9b9b9",
-          color: "white",
-          fontFamily: "NanumSquareAcb",
-          fontSize: 20,
-        }}
-        onClick={() => {
-          setInputHat(defaultFixObject);
-          setInputHair(defaultFixObject);
-          setInputFace(defaultFixObject);
-          setInputTop(defaultFixObject);
-          setInputBottom(defaultFixObject);
-          setInputShoes(defaultFixObject);
-          setInputWeapon(defaultFixObject);
-        }}>
-        Reset
-      </button>
+      <Stack className="simulatorAndItem" direction="row" spacing={20}>
+        <CodiSimulator
+          className="codiSimulator"
+          inputHat={inputHat}
+          inputHair={inputHair}
+          inputFace={inputFace}
+          inputTop={inputTop}
+          inputBottom={inputBottom}
+          inputShoes={inputShoes}
+          inputWeapon={inputWeapon}
+          size={4.5}
+          isResult={false}
+        />
+        <CodiPartInputs
+          inputHat={inputHat}
+          setInputHat={setInputHat}
+          inputHair={inputHair}
+          setInputHair={setInputHair}
+          inputFace={inputFace}
+          setInputFace={setInputFace}
+          inputTop={inputTop}
+          setInputTop={setInputTop}
+          inputBottom={inputBottom}
+          setInputBottom={setInputBottom}
+          inputShoes={inputShoes}
+          setInputShoes={setInputShoes}
+          inputWeapon={inputWeapon}
+          setInputWeapon={setInputWeapon}
+        />
+      </Stack>
       <Grid
         container
         direction="row"
