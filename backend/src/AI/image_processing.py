@@ -1,4 +1,4 @@
-from torch import Tensor
+from torch import Tensor, stack
 import torchvision
 from PIL import Image
 from pandas import DataFrame
@@ -17,7 +17,7 @@ from src.database.init_db import get_db
 gcs_helper = GCSHelper(key_path="src/utils/gcs_key.json", bucket_name="maple_raw_data")
 
 
-async def image_to_tensor() -> Tuple[List[Tensor], DataFrame]:
+async def image_to_tensor() -> Tuple[Tensor, DataFrame]:
     # 1. 이미지 다운로드
     path = "src/data/image"
     saved_path = os.path.join(path, "item")
@@ -68,4 +68,4 @@ async def image_to_tensor() -> Tuple[List[Tensor], DataFrame]:
 
         image_tensors[i] = trans(image)
 
-    return image_tensors, item_data
+    return stack(image_tensors), item_data
