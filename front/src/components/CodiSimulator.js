@@ -30,23 +30,19 @@ function CodiSimulator({
     inputShoes,
     inputWeapon,
   ];
-  console.log(partList);
   for (let part of partList) {
     if (isResult) {
       if (String(part["item_id"]) !== "") {
-        console.log("success");
         baseURL =
           baseURL + addURLBefore + String(part["item_id"]) + addURLAfter;
       }
     } else {
       if (part["id"] !== "") {
-        console.log("success");
         baseURL = baseURL + addURLBefore + part["id"] + addURLAfter;
       }
     }
   }
   const finalURL = baseURL + endURL;
-  console.log(finalURL);
   return (
     <div className="codiSimulator-container">
       {/* <img className="codiSimulator-bg" src={simulatorBg} alt=""></img> */}
