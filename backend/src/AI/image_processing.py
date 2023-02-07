@@ -45,7 +45,7 @@ async def image_to_tensor() -> Tuple[Tensor, DataFrame]:
 
     trans = torchvision.transforms.Compose(
         [
-            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.Resize((24, 24)),
             torchvision.transforms.ToTensor(),
         ]
     )
