@@ -6,7 +6,7 @@ from typing import Optional, Dict, List
 
 from collections import defaultdict
 from src.AI import InferenceNewMF, MCNInference
-from src.AI.inference import get_model
+from src.AI.init_model import get_model
 
 from src.database.init_db import get_db
 from src.database.models.crud_item import (
@@ -81,7 +81,7 @@ async def mcn_output(
                 codi_set[part] = {
                     "item_id": -1,
                     "name": "상의가 한벌옷입니다",
-                    "gcs_image_url": "https://storage.googleapis.com/maple_web/image/item/None.png"
+                    "gcs_image_url": "https://storage.googleapis.com/maple_web/image/item/None.png",
                 }
                 continue
             item_info = await find_by_index(item_idx, db)
@@ -90,7 +90,7 @@ async def mcn_output(
             codi_set[part] = {
                 "item_id": item_info["item_id"],
                 "name": item_info["name"],
-                "gcs_image_url": item_info["gcs_image_url"]
+                "gcs_image_url": item_info["gcs_image_url"],
             }
         res.append(codi_set)
 
