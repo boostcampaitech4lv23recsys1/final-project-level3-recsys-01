@@ -116,7 +116,7 @@ function CodiPartInputs({
           setInputBottom(defaultFixObject);
           setInputShoes(defaultFixObject);
           setInputWeapon(defaultFixObject);
-          setPartChange(true);
+          setPartChange(false);
         }}>
         All Reset
       </button>

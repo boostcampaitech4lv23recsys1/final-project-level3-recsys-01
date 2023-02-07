@@ -24,16 +24,7 @@ function PreferenceRecommendPage({
   inputWeapon,
   setInputWeapon,
 }) {
-  const [partChange, setPartChange] = useState(false);
-  const partList = [
-    inputHat,
-    inputHair,
-    inputFace,
-    inputTop,
-    inputBottom,
-    inputShoes,
-    inputWeapon,
-  ];
+  const [partChange, setPartChange] = useState(true);
 
   return (
     <div className="PreferenceRecommendPage">
