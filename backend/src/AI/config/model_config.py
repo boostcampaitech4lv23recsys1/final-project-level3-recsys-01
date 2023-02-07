@@ -17,4 +17,9 @@ MODEL_CONFIG = {
         "top_k": 10,
         "batch_size": 32,
     },
+    "SimpleMCN": {
+        "model_path": "src/AI/save_model/SimpleMCN/SimpleMCN_latest.pt",
+        "batch_size": 32,
+        "top_k": 10,
+    },
 }
