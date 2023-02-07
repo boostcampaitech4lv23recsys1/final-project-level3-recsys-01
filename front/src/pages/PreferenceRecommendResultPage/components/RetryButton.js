@@ -1,8 +1,6 @@
 import React from "react";
 import Fab from "@mui/material/Fab";
 import { useNavigate } from "react-router-dom";
-import { textAlign } from "@mui/system";
-import { useEffect } from "react";
 
 function RetryButton() {
   const navigate = useNavigate();

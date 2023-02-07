@@ -1,5 +1,5 @@
 import * as React from "react";
-import simulatorBg from "../assets/images/simulatorBg.png";
+// import simulatorBg from "../assets/images/simulatorBg.png";
 
 function CodiSimulator({
   inputHat,

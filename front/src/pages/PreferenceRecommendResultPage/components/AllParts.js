@@ -1,7 +1,5 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
-import AllCodiPartButton from "./AllCodiPartButton";
-import { Stack } from "@mui/system";
 import basicitem from "../../../assets/images/basicItem.png";
 import fixitme from "../../../assets/images/fixItem.png";
 import simulatorBg from "../../../assets/images/simulatorBg.png";

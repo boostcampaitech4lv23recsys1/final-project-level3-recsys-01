@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import Paper from "@mui/material/Paper";
-import { MobileStepper, Typography } from "@mui/material";
+import { MobileStepper } from "@mui/material";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import characterSSSU from "../../../assets/images/characterSSSU.png";
@@ -86,7 +86,7 @@ function SwipeableMemberStepper() {
         }}>
         <AutoPlaySwipeableViews
           className="memberBox-autoPlay"
-          axis={theme.direction == "rtl" ? "x-reverse" : "x"}
+          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={activeStep}
           onChangeIndex={handleStepChange}
           enableMouseEvents>
