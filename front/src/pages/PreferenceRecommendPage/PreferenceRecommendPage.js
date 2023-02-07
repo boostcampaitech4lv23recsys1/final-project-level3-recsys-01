@@ -66,7 +66,16 @@ function PreferenceRecommendPage({
         direction="row"
         justifyContent="center"
         alignItems="center">
-        <GoCodiRecResult partChange={partChange} />
+        <GoCodiRecResult
+          inputHat={inputHat}
+          inputHair={inputHair}
+          inputFace={inputFace}
+          inputTop={inputTop}
+          inputBottom={inputBottom}
+          inputShoes={inputShoes}
+          inputWeapon={inputWeapon}
+          partChange={partChange}
+        />
       </Grid>
     </div>
   );

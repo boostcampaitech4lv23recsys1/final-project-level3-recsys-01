@@ -2,8 +2,33 @@ import * as React from "react";
 import Fab from "@mui/material/Fab";
 import { useNavigate } from "react-router-dom";
 
-function GoCodiRecResult({ partChange }) {
+function GoCodiRecResult({
+  inputHat,
+  inputHair,
+  inputFace,
+  inputTop,
+  inputBottom,
+  inputShoes,
+  inputWeapon,
+  partChange,
+}) {
   const navigate = useNavigate();
+  const partList = [
+    inputHat,
+    inputHair,
+    inputFace,
+    inputTop,
+    inputBottom,
+    inputShoes,
+    inputWeapon,
+  ];
+  for (let part of partList) {
+    console.log(part);
+    if (part["label"] !== "") {
+      partChange = false;
+    }
+  }
+
   return (
     <Fab
       variant="extended"
