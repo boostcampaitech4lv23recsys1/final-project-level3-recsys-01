@@ -25,6 +25,7 @@ function CodiDiagnosisPage({
   setInputWeapon,
 }) {
   const [diagnosisScore, setDiagnosisScore] = useState(0);
+  const [partChange, setPartChange] = useState(true);
   return (
     <div className="CDP">
       <InfoText></InfoText>
@@ -58,6 +59,7 @@ function CodiDiagnosisPage({
           setInputShoes={setInputShoes}
           inputWeapon={inputWeapon}
           setInputWeapon={setInputWeapon}
+          setPartChange={setPartChange}
         />
       </Stack>
       {diagnosisScore != 0 ? (
@@ -75,6 +77,8 @@ function CodiDiagnosisPage({
         inputWeapon={inputWeapon}
         diagnosisScore={diagnosisScore}
         setDiagnosisScore={setDiagnosisScore}
+        partChange={partChange}
+        setPartChange={setPartChange}
       />
     </div>
   );

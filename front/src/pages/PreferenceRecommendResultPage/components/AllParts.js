@@ -18,13 +18,12 @@ function AllParts({ fixPartList, recommendData }) {
     Shoes: "신발",
     Weapon: "무기",
   };
-  console.log(recommendData);
   const collectAllPart = () => {
     const all = [];
     const codiPartEngName = Object.keys(codiPartName);
 
     all.push(
-      <Grid xs={1.3} className="button-fixitem">
+      <Grid xs={1.3} className="button-fixitem" key="CodiSumulator">
         <div className="img-instack">
           <img alt="" src={simulatorBg} width="180" height="250"></img>
         </div>

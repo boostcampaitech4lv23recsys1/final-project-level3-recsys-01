@@ -6,6 +6,7 @@ import { useState } from "react";
 function BestCodi({ order, fixPartList, recommendData }) {
   const [feedback, setfeedback] = useState(-1); // default -1 no feedback
   const [disabled, setdisabled] = useState(false);
+  console.log("best codi");
 
   return (
     <div className="block-bestorder">
