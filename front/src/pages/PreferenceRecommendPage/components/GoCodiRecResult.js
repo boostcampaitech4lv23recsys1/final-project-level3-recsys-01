@@ -23,7 +23,6 @@ function GoCodiRecResult({
     inputWeapon,
   ];
   for (let part of partList) {
-    console.log(part);
     if (part["label"] !== "") {
       partChange = false;
     }
