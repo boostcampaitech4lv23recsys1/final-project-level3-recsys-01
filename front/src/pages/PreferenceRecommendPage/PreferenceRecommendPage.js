@@ -6,6 +6,7 @@ import GoCodiRecResult from "./components/GoCodiRecResult";
 import clickIcon from "../../assets/icons/click.png";
 import CodiSimulator from "../../components/CodiSimulator";
 import Stack from "@mui/material/Stack";
+import { useState } from "react";
 
 function PreferenceRecommendPage({
   inputHat,
@@ -23,13 +24,8 @@ function PreferenceRecommendPage({
   inputWeapon,
   setInputWeapon,
 }) {
-  const defaultFixObject = {
-    label: "",
-    img: clickIcon,
-    id: "",
-    category: "",
-    index: "",
-  };
+  const [partChange, setPartChange] = useState(true);
+
   return (
     <div className="PreferenceRecommendPage">
       <InfoTextAndVideo />
@@ -61,6 +57,8 @@ function PreferenceRecommendPage({
           setInputShoes={setInputShoes}
           inputWeapon={inputWeapon}
           setInputWeapon={setInputWeapon}
+          partChange={partChange}
+          setPartChange={setPartChange}
         />
       </Stack>
       <Grid
@@ -68,7 +66,16 @@ function PreferenceRecommendPage({
         direction="row"
         justifyContent="center"
         alignItems="center">
-        <GoCodiRecResult />
+        <GoCodiRecResult
+          inputHat={inputHat}
+          inputHair={inputHair}
+          inputFace={inputFace}
+          inputTop={inputTop}
+          inputBottom={inputBottom}
+          inputShoes={inputShoes}
+          inputWeapon={inputWeapon}
+          partChange={partChange}
+        />
       </Grid>
     </div>
   );

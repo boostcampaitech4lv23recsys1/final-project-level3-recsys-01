@@ -1,9 +1,14 @@
 import * as React from "react";
 import "./CodiPartButton.css";
-import Stack from "@mui/material/Stack";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
 
-function CodiPartButton({ codiPart, inputValue, setInputValue, openPopover }) {
+function CodiPartButton({
+  codiPart,
+  inputValue,
+  setInputValue,
+  openPopover,
+  setPartChange,
+}) {
   const defaultFixObject = {
     label: "",
     img: null,
@@ -20,6 +25,7 @@ function CodiPartButton({ codiPart, inputValue, setInputValue, openPopover }) {
       category: newInputValue["category"],
       index: newInputValue["index"],
     };
+    setPartChange(false);
     setInputValue(updatedInputValue);
   }
 

@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 
 function BestCodiTopThree({ fixPartList, recommendData }) {
   return (
-    <Grid>
+    <Grid container>
       <Grid item xs={12}>
         <BestCodi
           order={1}

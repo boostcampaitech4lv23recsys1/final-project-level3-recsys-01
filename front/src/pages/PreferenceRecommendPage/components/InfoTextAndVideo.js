@@ -1,7 +1,6 @@
 import * as React from "react";
 import "./InfoTextAndVideo.css";
 import quests from "../../../assets/images/quests.png";
-import { Grid } from "@mui/material";
 
 function InfoTextAndVideo() {
   return (
