@@ -29,6 +29,10 @@ function CodiPartButton({
     setInputValue(updatedInputValue);
   }
 
+  if (openPopover === false) {
+    setInputValue(defaultFixObject);
+  }
+
   return (
     <div className="codiPartButton">
       <BasicPopover

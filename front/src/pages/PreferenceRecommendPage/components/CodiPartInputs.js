@@ -65,7 +65,7 @@ function CodiPartInputs({
           {inputTop["category"] === "Overall" ? (
             <CodiPartButton
               codiPart="하의"
-              inputValue={{ label: "", img: clickIcon, category: "", id: "" }}
+              inputValue={defaultFixObject}
               setInputValue={setInputBottom}
               openPopover={false}
               setPartChange={setPartChange}
@@ -93,6 +93,7 @@ function CodiPartInputs({
             openPopover={true}
             setPartChange={setPartChange}
           />
+          {console.log(inputTop, inputBottom)}
         </Stack>
       </Stack>
       <button
