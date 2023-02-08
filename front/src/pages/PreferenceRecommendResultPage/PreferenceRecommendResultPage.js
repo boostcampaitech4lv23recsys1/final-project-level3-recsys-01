@@ -57,7 +57,7 @@ function PreferenceRecommendResultPage({
   const [loadingPage, setLoadingPage] = useState(false);
 
   const postCodiPartData = async () => {
-    const res = await API.post("inference/submit/MCN", inputParts);
+    const res = await API.post("inference/submit", inputParts);
     const data = res.data;
     setRecommendData(data);
     setLoadingPage(true);
