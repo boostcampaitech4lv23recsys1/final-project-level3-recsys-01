@@ -11,21 +11,12 @@ function GoCodiRecResult({
   inputShoes,
   inputWeapon,
   partChange,
+  numberState,
 }) {
   const navigate = useNavigate();
-  const partList = [
-    inputHat,
-    inputHair,
-    inputFace,
-    inputTop,
-    inputBottom,
-    inputShoes,
-    inputWeapon,
-  ];
-  for (let part of partList) {
-    if (part["label"] !== "") {
-      partChange = false;
-    }
+
+  if (numberState <= 2 || numberState >= 7) {
+    partChange = true;
   }
 
   return (

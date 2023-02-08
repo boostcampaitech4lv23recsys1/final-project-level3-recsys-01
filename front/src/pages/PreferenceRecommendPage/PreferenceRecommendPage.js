@@ -24,6 +24,7 @@ function PreferenceRecommendPage({
   setInputWeapon,
 }) {
   const [partChange, setPartChange] = useState(true);
+  const [numberState, setNumberState] = useState(0);
 
   return (
     <div className="PreferenceRecommendPage">
@@ -58,8 +59,11 @@ function PreferenceRecommendPage({
           setInputWeapon={setInputWeapon}
           partChange={partChange}
           setPartChange={setPartChange}
+          numberState={numberState}
+          setNumberState={setNumberState}
         />
       </Stack>
+      {console.log(numberState)}
       <Grid
         container
         direction="row"
@@ -74,6 +78,7 @@ function PreferenceRecommendPage({
           inputShoes={inputShoes}
           inputWeapon={inputWeapon}
           partChange={partChange}
+          numberState={numberState}
         />
       </Grid>
     </div>
