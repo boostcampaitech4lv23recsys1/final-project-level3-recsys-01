@@ -70,7 +70,7 @@
 
 ## 5. 사용 기술 스택
 
-<img src="https://user-images.githubusercontent.com/59256704/217677774-8a5b3d48-cd9a-4428-8deb-365ec12ea741.png" width="500">
+<img src="https://user-images.githubusercontent.com/59256704/217677774-8a5b3d48-cd9a-4428-8deb-365ec12ea741.png" width="700">
 
 <br>
 
