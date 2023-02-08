@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from typing import Optional, Dict, List
 
 from collections import defaultdict
-from src.AI import InferenceNewMF, MCNInference
+from src.AI import InferenceNewMF, MCNInference, AEInference
 from src.AI.init_model import get_model
 
 from src.database.init_db import get_db
@@ -66,6 +66,48 @@ async def newMF_output(
 async def mcn_output(
     equips: InferenceInput,
     model: MCNInference = Depends(get_model),
+    db: Database = Depends(get_db),
+):
+    equips_dict = equips.dict(exclude_none=False)
+    res = list()
+
+    predicts = await model.get_topk_codi(equips_dict)
+    parts = ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"]
+
+    for predict in predicts:
+        codi_set = dict()
+        overall_flag = False
+        for part, item_idx in zip(parts, predict):
+            if overall_flag and part == "Bottom":
+                codi_set[part] = {
+                    "item_id": -1,
+                    "name": "상의가 한벌옷입니다",
+                    "gcs_image_url": "https://storage.googleapis.com/maple_web/image/item/None.png",
+                    "index": -1,
+                }
+                continue
+            item_info = await find_by_index(item_idx, db)
+            if item_info["equip_category"] == "Overall":
+                overall_flag = True
+            codi_set[part] = {
+                "item_id": item_info["item_id"],
+                "name": item_info["name"],
+                "gcs_image_url": item_info["gcs_image_url"],
+                "index": item_info["index"],
+            }
+        res.append(codi_set)
+
+    return res
+
+
+@router.post(
+    "/submit/AE",
+    response_model=List[InferenceResult],
+    description="ae codi recommendation",
+)
+async def mcn_output(
+    equips: InferenceInput,
+    model: AEInference = Depends(get_model),
     db: Database = Depends(get_db),
 ):
     equips_dict = equips.dict(exclude_none=False)
