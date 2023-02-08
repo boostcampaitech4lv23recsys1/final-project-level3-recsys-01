@@ -51,6 +51,7 @@ async def newMF_output(
                 "item_id": item["item_id"],
                 "name": item["name"],
                 "gcs_image_url": item["gcs_image_url"],
+                "index": item["index"],
             }
 
         res.append(codi_set)
