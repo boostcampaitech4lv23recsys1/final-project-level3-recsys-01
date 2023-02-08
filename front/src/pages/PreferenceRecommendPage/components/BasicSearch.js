@@ -54,7 +54,7 @@ function BasicSearch({ codiPart, onSearchChange, inputValue, setAnchorEl }) {
     return () => {
       active = false;
     };
-  }, [loading]);
+  });
 
   useEffect(() => {
     if (!open) {

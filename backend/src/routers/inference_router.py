@@ -82,6 +82,7 @@ async def mcn_output(
                     "item_id": -1,
                     "name": "상의가 한벌옷입니다",
                     "gcs_image_url": "https://storage.googleapis.com/maple_web/image/item/None.png",
+                    "index": -1,
                 }
                 continue
             item_info = await find_by_index(item_idx, db)
@@ -91,6 +92,7 @@ async def mcn_output(
                 "item_id": item_info["item_id"],
                 "name": item_info["name"],
                 "gcs_image_url": item_info["gcs_image_url"],
+                "index": item_info["index"],
             }
         res.append(codi_set)
 

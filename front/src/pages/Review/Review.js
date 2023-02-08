@@ -5,6 +5,7 @@ function Review() {
   return (
     <div className="RP">
       <iframe
+        title="리뷰"
         className="googleReview"
         src="https://docs.google.com/forms/d/e/1FAIpQLSeaBu1ix3gR5ClQk9ZFgo_LaruEBHOPzC7ngVGnRnzPCT4UbA/viewform?embedded=true"
         width="700"

@@ -62,7 +62,7 @@ function CodiDiagnosisPage({
           setPartChange={setPartChange}
         />
       </Stack>
-      {diagnosisScore != 0 ? (
+      {diagnosisScore !== 0 ? (
         <ShowDiagnosisResult diagnosisScore={diagnosisScore} />
       ) : (
         <p></p>

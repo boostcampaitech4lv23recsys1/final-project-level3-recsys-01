@@ -46,7 +46,14 @@ function GoCodiRecResult({
         fontSize: 30,
       }}
       disabled={partChange}>
-      <a style={{ color: "white" }}>{"코디 추천 받으러 가기"}</a>
+      <a
+        href="/"
+        onClick={(event) => {
+          event.preventDefault();
+        }}
+        style={{ color: "white" }}>
+        {"코디 추천 받으러 가기"}
+      </a>
     </Fab>
   );
 }

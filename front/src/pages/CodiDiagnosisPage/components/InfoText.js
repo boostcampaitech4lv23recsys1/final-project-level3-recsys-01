@@ -1,7 +1,6 @@
 import * as React from "react";
 import "./InfoText.css";
 import quests from "../../../assets/images/quests.png";
-import { Grid } from "@mui/material";
 
 function InfoText() {
   return (
@@ -20,13 +19,6 @@ function InfoText() {
           }
         </div>
       </div>
-      {/* 
-      <br />
-      <div className="infoVideo">
-        <video autoPlay muted loop height="200px">
-          <source src="videos/demodemo.mp4" />
-        </video>
-      </div> */}
     </div>
   );
 }
