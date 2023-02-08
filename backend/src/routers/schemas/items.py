@@ -15,6 +15,7 @@ class InferenceInput(BaseModel):
 
 class ResultItem(BaseModel):
     item_id: int
+    index: int
     name: str
     gcs_image_url: str
 

@@ -20,6 +20,6 @@ MONGODB_DATABASE_NAME = str(os.getenv("MONGODB_DATABASE_NAME"))
 
 
 async def get_db():
-    client = AsyncIOMotorClient(MONGODB_URI)
+    client = AsyncIOMotorClient(MONGODB_URI, tlsCAFile=ca)
     db = client[MONGODB_DATABASE_NAME]
     return db
