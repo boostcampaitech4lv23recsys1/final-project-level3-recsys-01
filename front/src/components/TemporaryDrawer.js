@@ -45,14 +45,23 @@ function TemporaryDrawer() {
       <List>
         {["코디 추천", "코디 진단", "리뷰 남기기"].map((text, index) => (
           <a
-            onClick={() =>
-              window.location.reload(navigate("recommend/" + pageList[index]))
-            }
-            key={text}>
+            href="/"
+            onClick={(event) => {
+              event.preventDefault();
+              window.location.reload(navigate("recommend/" + pageList[index]));
+            }}
+            key={text}
+            style={{
+              color: "black",
+            }}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  <img src={iconList[index]} width="30" height="30"></img>
+                  <img
+                    src={iconList[index]}
+                    alt=""
+                    width="30"
+                    height="30"></img>
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -64,8 +73,15 @@ function TemporaryDrawer() {
       <List>
         {["Home", "About"].map((text, index) => (
           <a
-            onClick={() => window.location.reload(navigate(infoList[index]))}
-            key={text}>
+            href="/"
+            onClick={(event) => {
+              event.preventDefault();
+              window.location.reload(navigate(infoList[index]));
+            }}
+            key={text}
+            style={{
+              color: "black",
+            }}>
             <ListItem alignItems="flex-start" disablePadding>
               <ListItemButton>
                 <ListItemText primary={text} />

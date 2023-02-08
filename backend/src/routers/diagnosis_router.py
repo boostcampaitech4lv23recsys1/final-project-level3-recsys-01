@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from typing import Optional, Dict, List
 
 from src.AI import MCNInference
-from src.AI.inference import get_model
+from src.AI.init_model import get_model
 
 from src.routers.schemas import InferenceInput, ResultItem, InferenceResult
 

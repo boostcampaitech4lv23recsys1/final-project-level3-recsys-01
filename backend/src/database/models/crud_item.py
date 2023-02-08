@@ -1,4 +1,5 @@
 from pymongo.database import Database
+from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from typing import List, Dict
 
@@ -8,38 +9,39 @@ import json
 from bson import json_util
 
 
-async def find_all(db: Database) -> List[ItemSchema]:
-    res = db.items.find({})
+async def find_all(db: AsyncIOMotorDatabase) -> List[ItemSchema]:
+    res = await db.items.find({}).to_list(None)
     res = list(json.loads(json_util.dumps(res)))
     return res
 
 
-async def find_by_equip_category(equip_category: str, db: Database) -> List[ItemSchema]:
+async def find_by_equip_category(
+    equip_category: str, db: AsyncIOMotorDatabase
+) -> List[ItemSchema]:
     if equip_category == "Top":
-        res = db.items.find(
+        res = await db.items.find(
             {
                 "$or": [
                     {"equip_category": equip_category},
                     {"equip_category": "Overall"},
                 ]
             }
-        )
-        res = list(json.loads(json_util.dumps(res)))
+        ).to_list(None)
     else:
-        res = db.items.find({"equip_category": equip_category})
-        res = list(json.loads(json_util.dumps(res)))
+        res = await db.items.find({"equip_category": equip_category}).to_list(None)
 
+    res = list(json.loads(json_util.dumps(res)))
     return res
 
 
-async def find_by_item_id(item_id: int, db: Database) -> Dict:
-    res = db.items.find_one({"item_id": item_id})
+async def find_by_item_id(item_id: int, db: AsyncIOMotorDatabase) -> Dict:
+    res = await db.items.find_one({"item_id": item_id})
+
     res = json.loads(json_util.dumps(res))
-
     return res
 
 
-async def find_by_item_idxs(equip_category: str, db: Database) -> List[str]:
+async def find_by_item_idxs(equip_category: str, db: AsyncIOMotorDatabase) -> List[str]:
     if equip_category == "Top":
         res = db.items.find(
             {
@@ -50,18 +52,18 @@ async def find_by_item_idxs(equip_category: str, db: Database) -> List[str]:
                 "is_cash": True,
             },
         )
-        res = [d["index"] for d in (json.loads(json_util.dumps(res)))]
     else:
         res = db.items.find(
             {"equip_category": equip_category, "is_cash": True},
         )
-        res = [d["index"] for d in (json.loads(json_util.dumps(res)))]
+    res = await res.to_list(None)
+
+    res = [d["index"] for d in (json.loads(json_util.dumps(res)))]
 
     return res
 
 
-async def find_by_index(index: int, db: Database) -> Dict:
-    res = db.items.find_one({"index": index})
+async def find_by_index(index: int, db: AsyncIOMotorDatabase) -> Dict:
+    res = await db.items.find_one({"index": index})
     res = json.loads(json_util.dumps(res))
-
     return res

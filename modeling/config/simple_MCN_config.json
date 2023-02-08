@@ -1,0 +1,42 @@
+{
+  "project": "SimpleMCN",
+  "seed": 417,
+  "dataset": {
+    "test_size": 0.1,
+    "shuffle": true,
+    "negative_ratio": 0.5,
+    "n_change_parts": 3
+  },
+  "dataloader": {
+    "args": {
+      "batch_size": 128,
+      "num_workers": 0
+    }
+  },
+  "trainer": {
+    "epochs": 50,
+    "save_dir": "modeling/save_models",
+    "learning_rate": 0.001,
+    "early_stopping": 5,
+    "loss": "bce",
+    "print_every": 50,
+    "optimizer": {
+      "type": "adam",
+      "args": {
+        "lr": 1e-2,
+        "weight_decay": 0,
+        "momentum": 0.9
+      }
+    }
+  },
+  "arch": {
+    "type": "SimpleMCN",
+    "args": {
+      "pretrained": true
+    }
+  },
+  "inference": {
+    "top_k": 20,
+    "result_dir": "modeling/result"
+  }
+}

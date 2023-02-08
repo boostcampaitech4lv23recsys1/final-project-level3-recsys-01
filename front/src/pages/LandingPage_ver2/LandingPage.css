@@ -51,10 +51,13 @@
     width: 240px;
     background-color: inherit;
     font-size: 20px;
-    margin: "0auto";
     border: 0;
     margin-top: 20px;
     font-family: 'NanumSquareAcb';
+}
+
+.button-gocodi a {
+    color: black;
 }
 
 .background {

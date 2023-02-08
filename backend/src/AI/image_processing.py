@@ -35,9 +35,7 @@ async def image_to_tensor() -> Tuple[Tensor, DataFrame]:
         with tarfile.open(tar_file_path, "r:gz") as tr:
             tr.extractall(path=path)
     # 2. 이미지 텐서로 변환
-    print("이미지를 텐서로 변환합니다. ")
-    gcs_helper.change_bucket("maple_preprocessed_data")
-    db = await get_db().__anext__()
+    db = await get_db()
     item_data = DataFrame(await find_all(db))
     image_tensors = [None for _ in range(len(item_data))]
 
@@ -47,11 +45,12 @@ async def image_to_tensor() -> Tuple[Tensor, DataFrame]:
 
     trans = torchvision.transforms.Compose(
         [
-            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.Resize((24, 24)),
             torchvision.transforms.ToTensor(),
         ]
     )
 
+    print("이미지를 텐서로 변환합니다. ")
     for i, row in tqdm(item_data.iterrows()):
         image_path = os.path.join("src", row["local_image_path"][9:])
         item_category = row["equip_category"]

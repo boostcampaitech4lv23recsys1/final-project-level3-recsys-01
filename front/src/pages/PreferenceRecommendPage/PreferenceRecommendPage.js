@@ -3,7 +3,6 @@ import Grid from "@mui/material/Grid";
 import CodiPartInputs from "./components/CodiPartInputs";
 import InfoTextAndVideo from "./components/InfoTextAndVideo";
 import GoCodiRecResult from "./components/GoCodiRecResult";
-import clickIcon from "../../assets/icons/click.png";
 import CodiSimulator from "../../components/CodiSimulator";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
