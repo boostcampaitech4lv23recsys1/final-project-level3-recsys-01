@@ -19,65 +19,108 @@ function CodiPartInputs({
   setInputShoes,
   inputWeapon,
   setInputWeapon,
+  setPartChange,
 }) {
+  const defaultFixObject = {
+    label: "",
+    img: clickIcon,
+    id: "",
+    category: "",
+    index: "",
+  };
   return (
-    <Stack direction="column" spacing={10} alignItems="center" sx={{ p: 8 }}>
-      <Stack direction="row" spacing={8} alignItems="center">
-        <CodiPartButton
-          codiPart="모자"
-          inputValue={inputHat}
-          setInputValue={setInputHat}
-          openPopover={true}
-        />
-        <CodiPartButton
-          codiPart="헤어"
-          inputValue={inputHair}
-          setInputValue={setInputHair}
-          openPopover={true}
-        />
-        <CodiPartButton
-          codiPart="성형"
-          inputValue={inputFace}
-          setInputValue={setInputFace}
-          openPopover={true}
-        />
-      </Stack>
-      <Stack direction="row" spacing={8} alignItems="center">
-        <CodiPartButton
-          codiPart="상의"
-          inputValue={inputTop}
-          setInputValue={setInputTop}
-          openPopover={true}
-        />
-        {inputTop["category"] === "Overall" ? (
+    <div>
+      <Stack direction="column" spacing={10} alignItems="center" sx={{ p: 8 }}>
+        <Stack direction="row" spacing={8} alignItems="center">
           <CodiPartButton
-            codiPart="하의"
-            inputValue={{ label: "", img: clickIcon, category: "", id: "" }}
-            setInputValue={setInputBottom}
-            openPopover={false}
-          />
-        ) : (
-          <CodiPartButton
-            codiPart="하의"
-            inputValue={inputBottom}
-            setInputValue={setInputBottom}
+            codiPart="모자"
+            inputValue={inputHat}
+            setInputValue={setInputHat}
             openPopover={true}
+            setPartChange={setPartChange}
           />
-        )}
-        <CodiPartButton
-          codiPart="신발"
-          inputValue={inputShoes}
-          setInputValue={setInputShoes}
-          openPopover={true}
-        />
-        <CodiPartButton
-          codiPart="무기"
-          inputValue={inputWeapon}
-          setInputValue={setInputWeapon}
-          openPopover={true}
-        />
+          <CodiPartButton
+            codiPart="헤어"
+            inputValue={inputHair}
+            setInputValue={setInputHair}
+            openPopover={true}
+            setPartChange={setPartChange}
+          />
+          <CodiPartButton
+            codiPart="성형"
+            inputValue={inputFace}
+            setInputValue={setInputFace}
+            openPopover={true}
+            setPartChange={setPartChange}
+          />
+        </Stack>
+        <Stack direction="row" spacing={8} alignItems="center">
+          <CodiPartButton
+            codiPart="상의"
+            inputValue={inputTop}
+            setInputValue={setInputTop}
+            openPopover={true}
+            setPartChange={setPartChange}
+          />
+          {inputTop["category"] === "Overall" ? (
+            <CodiPartButton
+              codiPart="하의"
+              inputValue={{ label: "", img: clickIcon, category: "", id: "" }}
+              setInputValue={setInputBottom}
+              openPopover={false}
+              setPartChange={setPartChange}
+            />
+          ) : (
+            <CodiPartButton
+              codiPart="하의"
+              inputValue={inputBottom}
+              setInputValue={setInputBottom}
+              openPopover={true}
+              setPartChange={setPartChange}
+            />
+          )}
+          <CodiPartButton
+            codiPart="신발"
+            inputValue={inputShoes}
+            setInputValue={setInputShoes}
+            openPopover={true}
+            setPartChange={setPartChange}
+          />
+          <CodiPartButton
+            codiPart="무기"
+            inputValue={inputWeapon}
+            setInputValue={setInputWeapon}
+            openPopover={true}
+            setPartChange={setPartChange}
+          />
+        </Stack>
       </Stack>
-    </Stack>
+      <button
+        className="button-reload"
+        style={{
+          borderRadius: 30,
+          width: 150,
+          height: 30,
+          border: 1,
+          backgroundColor: "#b9b9b9",
+          color: "white",
+          fontFamily: "NanumSquareAcb",
+          fontSize: 20,
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          setInputHat(defaultFixObject);
+          setInputHair(defaultFixObject);
+          setInputFace(defaultFixObject);
+          setInputTop(defaultFixObject);
+          setInputBottom(defaultFixObject);
+          setInputShoes(defaultFixObject);
+          setInputWeapon(defaultFixObject);
+          setPartChange(true);
+        }}>
+        All Reset
+      </button>
+    </div>
   );
 }
 

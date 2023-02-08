@@ -17,6 +17,7 @@ class MCNDataset(Dataset):
         item_data: pd.DataFrame,
         negative_ratio: float,
         n_change_parts: int,
+        is_train: bool = True,
     ) -> None:
         super().__init__()
         self.inter_data = inter_data
@@ -32,6 +33,7 @@ class MCNDataset(Dataset):
             )
         self.negative_ratio = negative_ratio
         self.n_change_parts = n_change_parts
+        self.is_train = is_train
 
         # 카테고리 별 dataframe 미리 생성
         # 카테고리 별 negative sampling을 하기 위함.
@@ -60,7 +62,7 @@ class MCNDataset(Dataset):
 
         # 주어진 비율보다 작은 값이 나오면
         negative = False
-        if random.random() < self.negative_ratio:
+        if random.random() < self.negative_ratio and self.is_train:
             negative = True
             for change_part_index in random.sample(range(7), self.n_change_parts):
                 item_per_category = (

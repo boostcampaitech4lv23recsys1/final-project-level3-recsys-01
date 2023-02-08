@@ -167,6 +167,46 @@
     margin: auto 0;
 }
 
-.button-good {
+.PRRP .simulatorAndItem {
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 80px;
+}
 
+.PRRP .codiSimulator {
+    padding-top: 20%;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.PRRP .codiSimulator-container {
+    position: relative;
+    height: 400px;
+    width: 300px;
+    padding-top: 20px;
+    padding-left: 100px;
+}
+
+.PRRP .codiSimulator-bg {
+    position: absolute;
+    height: 400px;
+    width: 300px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.PRRP .codiSimulator-simulator {
+    position: absolute;
+    top: 150px;
+    bottom: 0;
+    left: -20px;
+    right: 0;
 }

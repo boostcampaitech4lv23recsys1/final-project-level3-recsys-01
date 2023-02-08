@@ -1,6 +1,7 @@
 import * as React from "react";
 import Fab from "@mui/material/Fab";
 import * as API from "../../../api";
+import { useState } from "react";
 
 function getEquippedItem({
   inputHat,
@@ -79,6 +80,8 @@ function GetDiagnosisResult({
   inputWeapon,
   diagnosisScore,
   setDiagnosisScore,
+  partChange,
+  setPartChange,
 }) {
   const equippedItem = getEquippedItem({
     inputHat,
@@ -90,6 +93,7 @@ function GetDiagnosisResult({
     inputWeapon,
   });
   const sendCodiData = async () => {
+    setPartChange(true);
     const res = await API.post("diagnosis/submit/MCN", equippedItem);
     setDiagnosisScore(res.data);
     return diagnosisScore;
@@ -109,10 +113,12 @@ function GetDiagnosisResult({
           color: "white",
           fontFamily: "NanumSquareAcb",
           fontSize: 30,
-        }}>
-        <a onClick={() => sendCodiData()} style={{ color: "white" }}>
-          {"코디 점수 받기"}
-        </a>
+        }}
+        onClick={() => {
+          sendCodiData(); //여기서 셋 파트 체인지를 treu로 바꿔버리면 아무 소용없이 계속 눌리네
+        }}
+        disabled={partChange}>
+        <a style={{ color: "white" }}>{"코디 점수 받기"}</a>
       </Fab>
     </div>
   );

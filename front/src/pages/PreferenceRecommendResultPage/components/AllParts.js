@@ -1,10 +1,10 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
-import AllCodiPartButton from "./AllCodiPartButton";
-import { Stack } from "@mui/system";
 import basicitem from "../../../assets/images/basicItem.png";
 import fixitme from "../../../assets/images/fixItem.png";
+import simulatorBg from "../../../assets/images/simulatorBg.png";
 import Typography from "@mui/material/Typography";
+import CodiSimulator from "../../../components/CodiSimulator";
 
 function AllParts({ fixPartList, recommendData }) {
   const codiPartName = {
@@ -16,10 +16,31 @@ function AllParts({ fixPartList, recommendData }) {
     Shoes: "신발",
     Weapon: "무기",
   };
-
   const collectAllPart = () => {
     const all = [];
     const codiPartEngName = Object.keys(codiPartName);
+
+    all.push(
+      <Grid xs={1.3} className="button-fixitem" key="CodiSumulator">
+        <div className="img-instack">
+          <img alt="" src={simulatorBg} width="180" height="250"></img>
+        </div>
+        <div className="img-inbox">
+          <CodiSimulator
+            className="codiSimulator"
+            inputHat={recommendData["Hat"]}
+            inputHair={recommendData["Hair"]}
+            inputFace={recommendData["Face"]}
+            inputTop={recommendData["Top"]}
+            inputBottom={recommendData["Bottom"]}
+            inputShoes={recommendData["Shoes"]}
+            inputWeapon={recommendData["Weapon"]}
+            size={2}
+            isResult={true}></CodiSimulator>
+        </div>
+      </Grid>,
+    );
+
     for (let idx = 0; idx < codiPartEngName.length; idx++) {
       if (fixPartList.includes(codiPartEngName[idx])) {
         all.push(

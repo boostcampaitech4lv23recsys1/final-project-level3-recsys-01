@@ -1,9 +1,22 @@
 import * as React from "react";
 import "./CodiPartButton.css";
-import Stack from "@mui/material/Stack";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
 
-function CodiPartButton({ codiPart, inputValue, setInputValue, openPopover }) {
+function CodiPartButton({
+  codiPart,
+  inputValue,
+  setInputValue,
+  openPopover,
+  setPartChange,
+}) {
+  const defaultFixObject = {
+    label: "",
+    img: null,
+    id: "",
+    category: "",
+    index: "",
+  };
+
   function handleInputValueChange(newInputValue) {
     let updatedInputValue = {
       label: newInputValue["label"],
@@ -12,6 +25,7 @@ function CodiPartButton({ codiPart, inputValue, setInputValue, openPopover }) {
       category: newInputValue["category"],
       index: newInputValue["index"],
     };
+    setPartChange(false);
     setInputValue(updatedInputValue);
   }
 
@@ -27,6 +41,28 @@ function CodiPartButton({ codiPart, inputValue, setInputValue, openPopover }) {
         inputIndex={inputValue["index"]}
         openPopover={openPopover}
       />
+      <button
+        style={{
+          position: "relative",
+          top: 10,
+          left: 15,
+          marginLeft: 20,
+          borderRadius: 30,
+          width: 50,
+          height: 20,
+          border: 1,
+          backgroundColor: "#b9b9b9",
+          color: "white",
+          fontFamily: "NanumSquareAcb",
+          fontSize: 15,
+          textAlign: "center",
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          setInputValue(defaultFixObject);
+        }}>
+        Reset
+      </button>
     </div>
   );
 }

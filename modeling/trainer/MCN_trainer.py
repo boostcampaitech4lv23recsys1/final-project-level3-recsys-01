@@ -14,13 +14,14 @@ from modeling.utils.gcs_helper import GCSHelper
 
 import wandb
 
+
 class MCNTrainer(object):
     def __init__(
         self,
-            config,
-            model,
-            train_loader,
-            val_loader,
+        config,
+        model,
+        train_loader,
+        val_loader,
     ):
         self.config = config
         self.model = model
@@ -115,7 +116,7 @@ class MCNTrainer(object):
                     "train/features_loss": features_loss,
                     "train/tmasks_loss": tmasks_loss,
                     "train/total_loss": total_losses.val,
-                    "batch_num": batch_num
+                    "batch_num": batch_num,
                 }
                 wandb.log(log, commit=True)
         print("Train Loss (clf_loss): {:.4f}".format(clf_losses.avg))
@@ -124,7 +125,7 @@ class MCNTrainer(object):
             "train_epoch/clf_loss": clf_losses.avg,
             "train_epoch/vse_loss": vse_losses.avg,
             "train_epoch/total_loss": total_losses.avg,
-            "train_step": epoch
+            "train_step": epoch,
         }
         wandb.log(epoch_train_log, commit=True)
 
@@ -136,41 +137,26 @@ class MCNTrainer(object):
         print("Valid Phase, Epoch: {}".format(epoch))
         self.model.eval()
 
-        clf_losses = AverageMeter()
         outputs = []
-        targets = []
         for batch_num, batch in enumerate(self.val_loader, 1):
             images, is_compat = batch
             images = images.to(self.device)
-            target = is_compat.float().to(self.device)
             with torch.no_grad():
                 output, _, _, _ = self.model._compute_score(images)
                 output = output.squeeze(dim=1)
-                clf_loss = self.criterion(output, target)
-            clf_losses.update(clf_loss.item(), images.shape[0])
             outputs.append(output)
-            targets.append(target)
-        print("Valid Loss (clf_loss): {:.4f}".format(clf_losses.avg))
         outputs = torch.cat(outputs).cpu().data.numpy()
-        targets = torch.cat(targets).cpu().data.numpy()
-        predicts = np.where(outputs > 0.5, 1, 0)
-        accuracy = metrics.accuracy_score(predicts, targets)
-        print("Accuracy@0.5: {:.4f}".format(accuracy))
         avg_score = np.mean(outputs)
         print("avg_score: {:.4f}".format(avg_score))
-        positive_loss = -np.log(outputs[targets == 1]).mean()
-        print("Positive loss: {:.4f}".format(positive_loss))
 
         epoch_valid_log = {
-            "valid/clf_loss": clf_losses.avg,
-            "valid/accuracy": accuracy,
-            "valid/positive_loss": positive_loss,
             "valid/avg_score": avg_score,
-            "valid_step": epoch
+            "valid_step": epoch,
         }
         wandb.log(epoch_valid_log, commit=True)
 
         return avg_score
+
 
 class AverageMeter(object):
     """Computes and stores the average and current value.

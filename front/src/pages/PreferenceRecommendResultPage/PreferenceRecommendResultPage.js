@@ -62,6 +62,7 @@ function PreferenceRecommendResultPage({
     setRecommendData(data);
     setLoadingPage(true);
   };
+
   useEffect(() => {
     postCodiPartData();
   }, []);

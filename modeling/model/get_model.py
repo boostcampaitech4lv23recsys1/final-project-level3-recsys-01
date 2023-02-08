@@ -5,7 +5,11 @@ import modeling.model as models
 
 
 def get_models(config: Dict[str, Any]) -> nn.Module:
-    if config["arch"]["type"] == "NewMF":
+    if config["project"] == "SimpleMCN":
+        model_config = config["arch"]["args"]
+        model = getattr(models, "SimpleMCN")()
+
+    elif config["arch"]["type"] == "NewMF":
         model_config = config["arch"]["args"]
         model = getattr(models, config["arch"]["type"])(
             model_config["n_items"], model_config["n_factors"]
@@ -21,7 +25,7 @@ def get_models(config: Dict[str, Any]) -> nn.Module:
             mlp_layers=model_config["mlp_layers"],
             conv_feats=model_config["conv_feats"],
             pretrained=model_config["pretrained"],
-            resnet_layer_num=model_config["resnet_layer_num"]
+            resnet_layer_num=model_config["resnet_layer_num"],
         )
     else:
         raise NotImplementedError
