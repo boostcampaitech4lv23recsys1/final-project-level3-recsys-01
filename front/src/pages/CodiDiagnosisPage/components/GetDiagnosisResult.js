@@ -81,6 +81,7 @@ function GetDiagnosisResult({
   setDiagnosisScore,
   partChange,
   setPartChange,
+  numberState,
 }) {
   const equippedItem = getEquippedItem({
     inputHat,
@@ -91,8 +92,12 @@ function GetDiagnosisResult({
     inputShoes,
     inputWeapon,
   });
+
+  if (numberState === 0) {
+    partChange = true;
+  }
+
   const sendCodiData = async () => {
-    setPartChange(true);
     const res = await API.post("diagnosis/submit/MCN", equippedItem);
     setDiagnosisScore(res.data);
     return diagnosisScore;
@@ -114,7 +119,7 @@ function GetDiagnosisResult({
           fontSize: 30,
         }}
         onClick={() => {
-          sendCodiData(); //여기서 셋 파트 체인지를 treu로 바꿔버리면 아무 소용없이 계속 눌리네
+          sendCodiData(); //여기서 셋 파트 체인지를 true로 바꿔버리면 아무 소용없이 계속 눌리네
         }}
         disabled={partChange}>
         <a

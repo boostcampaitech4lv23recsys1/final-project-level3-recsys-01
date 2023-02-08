@@ -20,6 +20,8 @@ function CodiPartInputs({
   inputWeapon,
   setInputWeapon,
   setPartChange,
+  numberState,
+  setNumberState,
 }) {
   const defaultFixObject = {
     label: "",
@@ -38,6 +40,8 @@ function CodiPartInputs({
             setInputValue={setInputHat}
             openPopover={true}
             setPartChange={setPartChange}
+            numberState={numberState}
+            setNumberState={setNumberState}
           />
           <CodiPartButton
             codiPart="헤어"
@@ -45,6 +49,8 @@ function CodiPartInputs({
             setInputValue={setInputHair}
             openPopover={true}
             setPartChange={setPartChange}
+            numberState={numberState}
+            setNumberState={setNumberState}
           />
           <CodiPartButton
             codiPart="성형"
@@ -52,6 +58,8 @@ function CodiPartInputs({
             setInputValue={setInputFace}
             openPopover={true}
             setPartChange={setPartChange}
+            numberState={numberState}
+            setNumberState={setNumberState}
           />
         </Stack>
         <Stack direction="row" spacing={8} alignItems="center">
@@ -61,6 +69,8 @@ function CodiPartInputs({
             setInputValue={setInputTop}
             openPopover={true}
             setPartChange={setPartChange}
+            numberState={numberState}
+            setNumberState={setNumberState}
           />
           {inputTop["category"] === "Overall" ? (
             <CodiPartButton
@@ -69,6 +79,8 @@ function CodiPartInputs({
               setInputValue={setInputBottom}
               openPopover={false}
               setPartChange={setPartChange}
+              numberState={numberState}
+              setNumberState={setNumberState}
             />
           ) : (
             <CodiPartButton
@@ -77,6 +89,8 @@ function CodiPartInputs({
               setInputValue={setInputBottom}
               openPopover={true}
               setPartChange={setPartChange}
+              numberState={numberState}
+              setNumberState={setNumberState}
             />
           )}
           <CodiPartButton
@@ -85,6 +99,8 @@ function CodiPartInputs({
             setInputValue={setInputShoes}
             openPopover={true}
             setPartChange={setPartChange}
+            numberState={numberState}
+            setNumberState={setNumberState}
           />
           <CodiPartButton
             codiPart="무기"
@@ -92,6 +108,8 @@ function CodiPartInputs({
             setInputValue={setInputWeapon}
             openPopover={true}
             setPartChange={setPartChange}
+            numberState={numberState}
+            setNumberState={setNumberState}
           />
         </Stack>
       </Stack>
@@ -117,6 +135,7 @@ function CodiPartInputs({
           setInputShoes(defaultFixObject);
           setInputWeapon(defaultFixObject);
           setPartChange(true);
+          setNumberState(0);
         }}>
         All Reset
       </button>
