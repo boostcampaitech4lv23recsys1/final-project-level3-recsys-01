@@ -45,8 +45,8 @@ class AEInference:
             self.item_parts.append(item_part)
 
         self.model = AutoEncoderPredictor(
-            dropout_prop=model_config["dropout_prop"],
-            device=self.device,
+            config=self.model_config,
+            dropout_prop=self.model_config["dropout_prop"],
         )
 
         self.model.load_state_dict(
@@ -55,12 +55,6 @@ class AEInference:
         print(self.device)
         self.model.to(self.device)
         self.model.eval()
-
-    async def aemf_collate_fn(data):
-        images = torch.stack(data)
-        images = images.transpose(0, 1)
-
-        return images
 
     @torch.no_grad()
     async def diagnosis(self, equips: Dict[str, int]):
@@ -113,18 +107,18 @@ class AEInference:
             item_part = self.item_parts[part_idx]
 
             # 저 중에 특정 비율만 보자. 나는 그냥 임의로 50%만 봤다.
-            dataset_per_part = MCNTopkDataset(equips_list, part_idx, item_part)
+            dataset_per_part = AETopkDataset(equips_list, part_idx, item_part)
             dataloader_per_part = DataLoader(
-                dataset=dataset_per_part, batch_size=self.batch_size, shuffle=False, collate_fn=self.aemf_collate_fn
+                dataset=dataset_per_part, batch_size=self.batch_size, shuffle=False,
             )
 
             for batch_idx, batch in enumerate(dataloader_per_part):
                 # batch shape (batch, 7) == (16, 7)
                 images = self.image_tensors[batch]
-                output = self.model(images.to(self.device))
+                output = self.model(images.transpose(0, 1).to(self.device))
                 result = [
-                    (batch[part_idx, i], float(output[i]))
-                    for i in range(batch.shape[1])
+                    (batch[i, part_idx], float(output[i]))
+                    for i in range(batch.shape[0])
                 ]
                 part_scores.extend(result)
 
@@ -132,17 +126,17 @@ class AEInference:
             part_index_and_topk[part_idx] = [x[0] for x in part_scores[:self.top_k]]
 
         # topk 개 다 뽑았으니, 경우의 수 고려 시작
-        dataset_for_product = MCNProductDataset(equips_list, part_index_and_topk)
+        dataset_for_product = AEProductDataset(equips_list, part_index_and_topk)
         dataloader_for_product = DataLoader(
-            dataset=dataset_for_product, batch_size=self.batch_size, shuffle=False, collate_fn=self.aemf_collate_fn
+            dataset=dataset_for_product, batch_size=self.batch_size, shuffle=False,
         )
 
         codi_scores = []
         for batch_idx, batch in enumerate(dataloader_for_product):
             # batch shape (batch, 7) == (16, 7)
             images = self.image_tensors[batch]
-            output = self.model(images.to(self.device))
-            result = [(batch[:, i], float(output[i])) for i in range(batch.shape[1])]
+            output = self.model(images.transpose(0, 1).to(self.device))
+            result = [(batch[i, :], float(output[i])) for i in range(batch.shape[0])]
             codi_scores.extend(result)
 
         codi_scores.sort(key=lambda x: x[1], reverse=True)

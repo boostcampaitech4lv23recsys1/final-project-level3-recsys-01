@@ -11,7 +11,7 @@ class AutoEncoderPredictor(nn.Module):
         self.config = config
         self.categories = ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"]
         self.ae_models = dict()
-        self.device = device
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.get_models()
         self.dropout_prop = dropout_prop
 
@@ -49,12 +49,12 @@ class AutoEncoderPredictor(nn.Module):
         for category in self.categories:
             auto_encoder = AutoEncoder()
 
-            model_path = os.path.join(self.config["autoencoder_save_dir"], f"AutoEncoder_{category}.pt")
+            model_path = os.path.join(self.config["pretraind_model_dir"], f"AutoEncoder_{category}.pt")
 
-            if not os.path.exists(self.model_path):
-                os.makedirs("/".join(self.model_path.split("/")[:-1]))
+            if not os.path.exists(model_path):
+                os.makedirs("/".join(model_path.split("/")[:-1]), exist_ok=True)
                 gcs_helper.download_file_from_gcs(
-                    blob_name=f"AutoEncoder/AutoEncoder_{category}.pt", file_name=self.model_path
+                    blob_name=f"AutoEncoder/AutoEncoder_{category}.pt", file_name=model_path
                 )
 
             auto_encoder.load_state_dict(torch.load(model_path))

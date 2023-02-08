@@ -22,4 +22,11 @@ MODEL_CONFIG = {
         "batch_size": 32,
         "top_k": 10,
     },
+    "AutoEncoderPredictor": {
+        "model_path": "src/AI/save_model/AutoEncoderPredictor/AutoEncoderPredictor_latest.pt",
+        "pretraind_model_dir": "src/AI/save_model/AutoEncoder",
+        "dropout_prop": 0.2,
+        "top_k": 10,
+        "batch_size": 32
+    }
 }
