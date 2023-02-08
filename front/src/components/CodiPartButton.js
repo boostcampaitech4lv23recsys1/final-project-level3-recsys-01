@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import "./CodiPartButton.css";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
+import { useEffect } from "react";
 
 function CodiPartButton({
   codiPart,
@@ -9,6 +10,8 @@ function CodiPartButton({
   setInputValue,
   openPopover,
   setPartChange,
+  numberState,
+  setNumberState,
 }) {
   const defaultFixObject = {
     label: "",
@@ -28,11 +31,13 @@ function CodiPartButton({
     };
     setPartChange(false);
     setInputValue(updatedInputValue);
+    setNumberState(numberState + 1);
   }
 
   useEffect(() => {
     if (openPopover === false) {
       setInputValue(defaultFixObject);
+      setNumberState(numberState + 1);
     }
   }, [openPopover]);
 
@@ -66,6 +71,11 @@ function CodiPartButton({
           cursor: "pointer",
         }}
         onClick={() => {
+          if (inputValue["category"] === "Overall") {
+            setNumberState(numberState - 2);
+          } else {
+            setNumberState(numberState - 1);
+          }
           setInputValue(defaultFixObject);
         }}>
         Reset
