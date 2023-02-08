@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import "./CodiPartButton.css";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
 
@@ -28,6 +29,12 @@ function CodiPartButton({
     setPartChange(false);
     setInputValue(updatedInputValue);
   }
+
+  useEffect(() => {
+    if (openPopover === false) {
+      setInputValue(defaultFixObject);
+    }
+  }, [openPopover]);
 
   return (
     <div className="codiPartButton">
