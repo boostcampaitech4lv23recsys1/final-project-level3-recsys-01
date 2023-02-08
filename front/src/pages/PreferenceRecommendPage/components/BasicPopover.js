@@ -1,9 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import Popover from "@mui/material/Popover";
-import Fab from "@mui/material/Fab";
 import BasicSearch from "./BasicSearch";
-import click from "../../../assets/icons/click.png";
 import basicItem from "../../../assets/images/basicItem.png";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -39,10 +37,6 @@ function BasicPopover({
 
   return (
     <div className="basicPopover">
-      {/* <Fab>
-        <img src={inputImage} alt="" onClick={handleClick} />
-      </Fab> */}
-
       <Popover
         id={id}
         open={open}

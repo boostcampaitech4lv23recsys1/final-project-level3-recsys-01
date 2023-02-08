@@ -131,7 +131,7 @@
     margin-right: 20px;
 }
 
-.PRRP .button-goodbad {
+.PRRP .button-goodbads button {
     width: 35px;
     height: 35px;
     display: inline-block;
@@ -186,8 +186,8 @@
 
 .PRRP .codiSimulator-container {
     position: relative;
-    height: 400px;
-    width: 300px;
+    height: 100px;
+    width: 50px;
     padding-top: 20px;
     padding-left: 100px;
 }
@@ -203,10 +203,10 @@
     margin: auto;
 }
 
-.PRRP .codiSimulator-simulator {
+.PRRP .codiSimulator-simulator{
     position: absolute;
-    top: 150px;
+    top: 0px;
     bottom: 0;
-    left: -20px;
+    left: -40px;
     right: 0;
 }

@@ -1,7 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import "./Footer.css";
-import { autocompleteClasses } from "@mui/material";
 
 function StickyFooter() {
   const teamDescriptionOne = "Contact | ";

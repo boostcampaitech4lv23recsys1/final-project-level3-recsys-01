@@ -1,7 +1,6 @@
 import * as React from "react";
 import Fab from "@mui/material/Fab";
 import * as API from "../../../api";
-import { useState } from "react";
 
 function getEquippedItem({
   inputHat,
@@ -118,7 +117,12 @@ function GetDiagnosisResult({
           sendCodiData(); //여기서 셋 파트 체인지를 treu로 바꿔버리면 아무 소용없이 계속 눌리네
         }}
         disabled={partChange}>
-        <a style={{ color: "white" }}>{"코디 점수 받기"}</a>
+        <a
+          href="/"
+          onClick={(event) => event.preventDefault()}
+          style={{ color: "white" }}>
+          {"코디 점수 받기"}
+        </a>
       </Fab>
     </div>
   );

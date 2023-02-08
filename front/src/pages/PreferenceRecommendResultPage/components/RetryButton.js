@@ -19,7 +19,12 @@ function RetryButton() {
         window.location.reload(navigate("/", { replace: true }));
       }}
       className="button-retry">
-      <a style={{ color: "white" }}>{buttonDes}</a>
+      <a
+        href="/"
+        onClick={(event) => event.preventDefault()}
+        style={{ color: "white" }}>
+        {buttonDes}
+      </a>
     </Fab>
   );
 }
