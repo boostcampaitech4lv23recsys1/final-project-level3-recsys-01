@@ -93,7 +93,6 @@ function CodiPartInputs({
             openPopover={true}
             setPartChange={setPartChange}
           />
-          {console.log(inputTop, inputBottom)}
         </Stack>
       </Stack>
       <button
