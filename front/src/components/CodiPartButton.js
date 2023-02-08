@@ -2,7 +2,6 @@ import * as React from "react";
 import { useEffect } from "react";
 import "./CodiPartButton.css";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
-import { useEffect } from "react";
 
 function CodiPartButton({
   codiPart,
