@@ -1,8 +1,6 @@
-from typing import List, Dict
+from typing import Dict
 
 from src.database.schemas import FeedbackSchema
-
-# from src.database.init_db import db
 
 import json
 from bson import json_util

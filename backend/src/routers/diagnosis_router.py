@@ -1,13 +1,8 @@
-from fastapi import APIRouter, HTTPException, status, Depends
-from pymongo.database import Database
-from starlette.responses import JSONResponse
-from pydantic import BaseModel
-from typing import Optional, Dict, List
+from fastapi import APIRouter, Depends
 
 from src.AI import MCNInference
 from src.AI.init_model import get_model
-
-from src.routers.schemas import InferenceInput, ResultItem, InferenceResult
+from src.routers.schemas import InferenceInput
 
 router = APIRouter(prefix="/diagnosis")
 

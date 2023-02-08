@@ -1,21 +1,16 @@
-from fastapi import APIRouter, HTTPException, status, Depends
-from pymongo.database import Database
-from starlette.responses import JSONResponse
-from pydantic import BaseModel
-from typing import Optional, Dict, List
+from fastapi import APIRouter, Depends
+from typing import List
 
-from collections import defaultdict
-from src.AI import InferenceNewMF, MCNInference, AEInference
 from src.AI.init_model import get_model
 
 from src.database.init_db import get_db
 from src.database.models.crud_item import (
     find_by_index,
 )
-from src.routers.schemas import InferenceInput, ResultItem, InferenceResult
+from src.routers.schemas import InferenceInput, InferenceResult
 
 import os
-import time
+import torch
 
 MODEL = str(os.getenv("USE_MODEL")).lower()
 print("use model: ", MODEL)
@@ -63,7 +58,10 @@ async def mcn_output(
     equips_dict = equips.dict(exclude_none=False)
     res = list()
 
+    torch.cuda.empty_cache()
     predicts = await model.get_topk_codi(equips_dict)
+    torch.cuda.empty_cache()
+
     parts = ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"]
 
     for predict in predicts:
@@ -92,15 +90,14 @@ async def mcn_output(
     return res
 
 
-async def ae_output(
-    equips: InferenceInput,
-    model,
-    db
-):
+async def ae_output(equips: InferenceInput, model, db):
     equips_dict = equips.dict(exclude_none=False)
     res = list()
 
+    torch.cuda.empty_cache()
     predicts = await model.get_topk_codi(equips_dict)
+    torch.cuda.empty_cache()
+
     parts = ["Hat", "Hair", "Face", "Top", "Bottom", "Shoes", "Weapon"]
 
     for predict in predicts:
@@ -140,23 +137,10 @@ async def rec_output(
     db: object = Depends(get_db),
 ):
     if MODEL == "newmf":
-        res = await newMF_output(
-            equips=equips,
-            model=model,
-            db=db
-        )
+        res = await newMF_output(equips=equips, model=model, db=db)
     if MODEL == "mcn" or MODEL == "simplemcn":
-        res = await mcn_output(
-            equips=equips,
-            model=model,
-            db=db
-        )
+        res = await mcn_output(equips=equips, model=model, db=db)
     if MODEL == "autoencoder":
-        res = await ae_output(
-            equips=equips,
-            model=model,
-            db=db
-        )
+        res = await ae_output(equips=equips, model=model, db=db)
 
     return res
-

@@ -1,4 +1,3 @@
-from pymongo.database import Database
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from typing import List, Dict
