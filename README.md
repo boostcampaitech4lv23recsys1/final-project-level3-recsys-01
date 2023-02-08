@@ -2,6 +2,9 @@
 
 <img src="https://user-images.githubusercontent.com/59256704/217677181-3705536e-a046-4a86-bda4-d16e2ce5e627.png" width="800">
 
+<br>
+
+<br>
 
 ## 1. 프로젝트 소개
 
@@ -12,7 +15,9 @@
 
 고정하고 싶은 아이템을 입력하면 그 아이템과 어울리는 코디 조합 세 개를 추천해드립니다. 이 외에도 용사님들의 코디 점수를 평가 해주는 코디 진단 서비스도 있으니 한 번 방문해서 즐겨보세요!
 
+<br>
 
+<br>
 
 ## 2. AI 모델 구조
 
@@ -25,20 +30,32 @@
 - CNN의 각 Layer에서 서로 다른 Feature를 추출하는 과정을 부위 별로 반복하여 레이어 개수 * 7 만큼의 Feature를 추출합니다.
 - 추출한 Feature들 간의 Pairwise 유사성을 파악한 후 MLP Predictor를 통화개 최종 Score를 산출합니다.
 
+<br>
+
+<br>
+
 ## 3. 서비스 아키텍쳐
 
 - 데이터 & 모델 학습 파이프라인
 
 <img src="https://user-images.githubusercontent.com/59256704/217677382-78ba2243-c345-46a9-991c-eec247e28e71.png" width="700">
 
+<br>
+
 - 웹 배포 파이프라인
 
 <img src="https://user-images.githubusercontent.com/59256704/217677501-3db7b44c-68f5-48ac-869c-10041a8c00b9.png" width="700">
+
+<br>
 
 - 사용자 요청 흐름도
 
 <img src="https://user-images.githubusercontent.com/59256704/217677580-78d7f68a-7f73-478e-8693-a8429be22607.png" width="700">
 
+
+<br>
+
+<br>
 
 ## 4. 브랜치 전략
 
@@ -47,9 +64,17 @@
 - dev, modeling, back, front 네 개의 브랜치 분류 사용
 - 각 브랜치에서 기능 추가, 오류처리 등에 대한 세부 브랜치를 만들어 코드 관리
 
+<br>
+
+<br>
+
 ## 5. 사용 기술 스택
 
 <img src="https://user-images.githubusercontent.com/59256704/217677774-8a5b3d48-cd9a-4428-8deb-365ec12ea741.png" width="500">
+
+<br>
+
+<br>
 
 ## 6. 팀원 소개
 
@@ -59,8 +84,3 @@
 
 
 
-
-
-----
-🦖 team 공룡알에 대한 더 자세한 WIKI는 [팀 노션](https://41ow1ives.notion.site/Final-Project-7297be317b9340b5a7c18d70c010f783)에서 볼 수 있어요
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fboostcampaitech4lv23recsys1/final-project-level3-recsys-01/2F&count_bg=%23FFE565&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
