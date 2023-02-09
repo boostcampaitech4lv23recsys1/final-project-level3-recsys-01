@@ -24,10 +24,9 @@ function PreferenceRecommendPage({
   setInputShoes,
   inputWeapon,
   setInputWeapon,
+  numberState,
+  setNumberState,
 }) {
-  const [partChange, setPartChange] = useState(true);
-  const [numberState, setNumberState] = useState(0);
-
   return (
     <div className="PreferenceRecommendPage">
       <InfoTextAndVideo />
@@ -59,28 +58,17 @@ function PreferenceRecommendPage({
           setInputShoes={setInputShoes}
           inputWeapon={inputWeapon}
           setInputWeapon={setInputWeapon}
-          partChange={partChange}
-          setPartChange={setPartChange}
           numberState={numberState}
           setNumberState={setNumberState}
         />
+        {console.log(numberState)}
       </Stack>
       <Grid
         container
         direction="column"
         justifyContent="center"
         alignItems="center">
-        <GoCodiRecResult
-          inputHat={inputHat}
-          inputHair={inputHair}
-          inputFace={inputFace}
-          inputTop={inputTop}
-          inputBottom={inputBottom}
-          inputShoes={inputShoes}
-          inputWeapon={inputWeapon}
-          partChange={partChange}
-          numberState={numberState}
-        />
+        <GoCodiRecResult numberState={numberState} />
         <GoReviewPage />
       </Grid>
     </div>

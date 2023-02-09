@@ -2,19 +2,9 @@ import * as React from "react";
 import Fab from "@mui/material/Fab";
 import { useNavigate } from "react-router-dom";
 
-function GoCodiRecResult({
-  inputHat,
-  inputHair,
-  inputFace,
-  inputTop,
-  inputBottom,
-  inputShoes,
-  inputWeapon,
-  partChange,
-  numberState,
-}) {
+function GoCodiRecResult({ numberState }) {
   const navigate = useNavigate();
-
+  let partChange = false;
   if (numberState <= 2 || numberState >= 7) {
     partChange = true;
   }

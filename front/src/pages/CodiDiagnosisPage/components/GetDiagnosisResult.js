@@ -79,8 +79,6 @@ function GetDiagnosisResult({
   inputWeapon,
   diagnosisScore,
   setDiagnosisScore,
-  partChange,
-  setPartChange,
   numberState,
 }) {
   const equippedItem = getEquippedItem({
@@ -93,6 +91,7 @@ function GetDiagnosisResult({
     inputWeapon,
   });
 
+  let partChange = false;
   if (numberState === 0) {
     partChange = true;
   }

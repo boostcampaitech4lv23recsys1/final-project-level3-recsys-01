@@ -8,7 +8,6 @@ function CodiPartButton({
   inputValue,
   setInputValue,
   openPopover,
-  setPartChange,
   numberState,
   setNumberState,
 }) {
@@ -28,7 +27,6 @@ function CodiPartButton({
       category: newInputValue["category"],
       index: newInputValue["index"],
     };
-    setPartChange(false);
     setInputValue(updatedInputValue);
     setNumberState(numberState + 1);
   }
