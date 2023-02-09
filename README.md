@@ -10,7 +10,7 @@
 <br>
 
 ---
-#### [👉 메신사 체험하기](http://mesinsa.co.kr)
+#### <a href="http://mesinsa.co.kr"> 👉 메신사 체험하기 <a/>
 ---
 </div>
 <br><br><br>
@@ -33,7 +33,6 @@
 > 3. **AI가 코디 점수를 반환해줘요**
 
 
-
 <br>
 <h2> 💻 활용 장비 및 협업 툴</h2>
 
@@ -51,6 +50,7 @@
 #### <b> Multi-Layered Comparison Network<sup>[1]</sup> </b>
 
 <img src="https://user-images.githubusercontent.com/59256704/217676676-b95ca45a-b341-4880-a158-6e4da572e699.png" width="800">
+<img src="https://user-images.githubusercontent.com/78770033/217743106-018f1a90-dfd7-46a2-ace2-342eedc41bb1.png" width="800">
 
 - CNN의 각 Layer에서 서로 다른 Feature를 추출하는 과정을 부위 별로 반복하여 레이어 개수 * 7 만큼의 Feature를 추출합니다.
 - 추출한 Feature들 간의 Pairwise 유사성을 파악한 후 MLP Predictor를 통과해 최종 Score를 산출합니다.
