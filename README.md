@@ -2,8 +2,14 @@
 
 <img src="https://user-images.githubusercontent.com/59256704/217677181-3705536e-a046-4a86-bda4-d16e2ce5e627.png" width="800">
 
+<br>
+
+---
 ## [메신사 체험하기](http://mesinsa.co.kr)
 
+---
+
+<br>
 
 ## 1. 프로젝트 소개
 
@@ -13,8 +19,6 @@
 메이플스토리 세상에 존재하는 너무나도 많은 아이템들! 현실에서 무슨 옷 입을지 고민하기도 바쁜데 메이플 세계에서도 고민하느라 힘드셨던 용사님들을 위한 코디 추천 서비스입니다. 
 
 고정하고 싶은 아이템을 입력하면 그 아이템과 어울리는 코디 조합 세 개를 추천해드립니다. 이 외에도 용사님들의 코디 점수를 평가 해주는 코디 진단 서비스도 있으니 한 번 방문해서 즐겨보세요!
-
-<br>
 
 <br>
 
@@ -28,8 +32,6 @@
 
 - CNN의 각 Layer에서 서로 다른 Feature를 추출하는 과정을 부위 별로 반복하여 레이어 개수 * 7 만큼의 Feature를 추출합니다.
 - 추출한 Feature들 간의 Pairwise 유사성을 파악한 후 MLP Predictor를 통화개 최종 Score를 산출합니다.
-
-<br>
 
 <br>
 
@@ -51,9 +53,6 @@
 
 <img src="https://user-images.githubusercontent.com/59256704/217677580-78d7f68a-7f73-478e-8693-a8429be22607.png" width="700">
 
-
-<br>
-
 <br>
 
 ## 4. 브랜치 전략
@@ -65,13 +64,9 @@
 
 <br>
 
-<br>
-
 ## 5. 사용 기술 스택
 
 <img src="https://user-images.githubusercontent.com/59256704/217677774-8a5b3d48-cd9a-4428-8deb-365ec12ea741.png" width="500">
-
-<br>
 
 <br>
 
