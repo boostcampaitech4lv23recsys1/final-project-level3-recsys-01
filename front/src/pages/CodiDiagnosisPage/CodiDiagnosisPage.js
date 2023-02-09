@@ -7,6 +7,7 @@ import GetDiagnosisResult from "./components/GetDiagnosisResult";
 import ShowDiagnosisResult from "./components/ShowDiagnosisResult";
 import { useState } from "react";
 import InfoText from "./components/InfoText";
+import GoReviewPage from "../../components/GoReviewPage";
 
 function CodiDiagnosisPage({
   inputHat,
@@ -84,6 +85,7 @@ function CodiDiagnosisPage({
         setPartChange={setPartChange}
         numberState={numberState}
       />
+      <GoReviewPage />
     </div>
   );
 }

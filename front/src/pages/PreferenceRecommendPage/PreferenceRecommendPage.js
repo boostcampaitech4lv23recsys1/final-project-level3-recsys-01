@@ -3,6 +3,8 @@ import Grid from "@mui/material/Grid";
 import CodiPartInputs from "./components/CodiPartInputs";
 import InfoTextAndVideo from "./components/InfoTextAndVideo";
 import GoCodiRecResult from "./components/GoCodiRecResult";
+import GoReviewPage from "../../components/GoReviewPage";
+
 import CodiSimulator from "../../components/CodiSimulator";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
@@ -63,10 +65,9 @@ function PreferenceRecommendPage({
           setNumberState={setNumberState}
         />
       </Stack>
-      {console.log(numberState)}
       <Grid
         container
-        direction="row"
+        direction="column"
         justifyContent="center"
         alignItems="center">
         <GoCodiRecResult
@@ -80,6 +81,7 @@ function PreferenceRecommendPage({
           partChange={partChange}
           numberState={numberState}
         />
+        <GoReviewPage />
       </Grid>
     </div>
   );

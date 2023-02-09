@@ -2,6 +2,7 @@ import TitleFixItem from "./components/TitleFixItem";
 import BestCodiTopThree from "./components/BestCodiTopThree";
 import RetryButton from "./components/RetryButton";
 import LoadingAnimation from "./components/LoadingAnimation";
+import GoReviewPage from "../../components/GoReviewPage";
 import "./PreferenceRecommendResultPage.css";
 import * as API from "../../api";
 import { useState, useEffect } from "react";
@@ -88,6 +89,7 @@ function PreferenceRecommendResultPage({
           fixPartList={fixPartListKorEng}
           recommendData={recommendData}></BestCodiTopThree>
         <RetryButton></RetryButton>
+        <GoReviewPage />
       </div>
     );
   }
