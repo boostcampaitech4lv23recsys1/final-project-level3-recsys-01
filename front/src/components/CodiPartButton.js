@@ -27,15 +27,24 @@ function CodiPartButton({
       category: newInputValue["category"],
       index: newInputValue["index"],
     };
+    if (inputValue["label"] === "") {
+      setNumberState(numberState + 1);
+    }
+    if (
+      inputValue["category"] === "Overall" &&
+      updatedInputValue["category"] === "Top"
+    ) {
+      setNumberState(numberState - 1);
+    }
     setInputValue(updatedInputValue);
-    setNumberState(numberState + 1);
   }
   useEffect(() => {
+    // 상의가 Overall인 경우
     if (openPopover === false) {
       setInputValue(defaultFixObject);
       setNumberState(numberState + 1);
     }
-  }, [openPopover]); // 상의가 Overall인 경우
+  }, [openPopover]);
 
   return (
     <div className="codiPartButton">
