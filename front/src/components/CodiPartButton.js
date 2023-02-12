@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./CodiPartButton.css";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
 
@@ -10,8 +10,6 @@ function CodiPartButton({
   openPopover,
   numberState,
   setNumberState,
-  partState,
-  setPartState,
 }) {
   const defaultFixObject = {
     label: "",
@@ -32,30 +30,12 @@ function CodiPartButton({
     setInputValue(updatedInputValue);
     setNumberState(numberState + 1);
   }
-
   useEffect(() => {
     if (openPopover === false) {
       setInputValue(defaultFixObject);
       setNumberState(numberState + 1);
     }
   }, [openPopover]); // 상의가 Overall인 경우
-
-  // useEffect(() => {
-  //   if (inputValue["label"] !== defaultFixObject["label"]) {
-  //     setPartState({ ...partState, [codiPart]: 1 });
-  //     let sum = Object.values(partState).reduce((accumulator, value) => {
-  //       return accumulator + value;
-  //     }, 0);
-  //     // console.log(Object.values(partState));
-  //     setNumberState(sum);
-  //   } else {
-  //     setPartState({ ...partState, [codiPart]: 0 });
-  //     let sum = Object.values(partState).reduce((accumulator, value) => {
-  //       return accumulator + value;
-  //     }, 0);
-  //     setNumberState(sum);
-  //   }
-  // });
 
   return (
     <div className="codiPartButton">
