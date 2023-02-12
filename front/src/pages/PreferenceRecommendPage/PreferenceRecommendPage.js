@@ -65,7 +65,6 @@ function PreferenceRecommendPage({
           partState={partState}
           setPartState={setPartState}
         />
-        {console.log(numberState)}
       </Stack>
       <Grid
         container
