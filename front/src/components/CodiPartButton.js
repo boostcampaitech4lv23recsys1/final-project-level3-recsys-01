@@ -10,6 +10,8 @@ function CodiPartButton({
   openPopover,
   numberState,
   setNumberState,
+  partState,
+  setPartState,
 }) {
   const defaultFixObject = {
     label: "",
@@ -36,11 +38,28 @@ function CodiPartButton({
       setInputValue(defaultFixObject);
       setNumberState(numberState + 1);
     }
-  }, [openPopover]);
+  }, [openPopover]); // 상의가 Overall인 경우
+
+  // useEffect(() => {
+  //   if (inputValue["label"] !== defaultFixObject["label"]) {
+  //     setPartState({ ...partState, [codiPart]: 1 });
+  //     let sum = Object.values(partState).reduce((accumulator, value) => {
+  //       return accumulator + value;
+  //     }, 0);
+  //     // console.log(Object.values(partState));
+  //     setNumberState(sum);
+  //   } else {
+  //     setPartState({ ...partState, [codiPart]: 0 });
+  //     let sum = Object.values(partState).reduce((accumulator, value) => {
+  //       return accumulator + value;
+  //     }, 0);
+  //     setNumberState(sum);
+  //   }
+  // });
 
   return (
     <div className="codiPartButton">
-      <BasicPopover
+      <BasicPopover // 여기에서 아이템 선택 + 이름 띄워주기까지 다 함
         codiPart={codiPart}
         onInputValueChange={handleInputValueChange}
         inputLabel={inputValue["label"]}
@@ -69,7 +88,7 @@ function CodiPartButton({
         }}
         onClick={() => {
           if (inputValue["category"] === "Overall") {
-            setNumberState(numberState - 2);
+            setNumberState(numberState - 2); // 여기에서 Object.values(partState)의 sum 값으로 바꿔줘야 함
           } else {
             setNumberState(numberState - 1);
           }
