@@ -64,7 +64,6 @@ function CodiDiagnosisPage({
           numberState={numberState}
           setNumberState={setNumberState}
         />
-        {console.log(numberState)}
       </Stack>
       {diagnosisScore !== 0 ? (
         <ShowDiagnosisResult diagnosisScore={diagnosisScore} />

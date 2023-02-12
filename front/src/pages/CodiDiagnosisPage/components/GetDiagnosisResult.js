@@ -1,6 +1,12 @@
 import * as React from "react";
+import { useState } from "react";
 import Fab from "@mui/material/Fab";
 import * as API from "../../../api";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import Button from "@mui/material/Button";
 
 function getEquippedItem({
   inputHat,
@@ -91,17 +97,19 @@ function GetDiagnosisResult({
     inputWeapon,
   });
 
-  let partChange = false;
-  if (numberState === 0) {
-    partChange = true;
-  }
-
   const sendCodiData = async () => {
     const res = await API.post("diagnosis/submit/MCN", equippedItem);
     setDiagnosisScore(res.data);
     return diagnosisScore;
   };
 
+  const [alertOpen, setAlertOpen] = useState(false);
+  const handleAlertOpen = () => {
+    setAlertOpen(true);
+  };
+  const handleAlertClose = () => {
+    setAlertOpen(false);
+  };
   return (
     <div className="getDiagnosisResult">
       <Fab
@@ -118,9 +126,12 @@ function GetDiagnosisResult({
           fontSize: 30,
         }}
         onClick={() => {
-          sendCodiData(); //여기서 셋 파트 체인지를 true로 바꿔버리면 아무 소용없이 계속 눌리네
-        }}
-        disabled={partChange}>
+          if (numberState !== 0) {
+            sendCodiData();
+          } else {
+            handleAlertOpen();
+          }
+        }}>
         <a
           href="/"
           onClick={(event) => event.preventDefault()}
@@ -128,6 +139,20 @@ function GetDiagnosisResult({
           {"코디 점수 받기"}
         </a>
       </Fab>
+      <Dialog
+        open={alertOpen}
+        onClose={handleAlertClose}
+        aria-describedby="alert-dialog-description">
+        <DialogContent id="alert-dialog-description">
+          <DialogContentText>최소 한 개 이상 선택해주세요.</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAlertClose} autoFocus>
+            {" "}
+            Close{" "}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
