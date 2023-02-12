@@ -26,8 +26,6 @@ function PreferenceRecommendPage({
   setInputWeapon,
   numberState,
   setNumberState,
-  partState,
-  setPartState,
 }) {
   return (
     <div className="PreferenceRecommendPage">
@@ -62,8 +60,6 @@ function PreferenceRecommendPage({
           setInputWeapon={setInputWeapon}
           numberState={numberState}
           setNumberState={setNumberState}
-          partState={partState}
-          setPartState={setPartState}
         />
       </Stack>
       <Grid

@@ -126,7 +126,7 @@ function GetDiagnosisResult({
           fontSize: 30,
         }}
         onClick={() => {
-          if (numberState !== 0) {
+          if (numberState > 0) {
             sendCodiData();
           } else {
             handleAlertOpen();
