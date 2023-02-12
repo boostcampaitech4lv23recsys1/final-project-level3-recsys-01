@@ -67,6 +67,18 @@ function App() {
     category: "",
     index: "",
   });
+
+  const [numberState, setNumberState] = useState(0);
+  const [partState, setPartState] = useState({
+    모자: 0,
+    헤어: 0,
+    성형: 0,
+    상의: 0,
+    하의: 0,
+    신발: 0,
+    무기: 0,
+  });
+
   return (
     <Router>
       <Header />
@@ -93,6 +105,8 @@ function App() {
               setInputShoes={setInputShoes}
               inputWeapon={inputWeapon}
               setInputWeapon={setInputWeapon}
+              numberState={numberState}
+              setNumberState={setNumberState}
             />
           }
         />
@@ -114,6 +128,10 @@ function App() {
               setInputShoes={setInputShoes}
               inputWeapon={inputWeapon}
               setInputWeapon={setInputWeapon}
+              numberState={numberState}
+              setNumberState={setNumberState}
+              partState={partState}
+              setPartState={setPartState}
             />
           }
         />

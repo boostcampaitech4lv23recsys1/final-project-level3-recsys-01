@@ -20,11 +20,7 @@ function BasicPopover({
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   let open = false;
-  if (openPopover) {
-    open = Boolean(anchorEl);
-  } else {
-    open = false;
-  }
+  open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
   const handleClick = (event) => {
@@ -56,17 +52,25 @@ function BasicPopover({
             width: "300px",
             height: "55px",
           }}>
-          <BasicSearch
-            codiPart={codiPart}
-            codiPartData={codiPartData}
-            onSearchChange={onInputValueChange}
-            inputValue={inputLabel}
-            inputImage={inputImage}
-            inputId={inputId}
-            inputCategory={inputCategory}
-            inputIndex={inputIndex}
-            setAnchorEl={setAnchorEl}
-          />
+          {openPopover ? (
+            <BasicSearch
+              codiPart={codiPart}
+              codiPartData={codiPartData}
+              onSearchChange={onInputValueChange}
+              inputValue={inputLabel}
+              inputImage={inputImage}
+              inputId={inputId}
+              inputCategory={inputCategory}
+              inputIndex={inputIndex}
+              setAnchorEl={setAnchorEl}
+            />
+          ) : (
+            //Overall Alert
+            <div>
+              선택하신 상의가 한벌옷입니다. 한벌옷을 선택하신 경우에는 하의를
+              선택하실 수 없습니다.
+            </div>
+          )}
         </div>
       </Popover>
       <Stack

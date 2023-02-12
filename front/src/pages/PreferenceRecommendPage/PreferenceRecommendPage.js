@@ -3,6 +3,8 @@ import Grid from "@mui/material/Grid";
 import CodiPartInputs from "./components/CodiPartInputs";
 import InfoTextAndVideo from "./components/InfoTextAndVideo";
 import GoCodiRecResult from "./components/GoCodiRecResult";
+import GoReviewPage from "../../components/GoReviewPage";
+
 import CodiSimulator from "../../components/CodiSimulator";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
@@ -22,10 +24,11 @@ function PreferenceRecommendPage({
   setInputShoes,
   inputWeapon,
   setInputWeapon,
+  numberState,
+  setNumberState,
+  partState,
+  setPartState,
 }) {
-  const [partChange, setPartChange] = useState(true);
-  const [numberState, setNumberState] = useState(0);
-
   return (
     <div className="PreferenceRecommendPage">
       <InfoTextAndVideo />
@@ -57,29 +60,19 @@ function PreferenceRecommendPage({
           setInputShoes={setInputShoes}
           inputWeapon={inputWeapon}
           setInputWeapon={setInputWeapon}
-          partChange={partChange}
-          setPartChange={setPartChange}
           numberState={numberState}
           setNumberState={setNumberState}
+          partState={partState}
+          setPartState={setPartState}
         />
       </Stack>
-      {console.log(numberState)}
       <Grid
         container
-        direction="row"
+        direction="column"
         justifyContent="center"
         alignItems="center">
-        <GoCodiRecResult
-          inputHat={inputHat}
-          inputHair={inputHair}
-          inputFace={inputFace}
-          inputTop={inputTop}
-          inputBottom={inputBottom}
-          inputShoes={inputShoes}
-          inputWeapon={inputWeapon}
-          partChange={partChange}
-          numberState={numberState}
-        />
+        <GoCodiRecResult numberState={numberState} />
+        <GoReviewPage />
       </Grid>
     </div>
   );
