@@ -15,8 +15,14 @@ function RetryButton() {
         fontFamily: "NanumSquareAcb",
         fontSize: 20,
       }}
+      // onClick={() => { // PRP로 돌아가되, 모든 선택 상태 초기화
+      //   window.location.reload(
+      //     navigate("/recommend/preference", { replace: true }),
+      //   );
+      // }}
       onClick={() => {
-        window.location.reload(navigate("/", { replace: true }));
+        // PRP로 돌아가되, 선택 상태 유지
+        window.history.go(-1);
       }}
       className="button-retry">
       <a

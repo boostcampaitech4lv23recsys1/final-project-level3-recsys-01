@@ -37,14 +37,18 @@ function CodiPartButton({
       setNumberState(numberState - 1);
     }
     setInputValue(updatedInputValue);
-  }
-  useEffect(() => {
-    // 상의가 Overall인 경우
     if (openPopover === false) {
       setInputValue(defaultFixObject);
       setNumberState(numberState + 1);
     }
-  }, [openPopover]);
+  }
+  // useEffect(() => { // PRRP에서 windows.history.go(-2) 이용함에 따라 문제 발생
+  //   // 상의가 Overall인 경우
+  //   if (openPopover === false) {
+  //     setInputValue(defaultFixObject);
+  //     setNumberState(numberState + 1);
+  //   }
+  // }, [openPopover]);
 
   return (
     <div className="codiPartButton">
