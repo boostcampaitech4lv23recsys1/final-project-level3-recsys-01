@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function GoReviewPage() {
   return (
-    <div>
+    <div className="div-goReview">
       <button className="button-goReview">
         <Link
           className="link-goReview"
@@ -20,12 +20,3 @@ function GoReviewPage() {
 }
 
 export default GoReviewPage;
-
-{
-  /* <a
-onClick={() => (window.location.href = "/recommend/review")}
-target="_blank"
-rel="noreferrer">
-메신사 서비스에 대한 리뷰를 남겨주세요!
-</a> */
-}
