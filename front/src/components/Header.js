@@ -1,7 +1,6 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
 import "./Header.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +29,9 @@ function Header() {
           <Grid item xs={4} className="grid-center">
             <button className="button-title">
               <a
-                onClick={() => {
+                href="/"
+                onClick={(event) => {
+                  event.preventDefault();
                   window.location.reload(navigate("/recommend"));
                 }}>
                 <Typography

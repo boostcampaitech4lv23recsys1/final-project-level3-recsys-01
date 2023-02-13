@@ -1,6 +1,12 @@
 import * as React from "react";
+import { useState } from "react";
 import Fab from "@mui/material/Fab";
 import * as API from "../../../api";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import Button from "@mui/material/Button";
 
 function getEquippedItem({
   inputHat,
@@ -79,6 +85,7 @@ function GetDiagnosisResult({
   inputWeapon,
   diagnosisScore,
   setDiagnosisScore,
+  numberState,
 }) {
   const equippedItem = getEquippedItem({
     inputHat,
@@ -89,12 +96,20 @@ function GetDiagnosisResult({
     inputShoes,
     inputWeapon,
   });
+
   const sendCodiData = async () => {
     const res = await API.post("diagnosis/submit/MCN", equippedItem);
     setDiagnosisScore(res.data);
     return diagnosisScore;
   };
 
+  const [alertOpen, setAlertOpen] = useState(false);
+  const handleAlertOpen = () => {
+    setAlertOpen(true);
+  };
+  const handleAlertClose = () => {
+    setAlertOpen(false);
+  };
   return (
     <div className="getDiagnosisResult">
       <Fab
@@ -109,11 +124,35 @@ function GetDiagnosisResult({
           color: "white",
           fontFamily: "NanumSquareAcb",
           fontSize: 30,
+        }}
+        onClick={() => {
+          if (numberState > 0) {
+            sendCodiData();
+          } else {
+            handleAlertOpen();
+          }
         }}>
-        <a onClick={() => sendCodiData()} style={{ color: "white" }}>
+        <a
+          href="/"
+          onClick={(event) => event.preventDefault()}
+          style={{ color: "white" }}>
           {"코디 점수 받기"}
         </a>
       </Fab>
+      <Dialog
+        open={alertOpen}
+        onClose={handleAlertClose}
+        aria-describedby="alert-dialog-description">
+        <DialogContent id="alert-dialog-description">
+          <DialogContentText>최소 한 개 이상 선택해주세요.</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAlertClose} autoFocus>
+            {" "}
+            Close{" "}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

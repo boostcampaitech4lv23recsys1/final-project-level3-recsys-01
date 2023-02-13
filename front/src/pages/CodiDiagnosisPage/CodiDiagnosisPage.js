@@ -7,6 +7,7 @@ import GetDiagnosisResult from "./components/GetDiagnosisResult";
 import ShowDiagnosisResult from "./components/ShowDiagnosisResult";
 import { useState } from "react";
 import InfoText from "./components/InfoText";
+import GoReviewPage from "../../components/GoReviewPage";
 
 function CodiDiagnosisPage({
   inputHat,
@@ -23,6 +24,8 @@ function CodiDiagnosisPage({
   setInputShoes,
   inputWeapon,
   setInputWeapon,
+  numberState,
+  setNumberState,
 }) {
   const [diagnosisScore, setDiagnosisScore] = useState(0);
   return (
@@ -40,6 +43,7 @@ function CodiDiagnosisPage({
           inputShoes={inputShoes}
           inputWeapon={inputWeapon}
           size={4.5}
+          isResult={false}
         />
         <CodiPartInputs
           className="item"
@@ -57,9 +61,11 @@ function CodiDiagnosisPage({
           setInputShoes={setInputShoes}
           inputWeapon={inputWeapon}
           setInputWeapon={setInputWeapon}
+          numberState={numberState}
+          setNumberState={setNumberState}
         />
       </Stack>
-      {diagnosisScore != 0 ? (
+      {diagnosisScore !== 0 ? (
         <ShowDiagnosisResult diagnosisScore={diagnosisScore} />
       ) : (
         <p></p>
@@ -74,7 +80,9 @@ function CodiDiagnosisPage({
         inputWeapon={inputWeapon}
         diagnosisScore={diagnosisScore}
         setDiagnosisScore={setDiagnosisScore}
+        numberState={numberState}
       />
+      <GoReviewPage />
     </div>
   );
 }

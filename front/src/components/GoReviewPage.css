@@ -1,0 +1,11 @@
+.button-goReview{
+    margin-top: 20px;
+    font-family: 'NanumSquareAcb';
+    border : none;
+    background-color: transparent;
+}
+
+.link-goReview {
+    color: #8A37FF;
+    font-size: 13px;
+}

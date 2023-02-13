@@ -1,9 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import Popover from "@mui/material/Popover";
-import Fab from "@mui/material/Fab";
 import BasicSearch from "./BasicSearch";
-import click from "../../../assets/icons/click.png";
 import basicItem from "../../../assets/images/basicItem.png";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -22,11 +20,7 @@ function BasicPopover({
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   let open = false;
-  if (openPopover) {
-    open = Boolean(anchorEl);
-  } else {
-    open = false;
-  }
+  open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
   const handleClick = (event) => {
@@ -39,10 +33,6 @@ function BasicPopover({
 
   return (
     <div className="basicPopover">
-      {/* <Fab>
-        <img src={inputImage} alt="" onClick={handleClick} />
-      </Fab> */}
-
       <Popover
         id={id}
         open={open}
@@ -62,17 +52,25 @@ function BasicPopover({
             width: "300px",
             height: "55px",
           }}>
-          <BasicSearch
-            codiPart={codiPart}
-            codiPartData={codiPartData}
-            onSearchChange={onInputValueChange}
-            inputValue={inputLabel}
-            inputImage={inputImage}
-            inputId={inputId}
-            inputCategory={inputCategory}
-            inputIndex={inputIndex}
-            setAnchorEl={setAnchorEl}
-          />
+          {openPopover ? (
+            <BasicSearch
+              codiPart={codiPart}
+              codiPartData={codiPartData}
+              onSearchChange={onInputValueChange}
+              inputValue={inputLabel}
+              inputImage={inputImage}
+              inputId={inputId}
+              inputCategory={inputCategory}
+              inputIndex={inputIndex}
+              setAnchorEl={setAnchorEl}
+            />
+          ) : (
+            //Overall Alert
+            <div>
+              선택하신 상의가 한벌옷입니다. 한벌옷을 선택하신 경우에는 하의를
+              선택하실 수 없습니다.
+            </div>
+          )}
         </div>
       </Popover>
       <Stack

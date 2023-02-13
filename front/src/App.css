@@ -9,3 +9,6 @@ footer{
     transform: translate(0,100px);
 }
 
+a {
+    text-decoration: none;
+}

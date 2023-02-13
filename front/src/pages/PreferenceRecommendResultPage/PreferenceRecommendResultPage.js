@@ -2,6 +2,7 @@ import TitleFixItem from "./components/TitleFixItem";
 import BestCodiTopThree from "./components/BestCodiTopThree";
 import RetryButton from "./components/RetryButton";
 import LoadingAnimation from "./components/LoadingAnimation";
+import GoReviewPage from "../../components/GoReviewPage";
 import "./PreferenceRecommendResultPage.css";
 import * as API from "../../api";
 import { useState, useEffect } from "react";
@@ -57,11 +58,12 @@ function PreferenceRecommendResultPage({
   const [loadingPage, setLoadingPage] = useState(false);
 
   const postCodiPartData = async () => {
-    const res = await API.post("inference/submit/MCN", inputParts);
+    const res = await API.post("inference/submit", inputParts);
     const data = res.data;
     setRecommendData(data);
     setLoadingPage(true);
   };
+
   useEffect(() => {
     postCodiPartData();
   }, []);
@@ -87,6 +89,7 @@ function PreferenceRecommendResultPage({
           fixPartList={fixPartListKorEng}
           recommendData={recommendData}></BestCodiTopThree>
         <RetryButton></RetryButton>
+        <GoReviewPage />
       </div>
     );
   }

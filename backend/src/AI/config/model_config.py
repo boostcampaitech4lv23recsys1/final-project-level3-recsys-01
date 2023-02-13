@@ -14,7 +14,19 @@ MODEL_CONFIG = {
         "conv_feats": "1234",
         "pretrained": True,
         "resnet_layer_num": 18,
-        "top_k": 5,
-        "batch_size": 16
+        "top_k": 10,
+        "batch_size": 32,
     },
+    "SimpleMCN": {
+        "model_path": "src/AI/save_model/SimpleMCN/SimpleMCN_latest.pt",
+        "batch_size": 32,
+        "top_k": 10,
+    },
+    "AutoEncoderPredictor": {
+        "model_path": "src/AI/save_model/AutoEncoderPredictor/AutoEncoderPredictor_latest.pt",
+        "pretraind_model_dir": "src/AI/save_model/AutoEncoder",
+        "dropout_prop": 0.2,
+        "top_k": 10,
+        "batch_size": 32
+    }
 }

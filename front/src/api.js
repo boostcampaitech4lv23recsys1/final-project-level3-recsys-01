@@ -5,12 +5,16 @@ const backendDomain = process.env.REACT_APP_BACKEND_DOMAIN;
 const serverUrl = `http://${backendDomain}:${backendPortNumber}/`;
 
 async function get(endpoint, params = "") {
-  console.log(
-    `%cGET 요청 ${`${serverUrl + endpoint}/${params}`}`,
-    "color: #a25cd1;",
-  );
-
-  return axios.get(`${serverUrl + endpoint}/${params}`);
+  if (params === "") {
+    console.log(`%cGET 요청 ${`${serverUrl + endpoint}`}`, "color: #a25cd1;");
+    return axios.get(`${serverUrl + endpoint}`);
+  } else {
+    console.log(
+      `%cGET 요청 ${`${serverUrl + endpoint}/${params}`}`,
+      "color: #a25cd1;",
+    );
+    return axios.get(`${serverUrl + endpoint}/${params}`);
+  }
 }
 
 async function post(endpoint, data) {

@@ -1,8 +1,6 @@
 import React from "react";
 import Fab from "@mui/material/Fab";
 import { useNavigate } from "react-router-dom";
-import { textAlign } from "@mui/system";
-import { useEffect } from "react";
 
 function RetryButton() {
   const navigate = useNavigate();
@@ -21,7 +19,12 @@ function RetryButton() {
         window.location.reload(navigate("/", { replace: true }));
       }}
       className="button-retry">
-      <a style={{ color: "white" }}>{buttonDes}</a>
+      <a
+        href="/"
+        onClick={(event) => event.preventDefault()}
+        style={{ color: "white" }}>
+        {buttonDes}
+      </a>
     </Fab>
   );
 }

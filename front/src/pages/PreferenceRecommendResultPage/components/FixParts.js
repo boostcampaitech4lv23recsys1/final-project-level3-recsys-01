@@ -7,7 +7,7 @@ function FixParts({ fixPartList }) {
     const fixes = [];
     for (let idx = 0; idx < fixPartList.length; idx++) {
       fixes.push(
-        <Grid item xs={1}>
+        <Grid item xs={1} key={fixPartList[idx]}>
           <FixCodiPartButton codiPart={fixPartList[idx]}></FixCodiPartButton>
         </Grid>,
       );
