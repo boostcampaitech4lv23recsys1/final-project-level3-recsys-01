@@ -7,7 +7,6 @@ import GoReviewPage from "../../components/GoReviewPage";
 
 import CodiSimulator from "../../components/CodiSimulator";
 import Stack from "@mui/material/Stack";
-import { useState } from "react";
 
 function PreferenceRecommendPage({
   inputHat,

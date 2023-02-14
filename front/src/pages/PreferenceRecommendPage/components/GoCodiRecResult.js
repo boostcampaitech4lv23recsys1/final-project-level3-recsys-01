@@ -52,9 +52,20 @@ function GoCodiRecResult({ numberState }) {
         open={alertOpen}
         onClose={handleAlertClose}
         aria-describedby="alert-dialog-description">
-        <DialogContent id="alert-dialog-description">
-          <DialogContentText>최소 두 부위 이상 선택해주세요.</DialogContentText>
-        </DialogContent>
+        {numberState <= 2 ? (
+          <DialogContent id="alert-dialog-description">
+            <DialogContentText>
+              최소 세 부위 이상 선택해주세요.
+            </DialogContentText>
+          </DialogContent>
+        ) : (
+          <DialogContent id="alert-dialog-description">
+            <DialogContentText>
+              모든 부위 선택 시 추천이 불가능합니다.
+            </DialogContentText>
+          </DialogContent>
+        )}
+
         <DialogActions>
           <Button onClick={handleAlertClose} autoFocus>
             {" "}
