@@ -67,6 +67,12 @@ function App() {
     category: "",
     index: "",
   });
+
+  const [numberState, setNumberState] = useState(0);
+  if (numberState < 0) {
+    setNumberState(0);
+  }
+
   return (
     <Router>
       <Header />
@@ -93,6 +99,8 @@ function App() {
               setInputShoes={setInputShoes}
               inputWeapon={inputWeapon}
               setInputWeapon={setInputWeapon}
+              numberState={numberState}
+              setNumberState={setNumberState}
             />
           }
         />
@@ -114,6 +122,8 @@ function App() {
               setInputShoes={setInputShoes}
               inputWeapon={inputWeapon}
               setInputWeapon={setInputWeapon}
+              numberState={numberState}
+              setNumberState={setNumberState}
             />
           }
         />

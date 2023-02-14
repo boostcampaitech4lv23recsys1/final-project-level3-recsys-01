@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./CodiPartButton.css";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
 
@@ -8,7 +8,6 @@ function CodiPartButton({
   inputValue,
   setInputValue,
   openPopover,
-  setPartChange,
   numberState,
   setNumberState,
 }) {
@@ -28,21 +27,32 @@ function CodiPartButton({
       category: newInputValue["category"],
       index: newInputValue["index"],
     };
-    setPartChange(false);
+    if (inputValue["label"] === "") {
+      setNumberState(numberState + 1);
+    }
+    if (
+      inputValue["category"] === "Overall" &&
+      updatedInputValue["category"] === "Top"
+    ) {
+      setNumberState(numberState - 1);
+    }
     setInputValue(updatedInputValue);
-    setNumberState(numberState + 1);
-  }
-
-  useEffect(() => {
     if (openPopover === false) {
       setInputValue(defaultFixObject);
       setNumberState(numberState + 1);
     }
-  }, [openPopover]);
+  }
+  // useEffect(() => { // PRRP에서 windows.history.go(-2) 이용함에 따라 문제 발생
+  //   // 상의가 Overall인 경우
+  //   if (openPopover === false) {
+  //     setInputValue(defaultFixObject);
+  //     setNumberState(numberState + 1);
+  //   }
+  // }, [openPopover]);
 
   return (
     <div className="codiPartButton">
-      <BasicPopover
+      <BasicPopover // 여기에서 아이템 선택 + 이름 띄워주기까지 다 함
         codiPart={codiPart}
         onInputValueChange={handleInputValueChange}
         inputLabel={inputValue["label"]}
@@ -71,7 +81,7 @@ function CodiPartButton({
         }}
         onClick={() => {
           if (inputValue["category"] === "Overall") {
-            setNumberState(numberState - 2);
+            setNumberState(numberState - 2); // 여기에서 Object.values(partState)의 sum 값으로 바꿔줘야 함
           } else {
             setNumberState(numberState - 1);
           }

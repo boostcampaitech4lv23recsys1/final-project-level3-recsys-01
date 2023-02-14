@@ -19,7 +19,6 @@ function CodiPartInputs({
   setInputShoes,
   inputWeapon,
   setInputWeapon,
-  setPartChange,
   numberState,
   setNumberState,
 }) {
@@ -39,7 +38,6 @@ function CodiPartInputs({
             inputValue={inputHat}
             setInputValue={setInputHat}
             openPopover={true}
-            setPartChange={setPartChange}
             numberState={numberState}
             setNumberState={setNumberState}
           />
@@ -48,7 +46,6 @@ function CodiPartInputs({
             inputValue={inputHair}
             setInputValue={setInputHair}
             openPopover={true}
-            setPartChange={setPartChange}
             numberState={numberState}
             setNumberState={setNumberState}
           />
@@ -57,7 +54,6 @@ function CodiPartInputs({
             inputValue={inputFace}
             setInputValue={setInputFace}
             openPopover={true}
-            setPartChange={setPartChange}
             numberState={numberState}
             setNumberState={setNumberState}
           />
@@ -68,7 +64,6 @@ function CodiPartInputs({
             inputValue={inputTop}
             setInputValue={setInputTop}
             openPopover={true}
-            setPartChange={setPartChange}
             numberState={numberState}
             setNumberState={setNumberState}
           />
@@ -78,7 +73,6 @@ function CodiPartInputs({
               inputValue={defaultFixObject}
               setInputValue={setInputBottom}
               openPopover={false}
-              setPartChange={setPartChange}
               numberState={numberState}
               setNumberState={setNumberState}
             />
@@ -88,7 +82,6 @@ function CodiPartInputs({
               inputValue={inputBottom}
               setInputValue={setInputBottom}
               openPopover={true}
-              setPartChange={setPartChange}
               numberState={numberState}
               setNumberState={setNumberState}
             />
@@ -98,7 +91,6 @@ function CodiPartInputs({
             inputValue={inputShoes}
             setInputValue={setInputShoes}
             openPopover={true}
-            setPartChange={setPartChange}
             numberState={numberState}
             setNumberState={setNumberState}
           />
@@ -107,7 +99,6 @@ function CodiPartInputs({
             inputValue={inputWeapon}
             setInputValue={setInputWeapon}
             openPopover={true}
-            setPartChange={setPartChange}
             numberState={numberState}
             setNumberState={setNumberState}
           />
@@ -134,7 +125,6 @@ function CodiPartInputs({
           setInputBottom(defaultFixObject);
           setInputShoes(defaultFixObject);
           setInputWeapon(defaultFixObject);
-          setPartChange(true);
           setNumberState(0);
         }}>
         All Reset

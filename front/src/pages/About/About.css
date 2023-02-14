@@ -25,6 +25,8 @@
 
 .AP .aboutBox-wrap{
     position: relative;
+    width: 600px;
+    margin: 0 auto;
 }
 
 .AP .aboutBox-bg{
@@ -35,13 +37,23 @@
     margin-left: auto;
     margin-right: auto;
     display: block;
+    position: relative;
 }
 
 .AP .aboutBox-text{
     position: absolute;
-    top: 12%;
-    padding-left: 39%;
-    text-align: left;
+    top: 40%;
+    right: 34%;
+    transform: translate(40%, -50%);
+    white-space: pre-wrap;
+    font-family: 'NanumSquareAcr';
+    line-height: 22px;
+}
+
+.AP .aboutBox-text a {
+    text-decoration: none;
+    color: black;
+    font-family: 'NanumSquareAceb';
 }
 .Ap .memberBox{
     align-items:center;
