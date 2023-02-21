@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
 import "./CodiPartButton.css";
 import BasicPopover from "../pages/PreferenceRecommendPage/components/BasicPopover";
 
@@ -29,6 +28,9 @@ function CodiPartButton({
     };
     if (inputValue["label"] === "") {
       setNumberState(numberState + 1);
+      if (updatedInputValue["category"] === "Overall") {
+        setNumberState(numberState + 2);
+      }
     }
     if (
       inputValue["category"] === "Overall" &&
