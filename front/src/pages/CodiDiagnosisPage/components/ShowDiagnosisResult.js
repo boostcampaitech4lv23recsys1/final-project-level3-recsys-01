@@ -4,7 +4,6 @@ import NextCodiRec from "./NextCodiRec";
 function ShowDiagnosisResult({ diagnosisScore }) {
   const resultScore = Math.ceil(diagnosisScore * 100);
   let scoreDes = null;
-  console.log(diagnosisScore * 100);
   if (resultScore < 25) {
     scoreDes = "정말 개성있는 코디네요! AI가 더 개성있는 옷을 골라드릴게요!";
   } else if (25 <= resultScore && resultScore < 50) {
