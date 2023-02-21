@@ -4,7 +4,8 @@
  <h1> MESINSA :maple_leaf: 메이플스토리 코디 추천 </h1>
  <br>
  <p> 메이플스토리 세상에 존재하는 너무나도 많은 아이템들! <br />
- 현실에서 무슨 옷 입을지 고민하기도 바쁜데 메이플 세계에서도 고민하느라 힘드셨던 용사님들을 위한 <b>AI 코디 추천 서비스</b>입니다. <br />
+ 현실에서 무슨 옷 입을지 고민하기도 바쁜데 <br />
+ 메이플 세계에서도 고민하느라 힘드셨던 용사님들을 위한 <b>AI 코디 추천 서비스</b>입니다. <br />
  고정하고 싶은 아이템을 입력하면 그 아이템과 어울리는 코디 조합 세 개를 AI가 추천해드립니다. <br />
  이 외에도 용사님들의 코디 점수를 평가 해주는 코디 진단 서비스도 있으니 한 번 방문해서 즐겨보세요! :maple_leaf: ⚔️<br />
 <br>
@@ -12,8 +13,14 @@
 ---
 #### <a href="http://mesinsa.co.kr"> 👉 메신사 체험하기 <a/>
 ---
+<a href="https://41ow1ives.notion.site/7297be317b9340b5a7c18d70c010f783"> 팀 노션 &nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="https://drive.google.com/file/d/1fP7xUzF1oJofdpTOMUZ_LWpGZqkBWLh3/view?usp=sharing"> 발표 자료 <a/>&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="https://www.youtube.com/watch?v=H1UhgLhY-Ww"> 발표 영상
+<br> <br>
+<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fboostcampaitech4lv23recsys1/final-project-level3-recsys-01/2F&count_bg=%23E99533&title_bg=%23555555&title=hits&edge_flat=false"/></a>
+<img src="https://img.shields.io/badge/release-1.0.0-E99533"> 
 </div>
-<br><br><br>
+<br>
 
 ## 👚 서비스 구성 요소
 ### 🌹 코디 추천 받기
@@ -95,4 +102,4 @@
 
 ----
 🦖 team 공룡알에 대한 더 자세한 WIKI는 [팀 노션](https://41ow1ives.notion.site/Final-Project-7297be317b9340b5a7c18d70c010f783)에서 볼 수 있어요
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fboostcampaitech4lv23recsys1/final-project-level3-recsys-01/2F&count_bg=%23FFE565&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
