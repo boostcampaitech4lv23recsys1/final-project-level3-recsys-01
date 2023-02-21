@@ -13,7 +13,7 @@
 ---
 #### <a href="http://mesinsa.co.kr"> 👉 메신사 체험하기 <a/>
 ---
-<a href="https://41ow1ives.notion.site/7297be317b9340b5a7c18d70c010f783"> 팀 노션 &nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="https://41ow1ives.notion.site/7297be317b9340b5a7c18d70c010f783"> 팀 노션 <a/> &nbsp;&nbsp;|&nbsp;&nbsp;
 <a href="https://drive.google.com/file/d/1fP7xUzF1oJofdpTOMUZ_LWpGZqkBWLh3/view?usp=sharing"> 발표 자료 <a/>&nbsp;&nbsp;|&nbsp;&nbsp;
 <a href="https://www.youtube.com/watch?v=H1UhgLhY-Ww"> 발표 영상
 <br> <br>
