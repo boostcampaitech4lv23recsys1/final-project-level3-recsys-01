@@ -32,8 +32,11 @@ class MCNTrainer(object):
         self.optimizer = get_optimizer(self.model, config["trainer"]["optimizer"])
         self.scheduler = get_scheduler(self.optimizer, config["trainer"])
         self.epochs = config["trainer"]["epochs"]
-        self.best = float("-inf")
+        self.best_score = float("-inf")
         self.print_every = config["trainer"]["print_every"]
+
+        self.total_losses = AverageMeter()
+        self.clf_losses = AverageMeter()
 
         self.model_name = "MCN"
         self.gcs_helper = GCSHelper(
@@ -47,21 +50,11 @@ class MCNTrainer(object):
         for epoch in range(1, self.epochs + 1):
             print("Train Phase, Epoch: {}".format(epoch))
             self.scheduler.step()
-
-            total_losses = AverageMeter()
-            clf_losses = AverageMeter()
-            vse_losses = AverageMeter()
-
             self.model.train()
-            avg_score = self.__train(
-                epoch=epoch,
-                total_losses=total_losses,
-                clf_losses=clf_losses,
-                vse_losses=vse_losses,
-            )
+            avg_score = self.__train(epoch)
 
-            if avg_score > self.best:
-                self.best = avg_score
+            if avg_score > self.best_score:
+                self.best_score = avg_score
 
                 now = datetime.now(timezone("Asia/Seoul")).strftime(f"%Y%m%d-%H%M")
                 model_save_path = (
@@ -75,12 +68,12 @@ class MCNTrainer(object):
                         f"{self.model_name}/{self.model_name}_{now}.pt", model_save_path
                     )
 
-    def __train(self, epoch, total_losses, clf_losses, vse_losses):
+    def _train(self, epoch):
         for batch_num, batch in enumerate(self.train_loader, 1):
             images, is_compat = batch
             images = images.to(self.device)
 
-            output, vse_loss, tmasks_loss, features_loss = self.model(images)
+            output, tmasks_loss, features_loss = self.model(images)
 
             target = is_compat.float().to(self.device)
             output = output.squeeze(dim=1)
@@ -88,52 +81,48 @@ class MCNTrainer(object):
 
             features_loss = 5e-3 * features_loss
             tmasks_loss = 5e-4 * tmasks_loss
-            total_loss = clf_loss + vse_loss + features_loss + tmasks_loss
+            total_loss = clf_loss + features_loss + tmasks_loss
 
-            total_losses.update(total_loss.item(), images.shape[0])
-            clf_losses.update(clf_loss.item(), images.shape[0])
-            vse_losses.update(vse_loss.item(), images.shape[0])
+            self.total_losses.update(total_loss.item(), images.shape[0])
+            self.clf_losses.update(clf_loss.item(), images.shape[0])
 
             self.model.zero_grad()
             total_loss.backward()
             self.optimizer.step()
             if batch_num % self.print_every == 0:
                 print(
-                    "[{}/{}] #{} clf_loss: {:.4f}, vse_loss: {:.4f}, features_loss: {:.4f}, tmasks_loss: {:.4f}, total_loss:{:.4f}".format(
+                    "[{}/{}] #{} clf_loss: {:.4f}, features_loss: {:.4f}, tmasks_loss: {:.4f}, total_loss:{:.4f}".format(
                         epoch,
                         self.epochs,
                         batch_num,
-                        clf_losses.val,
-                        vse_losses.val,
+                        self.clf_losses.val,
                         features_loss,
                         tmasks_loss,
-                        total_losses.val,
+                        self.total_losses.val,
                     )
                 )
                 log = {
-                    "train/clf_loss": clf_losses.val,
-                    "train/vse_loss": vse_losses.val,
+                    "train/clf_loss": self.clf_losses.val,
                     "train/features_loss": features_loss,
                     "train/tmasks_loss": tmasks_loss,
-                    "train/total_loss": total_losses.val,
+                    "train/total_loss": self.total_losses.val,
                     "batch_num": batch_num,
                 }
                 wandb.log(log, commit=True)
-        print("Train Loss (clf_loss): {:.4f}".format(clf_losses.avg))
+        print("Train Loss (clf_loss): {:.4f}".format(self.clf_losses.avg))
 
         epoch_train_log = {
-            "train_epoch/clf_loss": clf_losses.avg,
-            "train_epoch/vse_loss": vse_losses.avg,
-            "train_epoch/total_loss": total_losses.avg,
+            "train_epoch/clf_loss": self.clf_losses.avg,
+            "train_epoch/total_loss": self.total_losses.avg,
             "train_step": epoch,
         }
         wandb.log(epoch_train_log, commit=True)
 
-        avg_score = self.__val(epoch)
+        avg_score = self._val(epoch)
 
         return avg_score
 
-    def __val(self, epoch):
+    def _val(self, epoch):
         print("Valid Phase, Epoch: {}".format(epoch))
         self.model.eval()
 
@@ -142,7 +131,7 @@ class MCNTrainer(object):
             images, is_compat = batch
             images = images.to(self.device)
             with torch.no_grad():
-                output, _, _, _ = self.model._compute_score(images)
+                output, _, _ = self.model._compute_score(images)
                 output = output.squeeze(dim=1)
             outputs.append(output)
         outputs = torch.cat(outputs).cpu().data.numpy()
@@ -159,14 +148,6 @@ class MCNTrainer(object):
 
 
 class AverageMeter(object):
-    """Computes and stores the average and current value.
-    >>> acc = AverageMeter()
-    >>> acc.update(0.6)
-    >>> acc.update(0.8)
-    >>> print(acc.avg)
-    0.7
-    """
-
     def __init__(self):
         self.reset()
 

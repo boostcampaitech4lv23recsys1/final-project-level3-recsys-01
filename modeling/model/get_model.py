@@ -18,14 +18,11 @@ def get_models(config: Dict[str, Any]) -> nn.Module:
         model_config = config["arch"]["args"]
         model = getattr(models, config["arch"]["type"])(
             embed_size=model_config["embed_size"],
-            need_rep=model_config["need_rep"],
-            vocabulary=None,
-            vse_off=model_config["vse_off"],
             pe_off=model_config["pe_off"],
-            mlp_layers=model_config["mlp_layers"],
-            conv_feats=model_config["conv_feats"],
             pretrained=model_config["pretrained"],
             resnet_layer_num=model_config["resnet_layer_num"],
+            hidden_sizes=model_coinfig["hidden_sizes"],
+            item_num=model_config["item_num"]
         )
     else:
         raise NotImplementedError
