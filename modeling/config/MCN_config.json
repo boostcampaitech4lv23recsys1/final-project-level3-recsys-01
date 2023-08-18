@@ -39,14 +39,12 @@
   "arch": {
     "type": "MCN",
     "args": {
-      "embed_size": 512,
-      "need_rep": true,
-      "vse_off": true,
+      "embed_size": 128,
       "pe_off": false,
-      "mlp_layers": 2,
-      "conv_feats": "1234",
-      "pretrained": true,
-      "resnet_layer_num": 18
+      "pretrained": false,
+      "resnet_layer_num": 18,
+      "hidden_sizes": [128],
+      "item_num": 7
     }
   },
   "inference": {
