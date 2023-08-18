@@ -44,15 +44,12 @@ class MCNInference:
             self.item_parts.append(item_part)
 
         self.model = MCN(
-            embed_size=self.model_config["embed_size"],
-            need_rep=self.model_config["need_rep"],
-            vocabulary=None,
-            vse_off=self.model_config["vse_off"],
-            pe_off=self.model_config["pe_off"],
-            mlp_layers=self.model_config["mlp_layers"],
-            conv_feats=self.model_config["conv_feats"],
-            pretrained=self.model_config["pretrained"],
-            resnet_layer_num=self.model_config["resnet_layer_num"],
+            embed_size=model_config["embed_size"],
+            pe_off=model_config["pe_off"],
+            pretrained=model_config["pretrained"],
+            resnet_layer_num=model_config["resnet_layer_num"],
+            hidden_sizes=model_coinfig["hidden_sizes"],
+            item_num=model_config["item_num"]
         )
 
         self.model.load_state_dict(
@@ -75,7 +72,7 @@ class MCNInference:
             images.append(self.image_tensors[equip_index])
 
         images = torch.stack(images).unsqueeze(0).to(self.device)
-        score, _, __, ___ = self.model.forward(images)
+        score, _, _ = self.model.forward(images)
         return float(score)
 
     @torch.no_grad()
@@ -121,7 +118,7 @@ class MCNInference:
             for batch_idx, batch in enumerate(dataloader_per_part):
                 # batch shape (batch, 7) == (16, 7)
                 images = self.image_tensors[batch]
-                output, _, _, _ = self.model(images.to(self.device))
+                output, _, _ = self.model(images.to(self.device))
                 result = [
                     (batch[i, part_idx], float(output[i]))
                     for i in range(batch.shape[0])
@@ -141,7 +138,7 @@ class MCNInference:
         for batch_idx, batch in enumerate(dataloader_for_product):
             # batch shape (batch, 7) == (16, 7)
             images = self.image_tensors[batch]
-            output, _, _, _ = self.model(images.to(self.device))
+            output, _, _ = self.model(images.to(self.device))
             result = [(batch[i, :], float(output[i])) for i in range(batch.shape[0])]
             codi_scores.extend(result)
 
